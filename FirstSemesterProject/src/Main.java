@@ -1,4 +1,4 @@
-package Main;
+
 import input.KeyboardInput;
 
 public class Main {

@@ -27,7 +27,7 @@ public class KeyboardInput {
 	
 	//String logic
 	public boolean isStringCorrect(String str) {
-		if (str.matches("[a-zA-Z]+")) {
+		if (str.matches("[ a-zA-Z]+")) {
 			return true;
 		}
 		else {
