@@ -13,4 +13,4 @@ Project is created with:
 Java version: 17.0.0
 	
 ## Setup
-To run this project, download the project, run the main class in Eclipse or your editor of your choice.
+To run this project, download the project, run the main class in Eclipse or your editor of choice.
