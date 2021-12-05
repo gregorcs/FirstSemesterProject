@@ -3,7 +3,7 @@ package model;
 public interface ContainerInterface<T> {
 	
 	//Search
-	public T searchForObject();
+	public T searchForObj();
 	// CRUD methods
 	public void create();
 	public T read(int id);
