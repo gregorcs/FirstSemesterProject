@@ -1,10 +1,11 @@
 package main;
-import input.KeyboardInput;
+
+import tui.MainMenu;
 
 public class Main {
-
-
-		public static void main (String args[]) {
-
-		}
+	
+	public static void main (String args[]) {
+		MainMenu mainMenu = new MainMenu();
+		mainMenu.start();
+	}
 }

@@ -1,19 +1,24 @@
 package input;
 import java.util.Scanner;
 
+import tui.PrintInput;
+
 public class KeyboardInput {
 
 	private Scanner sc;
+	private PrintInput printStatement;
 	
 	//Constructor
-	public KeyboardInput() {};
+	public KeyboardInput() {
+		printStatement = new PrintInput();
+	};
 	
 	//String input
 	public String StringInput() {
 		String input = "-1";
 		boolean correctInput = false;
 		
-		askForString();
+		//printStatement.askForString();
 		//while statement checks if inputed string is from a to z
 		while (!correctInput) {
 			sc = new Scanner(System.in);
@@ -31,7 +36,7 @@ public class KeyboardInput {
 			return true;
 		}
 		else {
-			askForStringAgain();
+			printStatement.askForStringAgain();
 			return false;
 		}
 	}
@@ -41,7 +46,7 @@ public class KeyboardInput {
 		int input = -1;
 		boolean correctInput = false;
 
-		askForInt();
+		//printStatement.askForInt();
 		//loops until user enters and integer, returns that integer
 		while (!correctInput) {
 			sc = new Scanner(System.in);
@@ -51,7 +56,7 @@ public class KeyboardInput {
 				
 				correctInput = isIntPositive(input);
 			} catch (Exception e) {
-				askForIntAgain();
+				printStatement.askForIntAgain();
 			}
 		}
 		return input;
@@ -59,34 +64,13 @@ public class KeyboardInput {
 	
 	//int logic
 	public boolean isIntPositive(int num) {
+		//checks if bigger or equal to 0 and checks against biggest possible int 
 		if ( (num >= 0) && (num < 4294967295L)) {
 			return true;
 		}
 		else {
-			askForPositiveInt();
+			printStatement.askForPositiveInt();
 			return false;
 		}
-	}
-	
-
-	
-	
-	//print statements for integer input
-	public void askForInt() {
-		System.out.println("Enter the numbers below: ");
-	}
-	public void askForPositiveInt() {
-		System.out.println("Enter a positive number: ");
-	}
-	public void askForIntAgain() {
-		System.out.println("Enter a valid number: ");
-	}
-	
-	//print statements for String input
-	public void askForString() {
-		System.out.println("Enter text here: ");
-	}
-	public void askForStringAgain() {
-		System.out.println("Your text is invalid, no numbers or characters allowed, try again: ");
 	}
 }
