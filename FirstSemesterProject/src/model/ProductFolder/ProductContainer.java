@@ -6,14 +6,15 @@ import model.ContainerInterface;
 
 public class ProductContainer implements ContainerInterface<Product> {
 	
-	//variable declarations, 
+	//variable declarations
 	private ArrayList<ArrayList<Product>> categoriesDatabase;
-	private ArrayList<Product> productsdatabase;
+	private ArrayList<Product> productsDatabase;
 	private static ProductContainer instance;
 	
 	//constructor
 	private ProductContainer() {
 		categoriesDatabase = new ArrayList<ArrayList<Product>>();
+		productsDatabase = new ArrayList<Product>();
 	}
 	
 	//Returns instance
@@ -25,18 +26,22 @@ public class ProductContainer implements ContainerInterface<Product> {
         return instance;
 	}
 
-	//CRUD Methods
+
 	@Override
-	public Product searchForObj() {
+	public Product searchForObj(int ID) {
 		//Searches for the specific item, not for category
-		// TODO Auto-generated method stub
+		for (Product product : productsDatabase) {
+			if (product.getID() == ID) {
+				return product;
+			}
+		}
+
 		return null;
 	}
-	
+	//CRUD Methods
 	@Override
-	public void create() {
-		// TODO Auto-generated method stub
-		
+	public void create(Product obj) {
+		productsDatabase.add(obj);
 	}
 	
 	@Override
@@ -46,32 +51,20 @@ public class ProductContainer implements ContainerInterface<Product> {
 	}
 
 	@Override
-	public Product select() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void delete(int id) {
-		// TODO Auto-generated method stub
+	public void delete(Product obj) {
+		productsDatabase.remove(obj);
 		
 	}
 
 	@Override
-	public void getArray() {
-		// TODO Auto-generated method stub
-		
+	public void update(Product obj) {
+
+		productsDatabase.set(getID(obj), obj);
 	}
 
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getID() {
-		// TODO Auto-generated method stub
+	public int getID(Product obj) {
+		productsDatabase.indexOf(obj);
 		return 0;
 	}
 

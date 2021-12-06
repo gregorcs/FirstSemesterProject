@@ -3,14 +3,13 @@ package model;
 public interface ContainerInterface<T> {
 	
 	//Search
-	public T searchForObj();
+	public T searchForObj(int ID);
 	// CRUD methods
-	public void create();
-	public T read(int id);
-	public T select();
-	public void delete(int id);
-	public void getArray();
-	public void update();
-	public int getID();
+	//create could be add instead, since the controller should create the objects
+	public void create(T obj);
+	public T read(int ID);
+	public void delete(T obj);
+	public void update(T obj);
+	public int getID(T obj);
 	
 }
