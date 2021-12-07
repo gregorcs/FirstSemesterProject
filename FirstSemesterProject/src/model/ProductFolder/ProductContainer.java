@@ -7,13 +7,11 @@ import model.ContainerInterface;
 public class ProductContainer implements ContainerInterface<Product> {
 	
 	//variable declarations
-	private ArrayList<ArrayList<Product>> categoriesDatabase;
 	private ArrayList<Product> productsDatabase;
 	private static ProductContainer instance;
 	
 	//constructor
 	private ProductContainer() {
-		categoriesDatabase = new ArrayList<ArrayList<Product>>();
 		productsDatabase = new ArrayList<Product>();
 	}
 	

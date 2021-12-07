@@ -35,7 +35,8 @@ public class MainMenu {
 					System.out.println("to do");
 					break;
 				case 3:
-					System.out.println("to do");
+					ProductMenu prodMenu = new ProductMenu();
+					prodMenu.start();
 					break;
 				case 4: 
 					System.out.println("to do");
