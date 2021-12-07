@@ -14,7 +14,7 @@ public class KeyboardInput {
 	};
 	
 	//String input
-	public String StringInput() {
+	public String stringInput() {
 		String input = "-1";
 		boolean correctInput = false;
 		
@@ -54,7 +54,7 @@ public class KeyboardInput {
 			try {
 				input = sc.nextInt();
 				
-				correctInput = isIntPositive(input);
+				correctInput = numIsPositive(input);
 			} catch (Exception e) {
 				printStatement.askForIntAgain();
 			}
@@ -63,7 +63,8 @@ public class KeyboardInput {
 	}
 	
 	//int logic
-	public boolean isIntPositive(int num) {
+	//is this good? converts int to double, idk how to do it
+	public boolean numIsPositive(double num) {
 		//checks if bigger or equal to 0 and checks against biggest possible int 
 		if ( (num >= 0) && (num < 4294967295L)) {
 			return true;
@@ -73,4 +74,22 @@ public class KeyboardInput {
 			return false;
 		}
 	}
+	
+	public double doubleInput() {
+		double result = -1.00;
+		boolean correctInput = false;
+		
+		while(!correctInput) {
+			sc = new Scanner(System.in);
+			
+			try {
+				result = sc.nextDouble();
+				correctInput = numIsPositive(result);
+			} catch (Exception e) {
+				printStatement.askForIntAgain();
+			}
+		}
+		return result;
+	}
 }
+

@@ -7,11 +7,11 @@ public class ProductForSale extends Product {
 	private int maximumAmount;
 
 	//constructor for Product and this class
-	public ProductForSale(int amount, String name, String location, double price, boolean available, int minimumAmount, int MaximumAmount, int maximumAmount) {
+	public ProductForSale(int amount, String name, String location, double price, boolean available, int minimumAmount, int maximumAmount) {
 		super(amount, name, location, price, available);
 
-		this.setMinimumAmount(minimumAmount);
-		this.setMaximumAmount(maximumAmount);
+		this.minimumAmount = minimumAmount;
+		this.maximumAmount = maximumAmount;
 	}
 
 	//getters and setters

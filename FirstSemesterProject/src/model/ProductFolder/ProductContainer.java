@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 import model.ContainerInterface;
 
-public class ProductContainer implements ContainerInterface<Product> {
+public class ProductContainer implements ContainerInterface<ProductForSale> {
 	
 	//variable declarations
-	private ArrayList<Product> productsDatabase;
+	private ArrayList<ProductForSale> productsDatabase;
 	private static ProductContainer instance;
 	
 	//constructor
 	private ProductContainer() {
-		productsDatabase = new ArrayList<Product>();
+		productsDatabase = new ArrayList<ProductForSale>();
 	}
 	
 	//Returns instance
@@ -20,50 +20,53 @@ public class ProductContainer implements ContainerInterface<Product> {
 		if (instance == null) {
             instance = new ProductContainer();
 		}
-
         return instance;
 	}
 
-
 	@Override
-	public Product searchForObj(int ID) {
-		//Searches for the specific item, not for category
-		for (Product product : productsDatabase) {
+	public ProductForSale searchForObj(int ID) {
+		for (ProductForSale product : productsDatabase) {
 			if (product.getID() == ID) {
 				return product;
 			}
 		}
-
 		return null;
 	}
+	
 	//CRUD Methods
 	@Override
-	public void create(Product obj) {
+	public void create(ProductForSale obj) {
+		obj.setID(createID());
 		productsDatabase.add(obj);
 	}
 	
 	@Override
-	public Product read(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void delete(Product obj) {
+	public void delete(ProductForSale obj) {
 		productsDatabase.remove(obj);
 		
 	}
 
 	@Override
-	public void update(Product obj) {
+	public void update(ProductForSale obj) {
 
 		productsDatabase.set(getID(obj), obj);
 	}
 
 	@Override
-	public int getID(Product obj) {
-		productsDatabase.indexOf(obj);
-		return 0;
+	public int getID(ProductForSale obj) {
+		return productsDatabase.indexOf(obj);
+
+	}
+	
+	public int createID() {
+		return productsDatabase.size();
 	}
 
+	//method for Junit
+	public int arraySize() {
+		return productsDatabase.size();
+	}
+	public ArrayList<ProductForSale> getProductsDatabase() {
+		return productsDatabase;
+	}
 }

@@ -17,11 +17,11 @@ public class MainMenu {
 		printIntro();
 		mainMenu();
 	}
+	
 	//main menu input and output
 	private void mainMenu() {
 		boolean isRunning = true;
 		int input;
-		
 		
 		while(isRunning) {
 			printMainMenu();
@@ -35,7 +35,7 @@ public class MainMenu {
 					System.out.println("to do");
 					break;
 				case 3:
-					ProductMenu prodMenu = new ProductMenu();
+					ProductTui prodMenu = new ProductTui();
 					prodMenu.start();
 					break;
 				case 4: 
@@ -56,7 +56,7 @@ public class MainMenu {
 		System.out.println("****** Main menu ******");
         System.out.println(" (1) Create order");
         System.out.println(" (2) Edit customers");
-        System.out.println(" (3) Edit products");
+        System.out.println(" (3) Product menu");
         System.out.println(" (4) Discounts");
         System.out.println(" (0) Quit the program");
         System.out.print("\n Choice:");
@@ -70,5 +70,4 @@ public class MainMenu {
 	private void errorMessage() {
 		System.out.println("Input does not match menu, try again: ");
 	}
-
 }

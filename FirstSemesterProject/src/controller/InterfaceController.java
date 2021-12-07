@@ -1,7 +1,8 @@
 package controller;
 
-public interface InterfaceController {
+public interface InterfaceController<T> {
 	public void createObj();
-	public void getObj();
+	public T getObj();
 	public void updateObj();
+	public void deleteObj();
 }
