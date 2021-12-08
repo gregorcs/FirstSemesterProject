@@ -1,19 +1,26 @@
 package input;
 import java.util.Scanner;
 
+import tui.PrintInput;
+
 public class KeyboardInput {
 
 	private Scanner sc;
+	private PrintInput printStatement;
+	private String numRegex = ".*[0-9].*";
+	private String alphaRegex = "[ a-zA-Z]+";
 	
 	//Constructor
-	public KeyboardInput() {};
+	public KeyboardInput() {
+		printStatement = new PrintInput();
+	};
 	
 	//String input
-	public String StringInput() {
+	public String stringInput() {
 		String input = "-1";
 		boolean correctInput = false;
 		
-		askForString();
+		//printStatement.askForString();
 		//while statement checks if inputed string is from a to z
 		while (!correctInput) {
 			sc = new Scanner(System.in);
@@ -27,11 +34,11 @@ public class KeyboardInput {
 	
 	//String logic
 	public boolean isStringCorrect(String str) {
-		if (str.matches("[ a-zA-Z]+")) {
+		if (str.matches(alphaRegex)) {
 			return true;
 		}
 		else {
-			askForStringAgain();
+			printStatement.askForStringAgain();
 			return false;
 		}
 	}
@@ -41,7 +48,7 @@ public class KeyboardInput {
 		int input = -1;
 		boolean correctInput = false;
 
-		askForInt();
+		//printStatement.askForInt();
 		//loops until user enters and integer, returns that integer
 		while (!correctInput) {
 			sc = new Scanner(System.in);
@@ -49,42 +56,42 @@ public class KeyboardInput {
 			try {
 				input = sc.nextInt();
 				
-				correctInput = isIntPositive(input);
+				correctInput = numIsPositive(input);
 			} catch (Exception e) {
-				askForIntAgain();
+				printStatement.askForIntAgain();
 			}
 		}
 		return input;
 	}
 	
 	//int logic
-	public boolean isIntPositive(int num) {
+	//is this good? converts int to double, idk how to do it
+	public boolean numIsPositive(double num) {
+		//checks if bigger or equal to 0 and checks against biggest possible int 
 		if ( (num >= 0) && (num < 4294967295L)) {
 			return true;
 		}
 		else {
-			askForPositiveInt();
+			printStatement.askForPositiveInt();
 			return false;
 		}
 	}
 	
-
-	//print statements for integer input
-	public void askForInt() {
-		System.out.println("Enter the numbers below: ");
-	}
-	public void askForPositiveInt() {
-		System.out.println("Enter a positive number: ");
-	}
-	public void askForIntAgain() {
-		System.out.println("Enter a valid number: ");
-	}
-	
-	//print statements for String input
-	public void askForString() {
-		System.out.println("Enter text here: ");
-	}
-	public void askForStringAgain() {
-		System.out.println("Your text is invalid, no numbers or characters allowed, try again: ");
+	public double doubleInput() {
+		double result = -1.00;
+		boolean correctInput = false;
+		
+		while(!correctInput) {
+			sc = new Scanner(System.in);
+			
+			try {
+				result = sc.nextDouble();
+				correctInput = numIsPositive(result);
+			} catch (Exception e) {
+				printStatement.askForIntAgain();
+			}
+		}
+		return result;
 	}
 }
+
