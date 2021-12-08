@@ -43,12 +43,10 @@ public class ProductContainer implements ContainerInterface<ProductForSale> {
 	@Override
 	public void delete(ProductForSale obj) {
 		productsDatabase.remove(obj);
-		
 	}
 
 	@Override
 	public void update(ProductForSale obj) {
-
 		productsDatabase.set(getID(obj), obj);
 	}
 

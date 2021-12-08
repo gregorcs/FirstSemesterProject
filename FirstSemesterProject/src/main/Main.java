@@ -1,6 +1,5 @@
 package main;
 
-import controller.ProductController;
 import model.ProductFolder.ProductContainer;
 import model.ProductFolder.ProductForSale;
 import tui.MainMenu;
@@ -12,6 +11,7 @@ public class Main {
 		testCreateObj();
 		MainMenu mainMenu = new MainMenu();
 		mainMenu.start();
+		
 	}
 	
 	static void testCreateObj() {

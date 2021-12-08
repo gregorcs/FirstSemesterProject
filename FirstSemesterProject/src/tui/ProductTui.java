@@ -8,18 +8,18 @@ import model.ProductFolder.ProductForSale;
 public class ProductTui {
 	
 	private ProductController pController;
+	private ProductTuiEdit prodTuiEdit;
 	private KeyboardInput kbInput;
-	private MainMenu menu;
 
 	public ProductTui() {
 		pController = new ProductController();
+		prodTuiEdit = new ProductTuiEdit();
 		kbInput = new KeyboardInput();
 	}
 	
 	public void start() {
 		boolean isRunning = true;
 		int kbChoice;
-		menu = new MainMenu();
 		
 		while(isRunning) {
 			writeProductMenu();
@@ -28,7 +28,6 @@ public class ProductTui {
 			switch(kbChoice) {
 				case 1:
 					pController.createObj();
-					menu.start();
 					break;
 				case 2:
 					printProductForSale();
@@ -37,16 +36,13 @@ public class ProductTui {
 					printAllProductsForSale();
 					break;
 				case 4:
-					//TO DO
-					pController.updateObj();
-					menu.start();
+					prodTuiEdit.start();
 					break;
 				case 5:
 					pController.deleteObj();
-					menu.start();
 					break;
 				case 0:
-					menu.start();
+					isRunning = false;
 					break;
 				default:
 					break;
@@ -55,7 +51,7 @@ public class ProductTui {
 	}
 	
 	private void writeProductMenu() {
-		System.out.println("****** Create product for sale ******");
+		System.out.println("****** Manage Products ******");
         System.out.println(" (1) Create Product");
         System.out.println(" (2) Print specific product");
         System.out.println(" (3) Print all products");
@@ -66,14 +62,15 @@ public class ProductTui {
 	}
 	public void printProductForSale() {	
 		ProductForSale product = pController.getObj();
-		
-	if (product != null) {
-		printProductInformation(product);	
+			
+		if (product != null) {
+			printProductInformation(product);	
+		}
+		else {
+			pController = new ProductController();
+			pController.printUnavailable();
+		}
 	}
-	else {
-		printUnavailable();
-	}
-}
 	public void printAllProductsForSale() {
 		//what do we do with this?
 		for (ProductForSale product : ProductContainer.getInstance().getProductsDatabase()) {
@@ -95,18 +92,5 @@ public class ProductTui {
 	}
 	public void emptyDatabase() {
 		System.out.println("Nothing to print");
-	}
-	public void printSuccess() {
-		System.out.println("Item edited successfully");
-	}
-	public void printAskforID() {
-		System.out.println("Please enter ID of the product: ");
-	}
-	public void printUnavailable() {
-		System.out.println("Unavailable product");
-	}
-	public void printCreateProdHeader() {
-    	System.out.println("****** Create product for sale******");
-    	System.out.println("************************************");
 	}
 }

@@ -14,7 +14,6 @@ class TestProductContainer {
 	//ProductForSale testProduct = new ProductForSale(getRandInt(), "yo", null, getRandInt(), true, getRandInt(), getRandInt());
 	ProductForSale prodForSale = new ProductForSale(5, "hammer", null, 2, true, 4, 5);
 
-
 	@BeforeEach
 	void setUp() throws Exception {
 	}
@@ -53,12 +52,4 @@ class TestProductContainer {
 	@Test
 	void testPrintProductForSale() {
 	}
-
-	//create random inputs
-	private int getRandInt() {
-		return (int) (Math.random() * (testSize - 1 + 1) + 1);
-	}
-
-	
-	
 }

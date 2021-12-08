@@ -3,12 +3,10 @@ package controller;
 import input.KeyboardInput;
 import model.ProductFolder.ProductContainer;
 import model.ProductFolder.ProductForSale;
-import tui.ProductTui;
 
 public class ProductController implements InterfaceController<ProductForSale> {
 
 	private KeyboardInput keyboard;
-	private ProductTui prodTui;
 	
 	public ProductController() {
 		keyboard = new KeyboardInput();
@@ -17,27 +15,25 @@ public class ProductController implements InterfaceController<ProductForSale> {
 	@Override
 	public void createObj() {
     	int  amount, minAmount, maxAmount;
-    	String name, location;
     	double price;
     	boolean isAvailable = false;
     	ProductForSale pForSale;
-    	prodTui = new ProductTui();
+    	String name, location;
     	
-    	prodTui.printCreateProdHeader();
-		System.out.println("Enter the name of the product for sale: ");
+    	printCreateProdHeader();
+    	printAskName();
 		name = keyboard.stringInput();
-		System.out.println("Enter the amount: ");
+    	printAskAmount();
 		amount = keyboard.intInput();
-		System.out.println("Enter the price: ");
+		printAskPrice();
 		price = keyboard.doubleInput();
-		System.out.println("Enter minimum stock amount: ");
-		minAmount = keyboard.intInput();
-		System.out.println("Enter maximum stock amount: ");
-		maxAmount = keyboard.intInput();
-		System.out.println("Enter location of product: ");
+		printAskLocation();
 		location = keyboard.stringInput();
 		
-		isAvailable = (amount >= 0) ? false : true;
+		int[] minAndMaxList = getMinAndMaxAmount();
+		minAmount = minAndMaxList[0];
+		maxAmount = minAndMaxList[1];
+		isAvailable = (amount > 0) ? true : false;
 		
 		//create object
 		pForSale = new ProductForSale(amount, name, location, price, isAvailable, minAmount, maxAmount);
@@ -57,26 +53,81 @@ public class ProductController implements InterfaceController<ProductForSale> {
 	@Override
 	public void deleteObj() {
 		ProductForSale product = getObj();
-		prodTui = new ProductTui();
 		
 		if (product != null) {
 			ProductContainer.getInstance().delete(product);
-			prodTui.printSuccess();
+			printSuccess();
 		}
 		else {
-			prodTui.printUnavailable();
+			printUnavailable();
 		}
 	}
 	
-	public int askForID() {
-		prodTui = new ProductTui();
-		
+	public int askForID() {	
 		if (ProductContainer.getInstance().arraySize() > 0) {
-			prodTui.printAskforID();
+			printAskforID();
 			int input = keyboard.intInput();
 			return input;
 		}
 		int input = -1;
 		return input;
 	}
+
+	public int[] getMinAndMaxAmount() {
+		 int[] resultArr = {0, -1};
+		 int minAmount;
+		 int maxAmount;
+		 boolean correctInput = false;
+		 
+		 while (!correctInput) {
+			printAskMinStock();
+			minAmount = keyboard.intInput();
+			printAskMaxStock();
+			maxAmount = keyboard.intInput();
+			
+			correctInput = (minAmount < maxAmount) ? true : false;
+			
+			if (correctInput) {
+				resultArr[0] = minAmount;
+				resultArr[1] = maxAmount;
+			}
+		 }
+		 return resultArr;
+	}
+	
+	private void printAskMinStock() {
+		System.out.println("Enter minimum stock amount: ");
+	}
+	
+	public void printCreateProdHeader() {
+    	System.out.println("****** Create product for sale******");
+    	System.out.println("************************************");
+	}
+	
+	private void printAskMaxStock() {
+		System.out.println("Enter maximum stock amount: ");
+	}
+	private void printAskName() {
+		System.out.println("Enter the name of the product for sale: ");
+	}
+	private void printAskAmount() {
+		System.out.println("Enter the amount: ");
+	}
+	private void printAskPrice() {
+		System.out.println("Enter the price: ");
+	}
+	private void printAskLocation() {
+		System.out.println("Enter location of product: ");
+	}
+	public void printAskforID() {
+		System.out.println("Please enter ID of the product: ");
+	}
+	public void printSuccess() {
+		System.out.println("Item edited successfully");
+	}
+
+	public void printUnavailable() {
+		System.out.println("Unavailable product");
+	}
+
 }
