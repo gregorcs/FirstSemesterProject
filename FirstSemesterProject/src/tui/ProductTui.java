@@ -65,18 +65,10 @@ public class ProductTui {
         System.out.print("\n Choice:");
 	}
 	public void printProductForSale() {	
-		ProductForSale prod = pController.getObj();
+		ProductForSale product = pController.getObj();
 		
-	if (prod != null) {
-		System.out.println("************************************");
-		System.out.println("Name of product: " + prod.getName());
-		System.out.println("Amount: " + prod.getAmount());
-		System.out.println("Price: " + prod.getPrice() + "dkk");
-		System.out.println("Availability: " + prod.isAvailable());
-		System.out.println("Physical location: " + prod.getLocation());
-		System.out.println("Minimum allowed in storage: " + prod.getMinimumAmount());
-		System.out.println("Maximum allowed in storage: " + prod.getMaximumAmount());
-		System.out.println("************************************");		
+	if (product != null) {
+		printProductInformation(product);	
 	}
 	else {
 		printUnavailable();
@@ -84,9 +76,22 @@ public class ProductTui {
 }
 	public void printAllProductsForSale() {
 		//what do we do with this?
-		for (ProductForSale prod : ProductContainer.getInstance().getProductsDatabase()) {
-			System.out.println("to do " + prod.getName());
+		for (ProductForSale product : ProductContainer.getInstance().getProductsDatabase()) {
+			printProductInformation(product);
+			System.out.println(ProductContainer.getInstance().arraySize());
 		}
+	}
+	public void printProductInformation(ProductForSale product) {
+		System.out.println("------------------------------------");
+		System.out.println("ID: " + product.getID());
+		System.out.println("Name of product: " + product.getName());
+		System.out.println("Amount: " + product.getAmount());
+		System.out.println("Price: " + product.getPrice() + "dkk");
+		System.out.println("Availability: " + product.isAvailable());
+		System.out.println("Physical location: " + product.getLocation());
+		System.out.println("Minimum allowed in storage: " + product.getMinimumAmount());
+		System.out.println("Maximum allowed in storage: " + product.getMaximumAmount());
+		System.out.println("------------------------------------");		
 	}
 	public void emptyDatabase() {
 		System.out.println("Nothing to print");

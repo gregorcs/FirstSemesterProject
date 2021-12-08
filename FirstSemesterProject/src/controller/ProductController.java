@@ -37,7 +37,7 @@ public class ProductController implements InterfaceController<ProductForSale> {
 		System.out.println("Enter location of product: ");
 		location = keyboard.stringInput();
 		
-		isAvailable = (amount > 0) ? false : true;
+		isAvailable = (amount >= 0) ? false : true;
 		
 		//create object
 		pForSale = new ProductForSale(amount, name, location, price, isAvailable, minAmount, maxAmount);

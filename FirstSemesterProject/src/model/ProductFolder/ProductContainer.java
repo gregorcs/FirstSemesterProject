@@ -59,7 +59,17 @@ public class ProductContainer implements ContainerInterface<ProductForSale> {
 	}
 	
 	public int createID() {
-		return productsDatabase.size();
+		int ID = productsDatabase.size();
+		
+		if(searchForObj(ID) == null) {
+			return ID;
+		}
+		else {
+			while (searchForObj(ID) != null) {
+				ID++;
+			}
+			return ID;
+		}
 	}
 
 	//method for Junit

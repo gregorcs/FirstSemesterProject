@@ -1,5 +1,6 @@
 package main;
 
+import controller.ProductController;
 import model.ProductFolder.ProductContainer;
 import model.ProductFolder.ProductForSale;
 import tui.MainMenu;
@@ -14,11 +15,12 @@ public class Main {
 	}
 	
 	static void testCreateObj() {
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 4; i++) {
 			ProductContainer.getInstance().create(new ProductForSale(5, "hammer", null, 2, true, 4, 5));
 		}
 		ProductTui prodTui = new ProductTui();
 		prodTui.printAllProductsForSale();
+		System.out.println(ProductContainer.getInstance().arraySize());
 	}
 	
 }

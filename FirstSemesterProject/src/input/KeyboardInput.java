@@ -7,6 +7,8 @@ public class KeyboardInput {
 
 	private Scanner sc;
 	private PrintInput printStatement;
+	private String numRegex = ".*[0-9].*";
+	private String alphaRegex = "[ a-zA-Z]+";
 	
 	//Constructor
 	public KeyboardInput() {
@@ -32,7 +34,7 @@ public class KeyboardInput {
 	
 	//String logic
 	public boolean isStringCorrect(String str) {
-		if (str.matches("[ a-zA-Z]+")) {
+		if (str.matches(alphaRegex)) {
 			return true;
 		}
 		else {
