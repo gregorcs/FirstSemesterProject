@@ -10,7 +10,6 @@ public class ProductContainer implements ContainerInterface<ProductForSale> {
 	private ArrayList<ProductForSale> productsDatabase;
 	private static ProductContainer instance;
 	
-	//constructor
 	private ProductContainer() {
 		productsDatabase = new ArrayList<ProductForSale>();
 	}
@@ -27,10 +26,10 @@ public class ProductContainer implements ContainerInterface<ProductForSale> {
 	public ProductForSale searchForObj(int ID) {
 		for (ProductForSale product : productsDatabase) {
 			if (product.getID() == ID) {
-				return product;
+				return product;				
 			}
 		}
-		return null;
+		return null;						
 	}
 	
 	//CRUD Methods
@@ -56,14 +55,18 @@ public class ProductContainer implements ContainerInterface<ProductForSale> {
 
 	}
 	
+    /**
+    * First checks if the ID is already taken
+    * Else it increments it and returns the next free one
+    */
 	public int createID() {
 		int ID = productsDatabase.size();
 		
-		if(searchForObj(ID) == null) {
-			return ID;
+		if(searchForObj(ID) == null) {				
+			return ID;							
 		}
 		else {
-			while (searchForObj(ID) != null) {
+			while (searchForObj(ID) != null) {		
 				ID++;
 			}
 			return ID;

@@ -12,13 +12,18 @@ public class ProductController implements InterfaceController<ProductForSale> {
 		keyboard = new KeyboardInput();
 	}
 	
+	/*CRUD METHODS*/
+	
 	@Override
 	public void createObj() {
-    	int  amount, minAmount, maxAmount;
-    	double price;
-    	boolean isAvailable = false;
+    	int amount;						//Amount of copies a ProductForSale can hold
+    	int minAmount;					//Minimum amount allowed to be stored
+    	int maxAmount;					//Maximum amount -||-
+    	double price;					
+    	boolean isAvailable = false;	
     	ProductForSale pForSale;
-    	String name, location;
+    	String name;
+    	String location;				//Location inside the store
     	
     	printCreateProdHeader();
     	printAskName();
@@ -33,7 +38,7 @@ public class ProductController implements InterfaceController<ProductForSale> {
 		int[] minAndMaxList = getMinAndMaxAmount();
 		minAmount = minAndMaxList[0];
 		maxAmount = minAndMaxList[1];
-		isAvailable = (amount > 0) ? true : false;
+		isAvailable = checkAvailability(amount);
 		
 		//create object
 		pForSale = new ProductForSale(amount, name, location, price, isAvailable, minAmount, maxAmount);
@@ -47,9 +52,51 @@ public class ProductController implements InterfaceController<ProductForSale> {
 
 	@Override
 	public void updateObj() {
+		int userChoice = keyboard.intInput();
+		ProductForSale prodForSale = getObj();
+		boolean isRunning = true;
 		
+		while (isRunning) {
+			switch (userChoice) {
+				case 1:
+					printAskAmount();
+					int amount = keyboard.intInput();
+					prodForSale.setAmount(amount);
+					prodForSale.setAvailable(checkAvailability(amount));
+					isRunning = false;
+					break;
+				case 2:
+					printAskName();
+					prodForSale.setName(keyboard.stringInput());
+					isRunning = false;
+					break;
+				case 3:
+					printAskLocation();
+					prodForSale.setLocation(keyboard.stringInput());
+					isRunning = false;
+					break;
+				case 4:
+					printAskPrice();
+					prodForSale.setPrice(keyboard.doubleInput());
+					isRunning = false;
+					break;
+				case 5:
+					int [] minMaxList = getMinAndMaxAmount();
+					int minAmount = minMaxList[0];
+					int maxAmount = minMaxList[1];
+					prodForSale.setMinimumAmount(minAmount);
+					prodForSale.setMaximumAmount(maxAmount);
+					break;
+				case 0:
+					isRunning = false;
+					break;
+				default: 
+					System.out.println("Something went wrong, try again: ");
+					break;
+			}
+		}
 	}
-
+	
 	@Override
 	public void deleteObj() {
 		ProductForSale product = getObj();
@@ -64,12 +111,28 @@ public class ProductController implements InterfaceController<ProductForSale> {
 	}
 	
 	public int askForID() {	
+		int input = 0;
+		
 		if (ProductContainer.getInstance().arraySize() > 0) {
+			boolean isCorrect = false;
 			printAskforID();
-			int input = keyboard.intInput();
+			input = keyboard.intInput();
+			
+			while (!isCorrect) {
+				
+				if (ProductContainer.getInstance().searchForObj(input) != null) {
+					return input;
+				}
+				else {
+					printTryAgain();
+					input = keyboard.intInput();
+				}
+			}
 			return input;
 		}
-		int input = -1;
+		else {
+			printEmpty();
+		}
 		return input;
 	}
 
@@ -95,6 +158,12 @@ public class ProductController implements InterfaceController<ProductForSale> {
 		 return resultArr;
 	}
 	
+	public boolean checkAvailability(int amount) {
+		return (amount > 0) ? true : false;
+	}
+	
+	/*Print statements*/
+	
 	private void printAskMinStock() {
 		System.out.println("Enter minimum stock amount: ");
 	}
@@ -107,27 +176,40 @@ public class ProductController implements InterfaceController<ProductForSale> {
 	private void printAskMaxStock() {
 		System.out.println("Enter maximum stock amount: ");
 	}
+	
 	private void printAskName() {
 		System.out.println("Enter the name of the product for sale: ");
 	}
+	
 	private void printAskAmount() {
 		System.out.println("Enter the amount: ");
 	}
+	
 	private void printAskPrice() {
 		System.out.println("Enter the price: ");
 	}
+	
 	private void printAskLocation() {
 		System.out.println("Enter location of product: ");
 	}
+	
 	public void printAskforID() {
 		System.out.println("Please enter ID of the product: ");
 	}
+	
 	public void printSuccess() {
 		System.out.println("Item edited successfully");
 	}
 
 	public void printUnavailable() {
 		System.out.println("Unavailable product");
+	}
+	
+	public void printEmpty() {
+		System.out.println("Database is empty");
+	}
+	public void printTryAgain() {
+		System.out.println("Incorrect! Try again: ");
 	}
 
 }

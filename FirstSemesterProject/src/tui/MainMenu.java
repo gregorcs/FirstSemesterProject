@@ -3,22 +3,18 @@ package tui;
 import input.KeyboardInput;
 
 public class MainMenu {
-	
-	//Initialise variables
+
 	private KeyboardInput kbInput;
 	
-	//constructor
 	public MainMenu() {
 		kbInput = new KeyboardInput();
 	}
 	
-	//start method to call 
 	public void start() {
 		printIntro();
 		mainMenu();
 	}
 	
-	//main menu input and output
 	private void mainMenu() {
 		boolean isRunning = true;
 		int input;
@@ -51,6 +47,7 @@ public class MainMenu {
 			}
 		}
 	}
+	
 	//Print statements 
 	private void printMainMenu() {
 		System.out.println("****** Main menu ******");
@@ -61,12 +58,15 @@ public class MainMenu {
         System.out.println(" (0) Quit the program");
         System.out.print("\n Choice:");
 	}
+	
 	private void printIntro() {
 		System.out.println("Shopping in Vestbjerg Byggecenter");
 	}
+	
 	private void printGoodbye() {
 		System.out.println("Thank you for shopping with us!");
 	}
+	
 	private void errorMessage() {
 		System.out.println("Input does not match menu, try again: ");
 	}
