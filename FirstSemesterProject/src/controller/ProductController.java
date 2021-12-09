@@ -4,7 +4,7 @@ import input.KeyboardInput;
 import model.ProductFolder.ProductContainer;
 import model.ProductFolder.ProductForSale;
 
-public class ProductController implements InterfaceController<ProductForSale> {
+public class ProductController {
 
 	private KeyboardInput keyboard;
 	
@@ -14,16 +14,15 @@ public class ProductController implements InterfaceController<ProductForSale> {
 	
 	/*CRUD METHODS*/
 	
-	@Override
 	public void createObj() {
-    	int amount;						//Amount of copies a ProductForSale can hold
-    	int minAmount;					//Minimum amount allowed to be stored
-    	int maxAmount;					//Maximum amount -||-
+    	int amount;						
+    	int minAmount;					
+    	int maxAmount;					
     	double price;					
     	boolean isAvailable = false;	
     	ProductForSale pForSale;
     	String name;
-    	String location;				//Location inside the store
+    	String location;				
     	
     	printCreateProdHeader();
     	printAskName();
@@ -45,12 +44,10 @@ public class ProductController implements InterfaceController<ProductForSale> {
 		ProductContainer.getInstance().create(pForSale);
 	}
 	
-	@Override
 	public ProductForSale getObj() {
 		return ProductContainer.getInstance().searchForObj(askForID());
 	}
 
-	@Override
 	public void updateObj() {
 		int userChoice = keyboard.intInput();
 		ProductForSale prodForSale = getObj();
@@ -91,21 +88,19 @@ public class ProductController implements InterfaceController<ProductForSale> {
 					isRunning = false;
 					break;
 				default: 
-					System.out.println("Something went wrong, try again: ");
+					printTryAgain();
 					break;
 			}
 		}
 	}
 	
-	@Override
 	public void deleteObj() {
 		ProductForSale product = getObj();
 		
 		if (product != null) {
 			ProductContainer.getInstance().delete(product);
 			printSuccess();
-		}
-		else {
+		} else {
 			printUnavailable();
 		}
 	}
@@ -119,18 +114,15 @@ public class ProductController implements InterfaceController<ProductForSale> {
 			input = keyboard.intInput();
 			
 			while (!isCorrect) {
-				
 				if (ProductContainer.getInstance().searchForObj(input) != null) {
 					return input;
-				}
-				else {
+				} else {
 					printTryAgain();
 					input = keyboard.intInput();
 				}
 			}
 			return input;
-		}
-		else {
+		} else {
 			printEmpty();
 		}
 		return input;
@@ -164,13 +156,14 @@ public class ProductController implements InterfaceController<ProductForSale> {
 	
 	/*Print statements*/
 	
-	private void printAskMinStock() {
-		System.out.println("Enter minimum stock amount: ");
-	}
 	
 	public void printCreateProdHeader() {
     	System.out.println("****** Create product for sale******");
     	System.out.println("************************************");
+	}
+	
+	private void printAskMinStock() {
+		System.out.println("Enter minimum stock amount: ");
 	}
 	
 	private void printAskMaxStock() {

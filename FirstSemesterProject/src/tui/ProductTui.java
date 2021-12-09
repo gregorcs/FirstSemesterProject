@@ -62,20 +62,12 @@ public class ProductTui {
 	}
 	public void printProductForSale() {	
 		ProductForSale product = pController.getObj();
-			
-		if (product != null) {
-			printProductInformation(product);	
-		}
-		else {
-			pController = new ProductController();
-			pController.printUnavailable();
-		}
+		printProductInformation(product);	
+
 	}
 	public void printAllProductsForSale() {
-		//what do we do with this?
 		for (ProductForSale product : ProductContainer.getInstance().getProductsDatabase()) {
 			printProductInformation(product);
-			System.out.println(ProductContainer.getInstance().arraySize());
 		}
 	}
 	public void printProductInformation(ProductForSale product) {
