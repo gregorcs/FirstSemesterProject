@@ -46,7 +46,6 @@ public class ProductContainer {
 
 	public int getID(ProductForSale obj) {
 		return productsDatabase.indexOf(obj);
-
 	}
 	
     /**
