@@ -1,27 +1,29 @@
-package model.ProductFolder;
+package model;
 
 import java.util.ArrayList;
 
-public class ProductContainer {
+import model.ProductFolder.ProductForLoan;
+
+public class LoanProductContainer {
 	
 	//variable declarations
-	private ArrayList<ProductForSale> productsDatabase;
-	private static ProductContainer instance;
+	private ArrayList<ProductForLoan> productsDatabase;
+	private static LoanProductContainer instance;
 	
-	protected ProductContainer() {
-		productsDatabase = new ArrayList<ProductForSale>();
+	private LoanProductContainer() {
+		productsDatabase = new ArrayList<ProductForLoan>();
 	}
 	
 	//Returns instance
-	public static ProductContainer getInstance() {
+	public static LoanProductContainer getInstance() {
 		if (instance == null) {
-            instance = new ProductContainer();
+            instance = new LoanProductContainer();
 		}
         return instance;
 	}
 
-	public ProductForSale searchForObj(int ID) {
-		for (ProductForSale product : productsDatabase) {
+	public ProductForLoan searchForObj(int ID) {
+		for (ProductForLoan product : productsDatabase) {
 			if (product.getID() == ID) {
 				return product;				
 			}
@@ -31,20 +33,20 @@ public class ProductContainer {
 	
 	//CRUD Methods
 
-	public void create(ProductForSale obj) {
+	public void create(ProductForLoan obj) {
 		obj.setID(createID());
 		productsDatabase.add(obj);
 	}
 	
-	public void delete(ProductForSale obj) {
+	public void delete(ProductForLoan obj) {
 		productsDatabase.remove(obj);
 	}
 
-	public void update(ProductForSale obj) {
+	public void update(ProductForLoan obj) {
 		productsDatabase.set(getID(obj), obj);
 	}
 
-	public int getID(ProductForSale obj) {
+	public int getID(ProductForLoan obj) {
 		return productsDatabase.indexOf(obj);
 
 	}
@@ -66,7 +68,7 @@ public class ProductContainer {
 	public int arraySize() {
 		return productsDatabase.size();
 	}
-	public ArrayList<ProductForSale> getProductsDatabase() {
+	public ArrayList<ProductForLoan> getProductsDatabase() {
 		return productsDatabase;
 	}
 }

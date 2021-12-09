@@ -1,6 +1,5 @@
 package tui;
 
-import LoanFolder.Loan.LoanMainMenu;
 import input.KeyboardInput;
 
 public class MainMenu {
@@ -29,8 +28,8 @@ public class MainMenu {
 					System.out.println("to do");
 					break;
 				case 2:
-					LoanMainMenu loanMainM= new LoanMainMenu();
-					loanMainM.start();
+					LoanTui loanMenu = new LoanTui();
+					loanMenu.start();
 					break;
 				case 3:
 					ProductTui prodMenu = new ProductTui();
