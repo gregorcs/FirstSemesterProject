@@ -1,6 +1,7 @@
 package tui;
 
 import input.KeyboardInput;
+import model.LoginContainer;
 
 public class MainMenu {
 	
@@ -15,7 +16,28 @@ public class MainMenu {
 	//start method to call 
 	public void start() {
 		printIntro();
-		mainMenu();
+		login();
+		//mainMenu();
+	}
+	
+	private void login() {
+		boolean loggedIn = false;
+		LoginContainer loginContainer = LoginContainer.getInstance();
+		while(!loggedIn) {
+			loginContainer.printEnterUsername();
+			String username = kbInput.stringInput();
+			if(loginContainer.checkUsername(username)) {
+				loginContainer.printEnterPassword();
+				String password = kbInput.stringInput();			///REPLACE WITH BETTER KBINPUT!
+				if(loginContainer.checkPassword(username, password)) {
+					loginContainer.printLoggedIn();
+					loggedIn = true;
+					mainMenu();
+				}else loginContainer.printPasswordError();
+			}else loginContainer.printUsernameError();
+			
+		}
+		
 	}
 	
 	//main menu input and output
