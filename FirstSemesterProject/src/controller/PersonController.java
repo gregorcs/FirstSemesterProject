@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import input.KeyboardInput;
@@ -16,17 +17,19 @@ public class PersonController {
 	public void createObj() {
 		String username, password, password2;
 		boolean correct = false;
+		boolean correctUN = false;
 		
 		
 		printCreateAccHeader();
-		username = ask4UN();
 		
 		// checks4Dupes
 		PersonContainer percon = PersonContainer.getInstance();
-		for (Entry<String, String> e : percon.personsDatabase.entrySet()) {
-			while (username == e.getKey()) {
-				printDupeError();
-				username = keyboard.stringInput();
+		username = ask4UN();
+		while(!correctUN) {
+			if(!percon.personsDatabase.containsKey(username)) {
+				correctUN = true;
+			}else {
+				username = ask4UN();
 			}
 		}
 		
@@ -34,13 +37,12 @@ public class PersonController {
 		
 		// bugged but working on it if we got time
 		 printConfirm();
-		 password2 = keyboard.stringInput();
 		 while (!correct) {
-			   if (password2 == password) {
+			 password2 = keyboard.stringInput();
+			   if (password2.equals(password)) {
 				   correct = true;
 			   } else {
 				   printTryAgain();
-				   password2 = keyboard.stringInput();
 			   }
 		}
 	
