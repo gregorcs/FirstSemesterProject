@@ -30,12 +30,12 @@ public class MainMenu {
 			input = kbInput.intInput();
 			
 			/*
-			 * I made separate register and login menus to deal with the whole "need an
+			 * I made separate register and login menus/methods to deal with the whole "need an
 			 * account before you do anything" situation.
 			 *
-			 * User settings (for changing the username/password) & log out only appear
-			 * if the user is logged in. Similarly, the Register & log in menus only appear
-			 * if no user is logged in at the time.
+			 * User settings (for changing the username/password, deleting an account and getting a
+			 * complete overview of all accounts) & log out only appear if the user is logged in.
+			 * Similarly, the Register & log in menus only appear if no user is logged in at the time.
 			 * 
 			 * ~Max
 			 */
