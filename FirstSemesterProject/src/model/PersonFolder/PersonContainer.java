@@ -30,8 +30,8 @@ public class PersonContainer {
 	
 	//CRUD Methods
 		public void create(Person obj) {
-			personsDatabase.put(obj.getUsername(), obj.getPassword());
 			personsList.add(obj);
+			personsDatabase.put(obj.getUsername(), obj.getPassword());
 		}
 		
 		public void readAll() {

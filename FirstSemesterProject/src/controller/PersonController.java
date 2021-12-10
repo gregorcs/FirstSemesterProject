@@ -35,12 +35,12 @@ public class PersonController {
 		// bugged but working on it if we got time
 		 printConfirm();
 		 password2 = keyboard.stringInput();
-		 while (correct) {
-			   password2 = keyboard.stringInput();
+		 while (!correct) {
 			   if (password2 == password) {
 				   correct = true;
 			   } else {
 				   printTryAgain();
+				   password2 = keyboard.stringInput();
 			   }
 		}
 	
