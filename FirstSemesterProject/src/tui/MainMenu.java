@@ -50,6 +50,7 @@ public class MainMenu {
 					 break;
 				 case 2:
 					 percontrol.logIn();
+					 isLoggedIn = true;
 					 break;
 				 case 0:
 					 isRunning = false;

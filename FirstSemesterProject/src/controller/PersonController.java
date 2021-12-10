@@ -83,28 +83,27 @@ public class PersonController {
 	}
 	
 	public void logIn() {
-		MainMenu mm = new MainMenu();
 		PersonContainer percon = PersonContainer.getInstance();
 		String username, password;
+		boolean loggedIn = false;
 		
-		if (!mm.isLoggedIn) {
 		username = ask4UN();
-		
-		for (Entry<String, String> e : percon.personsDatabase.entrySet()) {
-			if (username == e.getKey()) {
+		while(!loggedIn) {
+			if(percon.personsDatabase.containsKey(username)) {
 				printAskPass();
 				password = keyboard.stringInput();
-				while (password != e.getValue()) {
+				while(!password.equals(percon.personsDatabase.get(username))) {
 					printTryAgain();
 					password = keyboard.stringInput();
 				}
-			} else {
+				printLoginSuccessful();
+				loggedIn = true;
+			}
+			else {
+				username = ask4UN();
 				print404Error();
-				mm.mainMenu();
 			}
 		}
-		mm.isLoggedIn = true;
-	   }
 	}
 	
 	public String ask4UN() {
@@ -147,6 +146,10 @@ public class PersonController {
 	public void printCreateAccHeader() {
     	System.out.println("**********Create an Account*********");
     	System.out.println("************************************");
+	}
+	
+	private void printLoginSuccessful() {
+		System.out.println("Login succesful!");
 	}
 	
 	private void printAskUN() {
