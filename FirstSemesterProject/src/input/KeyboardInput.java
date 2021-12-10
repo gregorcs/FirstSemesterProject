@@ -2,6 +2,12 @@ package input;
 import java.util.Scanner;
 
 public class KeyboardInput {
+	
+	/**
+	 * Mad respect, bro, but... do we even need any of this?
+	 * 
+	 * ~Max
+	 */
 
 	private Scanner sc;
 	private String alphaRegex = "[ a-zA-Z]+";

@@ -30,6 +30,14 @@ public abstract class Product {
 	}
 	
 	public void setID(int iD) {
+
+		/**
+		 * Could we just use
+		 * this.ID = ID;
+		 * or am I missing something here?
+		 * ~Max
+		 */
+	
 		ID = iD;
 	}
 	
@@ -79,5 +87,5 @@ public abstract class Product {
 
 	public void setDiscounts(ArrayList<Discount> discounts) {
 		this.discounts = discounts;
-	};
+	}
 }
