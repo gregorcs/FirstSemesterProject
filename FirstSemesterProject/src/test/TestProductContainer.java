@@ -12,7 +12,7 @@ class TestProductContainer {
 	int testSize = 10;
 
 	//ProductForSale testProduct = new ProductForSale(getRandInt(), "yo", null, getRandInt(), true, getRandInt(), getRandInt());
-	ProductForSale prodForSale = new ProductForSale(5, "hammer", null, 2, true, 4, 5);
+	ProductForSale prodForSale = new ProductForSale(5, "hammer", null, 2, true, 4, 5, "wood");
 
 	@BeforeEach
 	void setUp() throws Exception {

@@ -54,7 +54,7 @@ public class MainMenu {
 		System.out.println("****** Main menu ******");
         System.out.println(" (1) Create order");
         System.out.println(" (2) Create loan");
-        System.out.println(" (3) Edit customers");
+        System.out.println(" (3) Edit products");
         System.out.println(" (4) Product menu");
         System.out.println(" (5) Discounts");
         System.out.println(" (0) Quit the program");

@@ -1,18 +1,20 @@
 package tui;
 
-import controller.LoanController;
 import input.KeyboardInput;
+import controller.LoanController;
+import controller.LoanProductController;
 import model.LoanProductContainer;
 import model.ProductFolder.ProductForLoan;
 
 public class LoanTui {
 	
-	private LoanController lpController;
+	private LoanProductController lpController;
+	private LoanController loanController;
 	private ProductTuiEdit prodTuiEdit;
 	private KeyboardInput kbInput;
 
 	public LoanTui() {
-		lpController = new LoanController();
+		lpController = new LoanProductController();
 		prodTuiEdit = new ProductTuiEdit();
 		kbInput = new KeyboardInput();
 	}
@@ -22,12 +24,12 @@ public class LoanTui {
 		int kbChoice;
 		
 		while(isRunning) {
-			writeProductMenu();
+			writeLoanMenu();
 			kbChoice = kbInput.intInput();
 			
 			switch(kbChoice) {
 				case 1:
-					lpController.createObj();
+					loanController.createObj();
 					break;
 				case 2:
 					printProductForLoan();
@@ -41,6 +43,9 @@ public class LoanTui {
 				case 5:
 					lpController.deleteObj();
 					break;
+				case 6:
+					System.out.println("to do");
+					break;
 				case 0:
 					isRunning = false;
 					break;
@@ -50,13 +55,12 @@ public class LoanTui {
 		}
 	}
 	
-	private void writeProductMenu() {
-		System.out.println("****** Manage Products ******");
+	private void writeLoanMenu() {
+		System.out.println("****** Loan Menu ******");
         System.out.println(" (1) Create loan");
-        System.out.println(" (2) Print active loans");
-        System.out.println(" (3) Print all products");
-        System.out.println(" (4) Update Product");
-        System.out.println(" (5) Delete Product");
+        System.out.println(" (2) Product menu");
+        System.out.println(" (3) Print active loans");
+        System.out.println(" (4) Print all products");
         System.out.println(" (5) Return Loan");
         System.out.println(" (0) Return to Main Menu");
         System.out.print("\n Choice:");
@@ -74,7 +78,6 @@ public class LoanTui {
 	public void printProductInformation(ProductForLoan product) {
 		System.out.println("------------------------------------");
 		System.out.println("ID: " + product.getID());
-		System.out.println("Name of product: " + product.getName());
 		System.out.println("Amount: " + product.getAmount());
 		System.out.println("Price: " + product.getPrice() + "dkk");
 		System.out.println("Availability: " + product.isAvailable());

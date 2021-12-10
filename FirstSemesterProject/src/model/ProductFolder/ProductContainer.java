@@ -62,11 +62,23 @@ public class ProductContainer {
 		}
 	}
 
-	//method for Junit
 	public int arraySize() {
 		return productsDatabase.size();
 	}
 	public ArrayList<ProductForSale> getProductsDatabase() {
 		return productsDatabase;
+	}
+	//this is the slow way of doing it, I should instead create another array that holds all the categories already sorted
+	//but time is not my friend now
+	//TODO
+	public ArrayList<ProductForSale> getCategory(String category) {
+		ArrayList<ProductForSale> al = new ArrayList<ProductForSale>();
+		
+		for (ProductForSale productFS : productsDatabase) {
+			if (productFS.getCategory().equals(category)) {
+				al.add(productFS);
+			}
+		}
+		return al;
 	}
 }

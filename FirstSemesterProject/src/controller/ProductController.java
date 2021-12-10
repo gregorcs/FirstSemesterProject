@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import input.KeyboardInput;
 import model.ProductFolder.ProductContainer;
 import model.ProductFolder.ProductForSale;
@@ -22,7 +24,8 @@ public class ProductController {
     	boolean isAvailable = false;	
     	ProductForSale pForSale;
     	String name;
-    	String location;				
+    	String location;	
+    	String category;
     	
     	printCreateProdHeader();
     	printAskName();
@@ -33,6 +36,8 @@ public class ProductController {
 		price = keyboard.doubleInput();
 		printAskLocation();
 		location = keyboard.stringInput();
+		printAskCategory();
+		category = keyboard.stringInput();
 		
 		int[] minAndMaxList = getMinAndMaxAmount();
 		minAmount = minAndMaxList[0];
@@ -40,7 +45,7 @@ public class ProductController {
 		isAvailable = checkAvailability(amount);
 		
 		//create object
-		pForSale = new ProductForSale(amount, name, location, price, isAvailable, minAmount, maxAmount);
+		pForSale = new ProductForSale(amount, name, location, price, isAvailable, minAmount, maxAmount, category);
 		ProductContainer.getInstance().create(pForSale);
 	}
 	
@@ -154,8 +159,36 @@ public class ProductController {
 		return (amount > 0) ? true : false;
 	}
 	
-	/*Print statements*/
 	
+	public ArrayList<ProductForSale> getCategory() {
+		boolean isCorrect = false;
+		String input;
+		ArrayList<ProductForSale> al = new ArrayList<ProductForSale>();
+		
+		printAskCategory();
+		input = keyboard.stringInput();
+		al = getCategoryAl(input);
+		
+		if (al != null) {
+			return al;
+		} else {
+			while (!isCorrect) {
+				printTryAgain();
+				input = keyboard.stringInput();
+				al = getCategoryAl(input);
+				if (al != null) {
+					isCorrect = true;
+				}
+			}
+			return al;
+		}
+	}
+	
+	private ArrayList<ProductForSale> getCategoryAl(String input) {
+		return ProductContainer.getInstance().getCategory(input);
+	}
+	
+	/*Print statements*/
 	
 	public void printCreateProdHeader() {
     	System.out.println("****** Create product for sale******");
@@ -184,6 +217,10 @@ public class ProductController {
 	
 	private void printAskLocation() {
 		System.out.println("Enter location of product: ");
+	}
+	
+	private void printAskCategory() {
+		System.out.println("Enter category of product: ");
 	}
 	
 	public void printAskforID() {

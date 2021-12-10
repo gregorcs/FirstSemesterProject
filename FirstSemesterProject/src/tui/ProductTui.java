@@ -33,12 +33,15 @@ public class ProductTui {
 					printProductForSale();
 					break;
 				case 3:
-					printAllProductsForSale();
+					printCategory();
 					break;
 				case 4:
-					prodTuiEdit.start();
+					printAllProductsForSale();
 					break;
 				case 5:
+					prodTuiEdit.start();
+					break;
+				case 6:
 					pController.deleteObj();
 					break;
 				case 0:
@@ -54,9 +57,10 @@ public class ProductTui {
 		System.out.println("****** Manage Products ******");
         System.out.println(" (1) Create Product");
         System.out.println(" (2) Print specific product");
-        System.out.println(" (3) Print all products");
-        System.out.println(" (4) Update Product");
-        System.out.println(" (5) Delete Product");
+        System.out.println(" (3) Print category of products");
+        System.out.println(" (4) Print all products");
+        System.out.println(" (5) Update Product");
+        System.out.println(" (6) Delete Product");
         System.out.println(" (0) Return to Main Menu");
         System.out.print("\n Choice:");
 	}
@@ -70,18 +74,27 @@ public class ProductTui {
 			printProductInformation(product);
 		}
 	}
+	
+	public void printCategory() {
+		for (ProductForSale product : pController.getCategory()) {
+			printProductInformation(product);
+		}
+	}
+	
 	public void printProductInformation(ProductForSale product) {
 		System.out.println("------------------------------------");
 		System.out.println("ID: " + product.getID());
 		System.out.println("Name of product: " + product.getName());
+		System.out.println("Category: " + product.getCategory());	
 		System.out.println("Amount: " + product.getAmount());
 		System.out.println("Price: " + product.getPrice() + "dkk");
 		System.out.println("Availability: " + product.isAvailable());
 		System.out.println("Physical location: " + product.getLocation());
 		System.out.println("Minimum allowed in storage: " + product.getMinimumAmount());
-		System.out.println("Maximum allowed in storage: " + product.getMaximumAmount());
+		System.out.println("Maximum allowed in storage: " + product.getMaximumAmount());	
 		System.out.println("------------------------------------");		
 	}
+	
 	public void emptyDatabase() {
 		System.out.println("Nothing to print");
 	}

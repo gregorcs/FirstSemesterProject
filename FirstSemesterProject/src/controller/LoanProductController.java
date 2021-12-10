@@ -1,50 +1,40 @@
 package controller;
 
-import java.util.ArrayList;
-
 import input.KeyboardInput;
-import model.Loan;
-import model.LoanContainer;
 import model.LoanProductContainer;
-import model.Person;
 import model.ProductFolder.ProductForLoan;
 
-public class LoanController {
+public class LoanProductController {
 
 	private KeyboardInput keyboard;
 	
-	public LoanController() {
+	public LoanProductController() {
 		keyboard = new KeyboardInput();
 	}
 	
 	/*CRUD METHODS*/
 	
 	public void createObj() {
-    	Person borrower;
-    	Loan loan;
-    	ArrayList<ProductForLoan> toLoanAL = new ArrayList<ProductForLoan>();	
-    	String name;
-    	String location;
+    	int amount;
+    	double price;					
     	boolean isAvailable = false;	
-		double price;
-		int ID;
-		int period;
+    	ProductForLoan pForSale;
+    	String name;
+    	String location;				
     	
     	printCreateProdHeader();
-    	printAskPerson();
-    	askForID();
-    	
-    	printAskForProducts();
-    	productsToLoan();
-    	
-    	printAskForPeriod();
-
-		printAskPricePerDay();
+    	printAskName();
+		name = keyboard.stringInput();
+    	printAskAmount();
+		amount = keyboard.intInput();
+		printAskPrice();
 		price = keyboard.doubleInput();
+		printAskLocation();
+		location = keyboard.stringInput();
 		
 		//create object
-		loan = new Loan(borrower, toLoanAl, period);
-		LoanContainer.getInstance().create(loan);
+		pForSale = new ProductForLoan(amount, name, location, price, isAvailable);
+		LoanProductContainer.getInstance().create(pForSale);
 	}
 	
 	public ProductForLoan getObj() {
@@ -103,13 +93,13 @@ public class LoanController {
 	public int askForID() {	
 		int input = 0;
 		
-		if (LoanContainer.getInstance().arraySize() > 0) {
+		if (LoanProductContainer.getInstance().arraySize() > 0) {
 			boolean isCorrect = false;
 			printAskforID();
 			input = keyboard.intInput();
 			
 			while (!isCorrect) {
-				if (LoanContainer.getInstance().searchForObj(input) != null) {
+				if (LoanProductContainer.getInstance().searchForObj(input) != null) {
 					return input;
 				} else {
 					printTryAgain();
@@ -123,26 +113,28 @@ public class LoanController {
 		return input;
 	}
 	
-	private ArrayList<ProductForLoan> productsToLoan() {
-		ArrayList<ProductForLoan> al = new ArrayList<ProductForLoan>();
-		
-		return al;
-	}
-	
 	/*Print statements*/
 	
 	
 	public void printCreateProdHeader() {
-    	System.out.println("****** Create new loan******");
+    	System.out.println("****** Create product for sale******");
     	System.out.println("************************************");
 	}
 	
-	private void printAskPerson() {
-		System.out.println("Enter the ID of the person: ");
+	private void printAskName() {
+		System.out.println("Enter the name of the product for sale: ");
 	}
 	
-	private void printAskPricePerDay() {
-		System.out.println("Enter the price per day: ");
+	private void printAskAmount() {
+		System.out.println("Enter the amount: ");
+	}
+	
+	private void printAskPrice() {
+		System.out.println("Enter the price: ");
+	}
+	
+	private void printAskLocation() {
+		System.out.println("Enter location of product: ");
 	}
 	
 	public void printAskforID() {
@@ -160,16 +152,7 @@ public class LoanController {
 	public void printEmpty() {
 		System.out.println("Database is empty");
 	}
-	
 	public void printTryAgain() {
 		System.out.println("Incorrect! Try again: ");
-	}
-	
-	public void printAskForProducts() {
-		System.out.println("Enter ID of products to loan (-1 to stop): ");
-	}
-	
-	public void printAskForPeriod() {
-		System.out.println("Enter number of days to be rented: ");
 	}
 }
