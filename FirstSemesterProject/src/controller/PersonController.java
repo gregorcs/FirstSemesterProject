@@ -17,6 +17,7 @@ public class PersonController {
 		String username, password, password2;
 		boolean correct = false;
 		
+		
 		printCreateAccHeader();
 		username = ask4UN();
 		
@@ -118,8 +119,7 @@ public class PersonController {
 	
 	public void verify(Person obj) {
 		String username = obj.getUsername();
-		
-		PersonContainer percon = new PersonContainer();
+		PersonContainer percon = PersonContainer.getInstance();
 		for (Entry<String, String> e : percon.personsDatabase.entrySet()) {
 			while (username != e.getKey()) {
 				print404Error();
