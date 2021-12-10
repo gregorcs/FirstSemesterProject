@@ -5,14 +5,23 @@ import input.KeyboardInput;
 
 public class MainMenu {
 	
+	private static MainMenu instance;
+	
 	//Initialize variables
 	private KeyboardInput kbInput;
-	public boolean isLoggedIn = false;
+	private boolean isLoggedIn = false;
+	
+	public static MainMenu getInstance() {
+		if(instance == null) {
+			instance = new MainMenu();
+		}
+		return instance;
+	}
 	
 	//constructor
-	public MainMenu() {
+	/*public MainMenu() {
 		kbInput = new KeyboardInput();
-	}
+	}*/
 	
 	//start method to call 
 	public void start() {
@@ -22,6 +31,7 @@ public class MainMenu {
 	
 	//main menu input and output
 	public void mainMenu() {
+		kbInput = new KeyboardInput();
 		boolean isRunning = true;
 		int input;
 		
@@ -121,5 +131,13 @@ public class MainMenu {
 	
 	void errorMessage() {
 		System.out.println("Input does not match menu, try again: ");
+	}
+	
+	public void setIsLoggedIn(boolean isLoggedIn) {
+		this.isLoggedIn = isLoggedIn;
+	}
+	
+	public boolean getIsLoggedIn() {
+		return isLoggedIn;
 	}
 }

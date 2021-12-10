@@ -6,9 +6,11 @@ import model.PersonFolder.*;
 
 public class UserSettingsMenu {
 	private KeyboardInput kbInput;
+	MainMenu mm;
 	
 	public UserSettingsMenu() {
 		kbInput = new KeyboardInput();
+		mm = MainMenu.getInstance();
 	}
 	
 	public void start() {
@@ -22,7 +24,6 @@ public class UserSettingsMenu {
 		while(isRunning) {
 			printUSM();
 			input = kbInput.intInput();
-			MainMenu mm = new MainMenu();
 			PersonContainer percon = new PersonContainer();
 			PersonController percontrol = new PersonController();
 			switch(input) {
@@ -37,6 +38,7 @@ public class UserSettingsMenu {
 				break;
 			case 4: 
 				percontrol.deleteObj();
+				mm.mainMenu();
 				break;
 			case 0:
 				mm.mainMenu();

@@ -1,17 +1,16 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.Map.Entry;
-
 import input.KeyboardInput;
 import model.PersonFolder.*;
 import tui.MainMenu;
 
 public class PersonController {
 	private KeyboardInput keyboard;
+	MainMenu mm;
 	
 	public PersonController() {
 		keyboard = new KeyboardInput();
+		mm = MainMenu.getInstance();
 	}
 	
 	public void createObj() {
@@ -47,24 +46,28 @@ public class PersonController {
 		}
 	
 		printSuccess();
-		
+		mm.setIsLoggedIn(true);
 		// Object Creation
 		Person obj = new Person(username, password);
-		PersonContainer.getInstance().create(obj);
+		percon.create(obj);
+		percon.setUsername(username);
 	}
 	
 	public void updateUN() {
-		Person obj = getObj();	
-		verify(obj);
+		PersonContainer percon = PersonContainer.getInstance();
+		
+		Person obj = verify();
+		percon.delete(obj);
+		
 		System.out.println("Enter new username: ");
-		obj.setUsername(keyboard.stringInput());
-	
-		PersonContainer.getInstance().update(obj);
+		String username = keyboard.stringInput();
+		obj.setUsername(username);
+		percon.setUsername(username);
+		percon.update(obj);
 	}
 	
 	public void updatePass() {
-		Person obj = getObj();		
-		verify(obj);		
+		Person obj = verify();				
 		System.out.println("Enter new password: ");
 		obj.setPassword(keyboard.stringInput());
 	
@@ -72,11 +75,11 @@ public class PersonController {
 	}
 	
 	public void deleteObj() {
-		Person obj = getObj();
-		
+		Person obj = verify();
 		if (obj != null) {
 			PersonContainer.getInstance().delete(obj);
 			printSuccessDelete();
+			mm.setIsLoggedIn(false);
 		} else {
 			print404Error();
 		}
@@ -87,20 +90,21 @@ public class PersonController {
 		String username, password;
 		boolean loggedIn = false;
 		
-		username = ask4UN();
 		while(!loggedIn) {
+			username = ask4UN();
 			if(percon.personsDatabase.containsKey(username)) {
 				printAskPass();
 				password = keyboard.stringInput();
 				while(!password.equals(percon.personsDatabase.get(username))) {
 					printTryAgain();
-					password = keyboard.stringInput();
+					password = keyboard.stringInput(); ///There is no option in this to stop login in. Once you click login you stuck until you login.
 				}
 				printLoginSuccessful();
+				mm.setIsLoggedIn(true);
 				loggedIn = true;
+				percon.setUsername(username);
 			}
 			else {
-				username = ask4UN();
 				print404Error();
 			}
 		}
@@ -118,24 +122,27 @@ public class PersonController {
 		return temp;
 	}
 	
-	public void verify(Person obj) {
-		String username = obj.getUsername();
+	public Person verify() {
 		PersonContainer percon = PersonContainer.getInstance();
-		for (Entry<String, String> e : percon.personsDatabase.entrySet()) {
-			while (username != e.getKey()) {
-				print404Error();
-				username = keyboard.stringInput();
+		boolean correct = false;
+		
+		String username = percon.getUsername();
+		
+		System.out.println("Logged in as: " + percon.getUsername());
+		printConfirmPassword();
+		String password = keyboard.stringInput();
+		while(!correct) {
+			if(password.equals(percon.personsDatabase.get(username))) {
+				correct = true;
+				printVerifySuccess();
+			}
+			else {
+			printTryAgain();
+			printAskPass();
+			password = keyboard.stringInput();
 			}
 		}
-		
-		printAskPass();
-		String password = keyboard.stringInput();
-		while (obj.getPassword() != password) {
-			printTryAgain();
-			password = keyboard.stringInput();
-		}
-		
-		printSuccess();
+		return percon.searchForObj(username);
 	}
 	
 	public Person getObj() {
@@ -165,6 +172,14 @@ public class PersonController {
 	
 	public void printSuccessDelete() {
 		System.out.println("Account deleted successfully.");
+	}
+	
+	public void printVerifySuccess() {
+		System.out.println("Password verified succesfully.");
+	}
+	
+	public void printConfirmPassword() {
+		System.out.println("Confirm your password: ");
 	}
 
 	public void printConfirm() {

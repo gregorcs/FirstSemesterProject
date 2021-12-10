@@ -10,6 +10,7 @@ public class PersonContainer {
 	public HashMap<String, String> personsDatabase = new HashMap<>();
 	public ArrayList<Person> personsList = new ArrayList<>();
 	private static PersonContainer instance;
+	private String username;
 
 	//Returns the Instance
 	public static PersonContainer getInstance() {
@@ -21,7 +22,7 @@ public class PersonContainer {
 	
 	public Person searchForObj(String username) {
 		for (Person P : personsList) {
-			if (P.getUsername() == username) {
+			if (P.getUsername().equals(username)) {
 				return P;
 			}
 		}
@@ -51,5 +52,14 @@ public class PersonContainer {
 		
 		public void delete(Person obj) {
 			personsDatabase.remove(obj.getUsername(), obj.getPassword());
+		}
+		
+		public void setUsername(String username) {
+			this.username = username;
+		}
+		
+		public String getUsername() {
+			if(username == null) return "null";
+			else return this.username;
 		}
 }
