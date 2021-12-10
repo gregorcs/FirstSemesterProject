@@ -20,12 +20,9 @@ public class LoanController {
 	/*CRUD METHODS*/
 	
 	public void createObj() {
-    	Person borrower;
+    	Person borrower = null;
     	Loan loan;
-    	ArrayList<ProductForLoan> toLoanAL = new ArrayList<ProductForLoan>();	
-    	String name;
-    	String location;
-    	boolean isAvailable = false;	
+    	ArrayList<ProductForLoan> toLoanAL = new ArrayList<ProductForLoan>();
 		double price;
 		int ID;
 		int period;
@@ -38,12 +35,12 @@ public class LoanController {
     	productsToLoan();
     	
     	printAskForPeriod();
-
+    	period = keyboard.intInput();
 		printAskPricePerDay();
 		price = keyboard.doubleInput();
 		
 		//create object
-		loan = new Loan(borrower, toLoanAl, period);
+		loan = new Loan(borrower, toLoanAL, period);
 		LoanContainer.getInstance().create(loan);
 	}
 	
@@ -59,23 +56,23 @@ public class LoanController {
 		while (isRunning) {
 			switch (userChoice) {
 				case 1:
-					printAskAmount();
+					printAskPerson();
 					int amount = keyboard.intInput();
 					prodForSale.setAmount(amount);
 					isRunning = false;
 					break;
 				case 2:
-					printAskName();
+					printAskPerson();
 					prodForSale.setName(keyboard.stringInput());
 					isRunning = false;
 					break;
 				case 3:
-					printAskLocation();
+					printAskForPeriod();
 					prodForSale.setLocation(keyboard.stringInput());
 					isRunning = false;
 					break;
 				case 4:
-					printAskPrice();
+					printAskPricePerDay();
 					prodForSale.setPrice(keyboard.doubleInput());
 					isRunning = false;
 					break;

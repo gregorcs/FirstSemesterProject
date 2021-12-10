@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class LoanContainer {
 	
 	//variable declarations
-	private ArrayList<Loan> productsDatabase;
+	private ArrayList<Loan> loanDatabase;
 	private static LoanContainer instance;
 	
 	protected LoanContainer() {
-		productsDatabase = new ArrayList<Loan>();
+		loanDatabase = new ArrayList<Loan>();
 	}
 	
 	//Returns instance
@@ -21,7 +21,7 @@ public class LoanContainer {
 	}
 
 	public Loan searchForObj(int ID) {
-		for (Loan product : productsDatabase) {
+		for (Loan product : loanDatabase) {
 			if (product.getID() == ID) {
 				return product;				
 			}
@@ -33,24 +33,24 @@ public class LoanContainer {
 
 	public void create(Loan obj) {
 		obj.setID(createID());
-		productsDatabase.add(obj);
+		loanDatabase.add(obj);
 	}
 	
 	public void delete(Loan obj) {
-		productsDatabase.remove(obj);
+		loanDatabase.remove(obj);
 	}
 
 	public void update(Loan obj) {
-		productsDatabase.set(getID(obj), obj);
+		loanDatabase.set(getID(obj), obj);
 	}
 
 	public int getID(Loan obj) {
-		return productsDatabase.indexOf(obj);
+		return loanDatabase.indexOf(obj);
 
 	}
 	
     public int createID() {
-		int ID = productsDatabase.size();
+		int ID = loanDatabase.size();
 		
 		if(searchForObj(ID) == null) {				
 			return ID;							
@@ -63,9 +63,9 @@ public class LoanContainer {
 	}
 
 	public int arraySize() {
-		return productsDatabase.size();
+		return loanDatabase.size();
 	}
-	public ArrayList<Loan> getProductsDatabase() {
-		return productsDatabase;
+	public ArrayList<Loan> getLoansDatabase() {
+		return loanDatabase;
 	}
 }

@@ -15,7 +15,7 @@ public class LoanTui {
 
 	public LoanTui() {
 		lpController = new LoanProductController();
-		prodTuiEdit = new ProductTuiEdit();
+		loanController = new LoanController();
 		kbInput = new KeyboardInput();
 	}
 	
