@@ -14,7 +14,8 @@ public class PersonController {
 	}
 	
 	public void createObj() {
-		String username, password;
+		String username, password, password2;
+		boolean correct = false;
 		
 		printCreateAccHeader();
 		username = ask4UN();
@@ -28,18 +29,16 @@ public class PersonController {
 			}
 		}
 		
-		printAskPass();
-		password = keyboard.stringInput();
+		password = ask4Pass();
 		
 		// bugged but working on it if we got time
 		 printConfirm();
-		 String pass = keyboard.stringInput();
-		 boolean not = false;
-		 while (not) {
-			   pass = keyboard.stringInput();
-			   if(pass == password) {
-				   not = true;
-			   }else {
+		 password2 = keyboard.stringInput();
+		 while (correct) {
+			   password2 = keyboard.stringInput();
+			   if (password2 == password) {
+				   correct = true;
+			   } else {
 				   printTryAgain();
 			   }
 		}
@@ -82,17 +81,19 @@ public class PersonController {
 	
 	public void logIn() {
 		MainMenu mm = new MainMenu();
-		PersonContainer percon = new PersonContainer();
+		PersonContainer percon = PersonContainer.getInstance();
+		String username, password;
 		
-		while (!mm.isLoggedIn) {
-		ask4UN();
+		if (!mm.isLoggedIn) {
+		username = ask4UN();
 		
 		for (Entry<String, String> e : percon.personsDatabase.entrySet()) {
-			if (keyboard.stringInput() == e.getKey()) {
+			if (username == e.getKey()) {
 				printAskPass();
-				while (keyboard.stringInput() != e.getValue()) {
+				password = keyboard.stringInput();
+				while (password != e.getValue()) {
 					printTryAgain();
-					keyboard.stringInput();
+					password = keyboard.stringInput();
 				}
 			} else {
 				print404Error();
@@ -105,6 +106,12 @@ public class PersonController {
 	
 	public String ask4UN() {
 		printAskUN();
+		String temp = keyboard.stringInput();
+		return temp;
+	}
+	
+	public String ask4Pass() {
+		printAskPass();
 		String temp = keyboard.stringInput();
 		return temp;
 	}
