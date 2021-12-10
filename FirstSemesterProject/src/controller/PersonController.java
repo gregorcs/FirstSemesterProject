@@ -33,10 +33,16 @@ public class PersonController {
 		
 		// bugged but working on it if we got time
 		 printConfirm();
-		   while (keyboard.stringInput() != password) {
-			   printTryAgain();
-			   keyboard.stringInput();
-		   }
+		 String pass = keyboard.stringInput();
+		 boolean not = false;
+		 while (not) {
+			   pass = keyboard.stringInput();
+			   if(pass == password) {
+				   not = true;
+			   }else {
+				   printTryAgain();
+			   }
+		}
 	
 		printSuccess();
 		
