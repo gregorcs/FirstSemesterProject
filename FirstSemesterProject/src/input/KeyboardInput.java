@@ -4,6 +4,12 @@ import java.util.Scanner;
 import tui.PrintInput;
 
 public class KeyboardInput {
+	
+	/**
+	 * Mad respect, bro, but... do we even need any of this?
+	 * 
+	 * ~Max
+	 */
 
 	private Scanner sc;
 	private PrintInput printStatement;

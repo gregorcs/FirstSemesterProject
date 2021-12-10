@@ -28,36 +28,55 @@ public abstract class Product {
 	public int getID() {
 		return ID;
 	}
+	
 	public void setID(int iD) {
+
+		/**
+		 * Could we just use
+		 * this.ID = ID;
+		 * or am I missing something here?
+		 * ~Max
+		 */
+	
 		ID = iD;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public double getPrice() {
 		return price;
 	}
+	
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
 	public int getAmount() {
 		return amount;
 	}
+	
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+	
 	public boolean isAvailable() {
 		return available;
 	}
+	
 	public void setAvailable(boolean availability) {
 		this.available = availability;
 	}
+	
 	public String getLocation() {
 		return location;
 	}
+	
 	public void setLocation(String location) {
 		this.location = location;
 	}
@@ -68,5 +87,5 @@ public abstract class Product {
 
 	public void setDiscounts(ArrayList<Discount> discounts) {
 		this.discounts = discounts;
-	};
+	}
 }
