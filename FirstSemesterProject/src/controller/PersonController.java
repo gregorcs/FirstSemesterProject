@@ -22,9 +22,9 @@ public class PersonController {
 		username = ask4UN();
 		
 		// checks4Dupes
-		PersonContainer percon = new PersonContainer();
+		PersonContainer percon = PersonContainer.getInstance();
 		for (Entry<String, String> e : percon.personsDatabase.entrySet()) {
-			if (username == e.getKey()) {
+			while (username == e.getKey()) {
 				printDupeError();
 				username = keyboard.stringInput();
 			}
