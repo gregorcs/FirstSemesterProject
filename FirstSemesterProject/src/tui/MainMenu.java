@@ -39,17 +39,6 @@ public class MainMenu {
 			printMainMenu();
 			input = kbInput.intInput();
 			
-			/*
-			 * I made separate register and login menus/methods to deal with the whole "need an
-			 * account before you do anything" situation.
-			 *
-			 * User settings (for changing the username/password, deleting an account and getting a
-			 * complete overview of all accounts) & log out only appear if the user is logged in.
-			 * Similarly, the Register & log in menus only appear if no user is logged in at the time.
-			 * 
-			 * ~Max
-			 */
-			
 			 if (!isLoggedIn) {
 				 PersonController percontrol = new PersonController();
 				 switch(input) {
