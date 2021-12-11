@@ -29,7 +29,8 @@ public class MainMenu {
 			
 			switch(input) {
 				case 1:
-					System.out.println("to do");
+					OrderTui ordMenu = new OrderTui();
+					ordMenu.start();
 					break;
 				case 2:
 					System.out.println("to do");
