@@ -128,7 +128,7 @@ public class ProductController {
 			}
 			return input;
 		} else {
-			printEmpty();
+			printUnavailable();
 		}
 		return input;
 	}
@@ -159,7 +159,7 @@ public class ProductController {
 		return (amount > 0) ? true : false;
 	}
 
-
+	//this is slow, we need another arraylist to hold it
 	public ArrayList<ProductForSale> getCategory() {
 		boolean isCorrect = false;
 		String input;
@@ -233,5 +233,9 @@ public class ProductController {
 
 	public void printUnavailable() {
 		System.out.println("Unavailable product");
+	}
+	
+	public void printTryAgain() {
+		System.out.println("Incorrect, try again: ");
 	}
 }

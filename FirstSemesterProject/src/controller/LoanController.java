@@ -3,15 +3,15 @@ package controller;
 import java.util.ArrayList;
 
 import input.KeyboardInput;
-import model.Loan;
-import model.LoanContainer;
-import model.LoanProductContainer;
-import model.Person;
+import loanFolder.Loan;
+import loanFolder.LoanContainer;
+import model.PersonFolder.Person;
 import model.ProductFolder.ProductForLoan;
 
 public class LoanController {
 
 	private KeyboardInput keyboard;
+	
 	
 	public LoanController() {
 		keyboard = new KeyboardInput();
@@ -23,8 +23,6 @@ public class LoanController {
     	Person borrower = null;
     	Loan loan;
     	ArrayList<ProductForLoan> toLoanAL = new ArrayList<ProductForLoan>();
-		double price;
-		int ID;
 		int period;
     	
     	printCreateProdHeader();
@@ -36,61 +34,37 @@ public class LoanController {
     	
     	printAskForPeriod();
     	period = keyboard.intInput();
-		printAskPricePerDay();
-		price = keyboard.doubleInput();
 		
 		//create object
 		loan = new Loan(borrower, toLoanAL, period);
 		LoanContainer.getInstance().create(loan);
 	}
 	
-	public ProductForLoan getObj() {
-		return LoanProductContainer.getInstance().searchForObj(askForID());
+	public Loan getObj() {
+		return LoanContainer.getInstance().searchForObj(askForID());
 	}
 
 	public void updateObj() {
 		int userChoice = keyboard.intInput();
-		ProductForLoan prodForSale = getObj();
+		Loan loan = getObj();
 		boolean isRunning = true;
 		
 		while (isRunning) {
 			switch (userChoice) {
-				case 1:
-					printAskPerson();
-					int amount = keyboard.intInput();
-					prodForSale.setAmount(amount);
-					isRunning = false;
-					break;
-				case 2:
-					printAskPerson();
-					prodForSale.setName(keyboard.stringInput());
-					isRunning = false;
-					break;
-				case 3:
-					printAskForPeriod();
-					prodForSale.setLocation(keyboard.stringInput());
-					isRunning = false;
-					break;
-				case 4:
-					printAskPricePerDay();
-					prodForSale.setPrice(keyboard.doubleInput());
-					isRunning = false;
-					break;
-				case 0:
-					isRunning = false;
-					break;
 				default: 
 					printTryAgain();
+					//TODO
+					loan.setBorrower(null);
 					break;
 			}
 		}
 	}
 	
 	public void deleteObj() {
-		ProductForLoan product = getObj();
+		Loan product = getObj();
 		
 		if (product != null) {
-			LoanProductContainer.getInstance().delete(product);
+			LoanContainer.getInstance().delete(product);
 			printSuccess();
 		} else {
 			printUnavailable();
@@ -136,10 +110,6 @@ public class LoanController {
 	
 	private void printAskPerson() {
 		System.out.println("Enter the ID of the person: ");
-	}
-	
-	private void printAskPricePerDay() {
-		System.out.println("Enter the price per day: ");
 	}
 	
 	public void printAskforID() {

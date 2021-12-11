@@ -1,14 +1,14 @@
 package controller;
 
 import input.KeyboardInput;
-import model.LoanProductContainer;
+import loanFolder.LoanProductContainer;
 import model.ProductFolder.ProductForLoan;
 
-public class LoanProductController {
+public class ProductForLoanController {
 
 	private KeyboardInput keyboard;
 	
-	public LoanProductController() {
+	public ProductForLoanController() {
 		keyboard = new KeyboardInput();
 	}
 	

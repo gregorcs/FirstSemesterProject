@@ -1,20 +1,26 @@
 package tui;
 
 import input.KeyboardInput;
+import loanFolder.Loan;
+import loanFolder.LoanContainer;
+import loanFolder.LoanProductContainer;
+
+import java.util.ArrayList;
+
 import controller.LoanController;
-import controller.LoanProductController;
-import model.LoanProductContainer;
+import controller.ProductForLoanController;
+import model.PersonFolder.Person;
 import model.ProductFolder.ProductForLoan;
 
 public class LoanTui {
 	
-	private LoanProductController lpController;
+	private ProductForLoanController lpController;
 	private LoanController loanController;
 	private ProductTuiEdit prodTuiEdit;
 	private KeyboardInput kbInput;
 
 	public LoanTui() {
-		lpController = new LoanProductController();
+		lpController = new ProductForLoanController();
 		loanController = new LoanController();
 		kbInput = new KeyboardInput();
 	}
@@ -32,10 +38,12 @@ public class LoanTui {
 					loanController.createObj();
 					break;
 				case 2:
-					printProductForLoan();
+					//CONTINUE HERE
+					//TODO
+					//FIX UP THE LOANPRODUCT CLASS SO THAT IT FILLS THE ARRAY, THEN CLEAN UP THE CODE AND EDGE CASES
 					break;
 				case 3:
-					printAllProductsForLoan();
+					printAllLoans();
 					break;
 				case 4:
 					prodTuiEdit.start();
@@ -75,6 +83,29 @@ public class LoanTui {
 			printProductInformation(product);
 		}
 	}
+	
+	public void printAllLoans() {
+		for (Loan loan : LoanContainer.getInstance().getLoansDatabase()) {
+			printLoanInformation(loan);
+		}
+	}
+	
+	public void printLoanInformation(Loan loan) {
+		Person borrower = loan.getBorrower();
+		System.out.println("----------------LOAN----------------");
+		System.out.println("ID of loan: " + loan.getID());
+		System.out.println("Name of borrower: " + borrower.getUsername());
+		System.out.println("Period rented in days: " + loan.getPeriod());
+		printProductsInLoan(loan.getToLoanList());
+		System.out.println("-------------END OF LOAN------------");	
+	}
+	
+	public void printProductsInLoan(ArrayList<ProductForLoan> al) {
+		for (ProductForLoan product : al) {
+			printProductInformation(product);
+		}
+	}
+	
 	public void printProductInformation(ProductForLoan product) {
 		System.out.println("------------------------------------");
 		System.out.println("ID: " + product.getID());

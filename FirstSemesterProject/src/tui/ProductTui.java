@@ -71,13 +71,18 @@ public class ProductTui {
 	}
 	public void printAllProductsForSale() {
 		for (ProductForSale product : ProductContainer.getInstance().getProductsDatabase()) {
-			printProductInformation(product);
+			if (product != null) {
+				 System.out.println(ProductContainer.getInstance().arraySize());
+				printProductInformation(product);
+			}
 		}
 	}
 	
 	public void printCategory() {
 		for (ProductForSale product : pController.getCategory()) {
-			printProductInformation(product);
+			if (product != null) {
+				printProductInformation(product);
+			}
 		}
 	}
 	

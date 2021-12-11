@@ -33,7 +33,7 @@ public class PersonController {
 		
 		// bugged but working on it if we got time
 		 printConfirm();
-		   while (keyboard.stringInput() != password) {
+		   while (!keyboard.stringInput().equals(password)) {
 			   printTryAgain();
 			   keyboard.stringInput();
 		   }
@@ -103,6 +103,27 @@ public class PersonController {
 		return temp;
 	}
 	
+	public String searchForPerson() {
+		boolean isRunning = true;
+		String name = null;
+		
+		while(isRunning) {
+			printAskUN();
+			name = keyboard.stringInput();
+			Person person = PersonContainer.getInstance().searchForObj(name);
+			
+			if(person != null) {
+				if (person.getUsername().equals(name)) {
+					isRunning = false;
+					return name;
+				}
+			} else {
+				print404Error();
+			}
+		}
+		return name;
+	}
+	
 	public void verify(Person obj) {
 		String username = obj.getUsername();
 		
@@ -125,7 +146,7 @@ public class PersonController {
 	}
 	
 	public Person getObj() {
-		return PersonContainer.getInstance().searchForObj(ask4UN());
+		return PersonContainer.getInstance().searchForObj(searchForPerson());
 	}
 	
 	// Print Methods

@@ -1,4 +1,4 @@
-package model;
+package loanFolder;
 
 import java.util.ArrayList;
 
@@ -64,7 +64,6 @@ public class LoanProductContainer {
 		}
 	}
 
-	//method for Junit
 	public int arraySize() {
 		return productsDatabase.size();
 	}

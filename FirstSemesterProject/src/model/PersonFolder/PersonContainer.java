@@ -21,7 +21,7 @@ public class PersonContainer {
 	
 	public Person searchForObj(String username) {
 		for (Person P : personsList) {
-			if (P.getUsername() == username) {
+			if (P.getUsername().equals(username)) {
 				return P;
 			}
 		}

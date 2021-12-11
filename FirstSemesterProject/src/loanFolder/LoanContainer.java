@@ -1,4 +1,4 @@
-package model;
+package loanFolder;
 
 import java.util.ArrayList;
 

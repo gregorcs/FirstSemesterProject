@@ -60,7 +60,8 @@ public class MainMenu {
 			 } else {
 			  	switch(input) {
 				case 1:
-					System.out.println("To-Do -- Create Order");
+					LoanTui loanTui = new LoanTui();
+					loanTui.start();
 					break;
 				case 2:
 					System.out.println("To-Do -- Edit Customers");

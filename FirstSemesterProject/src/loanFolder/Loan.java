@@ -1,7 +1,8 @@
-package model;
+package loanFolder;
 
 import java.util.ArrayList;
 
+import model.PersonFolder.Person;
 import model.ProductFolder.ProductForLoan;
 
 public class Loan {
