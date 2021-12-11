@@ -14,14 +14,14 @@ public class LineItem extends Product{
 		
 	public LineItem(ProductForSale p, int qty) {
 		super(p.getID(), p.getName(), p.getLocation(), p.getPrice(), p.isAvailable());
-		
+		this.qty = qty;
 		//this.setProdID(p.getID());
 		//this.setProdName(p.getName());
 		//this.setProdPrice(p.getPrice());
 		}
 	
-		public void setQty() {
-			this.qty = keyboard.intInput();
+		public void setQty(int qty) {
+			this.qty = qty;
 		}
 		
 		public int getQty() {

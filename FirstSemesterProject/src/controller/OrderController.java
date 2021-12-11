@@ -104,7 +104,7 @@ public class OrderController implements InterfaceController<ItemOrder>{
 	}
 	//change text later
 	private void printAddItems() {
-		System.out.println("Add your items: ");
+		System.out.println("****Add your items****");
 		
 	}
 	
