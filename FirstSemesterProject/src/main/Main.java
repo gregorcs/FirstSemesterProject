@@ -3,7 +3,7 @@ package main;
 import model.ProductFolder.ProductContainer;
 import model.ProductFolder.ProductForSale;
 import tui.MainMenu;
-import tui.ProductTui;
+import tui.ProductTui;	
 
 public class Main {
 	

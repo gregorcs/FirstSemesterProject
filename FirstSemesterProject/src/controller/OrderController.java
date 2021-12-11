@@ -2,18 +2,21 @@ package controller;
 
 import input.KeyboardInput;
 import model.OrderFolder.OrderContainer;
+import model.LineItem;
 import model.OrderFolder.Basket;
 import model.OrderFolder.ItemOrder;
+import controller.ProductController;
 import java.util.ArrayList;
 
 
 public class OrderController implements InterfaceController<ItemOrder>{
 	
 	private KeyboardInput keyboard;
-	private ArrayList<Basket> orderItems; 
-	
+	private ProductController pController;
+		
 	public OrderController() {
 		keyboard = new KeyboardInput();
+		pController = new ProductController();
 	}
 
 	//order creation
@@ -22,23 +25,15 @@ public class OrderController implements InterfaceController<ItemOrder>{
 		int ID;
 		int customerID;
 		ItemOrder iOrder;
-		Basket orderItems;
 		
 		printNewOrderHeader();
-		printAskforID();
-		ID = keyboard.intInput();
+		ID = OrderContainer.getInstance().createID();
 		printAskCustID();
 		customerID = keyboard.intInput();
 		printAddItems();
-		
-		
-		iOrder = new ItemOrder(ID, customerID);
+		iOrder = new ItemOrder(ID, customerID, addToOrder());
 		OrderContainer.getInstance().create(iOrder);
-	}
-
-	private void printAddItems() {
-		// TODO Auto-generated method stub
-		
+	
 	}
 
 	@Override
@@ -71,6 +66,28 @@ public class OrderController implements InterfaceController<ItemOrder>{
 		int input = -1;
 		return input;
 	}
+	
+	private Basket addToOrder() {
+		boolean isRunning = true;
+		int choice;
+		int qty;
+		Basket basket = new Basket();
+		LineItem lineItem;
+		
+		while (isRunning) {
+			printAskQty();
+			qty = keyboard.intInput();
+			lineItem = new LineItem(pController.getObj(), qty);
+			basket.addToBasket(lineItem);
+			
+			pController.printAskForProducts();
+			choice = keyboard.intInput();
+			if (choice == -1) {
+				isRunning = false;
+			}
+		}
+		return basket;
+	}
 
 	private void printNewOrderHeader() {
     	System.out.println("****** Create new order******");
@@ -84,6 +101,19 @@ public class OrderController implements InterfaceController<ItemOrder>{
 	private void printAskCustID() {
 		System.out.println("Please enter the ID of the customer: ");
 		
+	}
+	//change text later
+	private void printAddItems() {
+		System.out.println("Add your items: ");
+		
+	}
+	
+	public void printAskQty() {
+		System.out.println("Enter desired quantity: ");
+	}
+	
+	public void printAskID() {
+		System.out.println("Enter the ID of the product to add: ");
 	}
 	
 	private void printSuccess() {

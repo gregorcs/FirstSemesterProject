@@ -68,7 +68,7 @@ public class KeyboardInput {
 	//is this good? converts int to double, idk how to do it
 	public boolean numIsPositive(double num) {
 		//checks if bigger or equal to 0 and checks against biggest possible int 
-		if ( (num >= 0) && (num < 4294967295L)) {
+		if ( (num >= -1) && (num < 4294967295L)) {
 			return true;
 		}
 		else {

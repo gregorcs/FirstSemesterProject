@@ -1,19 +1,23 @@
 package model.OrderFolder;
 
 import java.util.ArrayList;
-
+import model.OrderFolder.Basket;
 import model.ContainerInterface;
+import model.LineItem;
+import controller.ProductController;
 
 public class OrderContainer implements ContainerInterface<ItemOrder> {
 
 	//variable declarations
 	private ArrayList<ItemOrder> orderDatabase;
 	private static OrderContainer instance;
+	private ProductController pController;
 	
 	//constructor
 	private OrderContainer() {
 		orderDatabase = new ArrayList<ItemOrder>();
 	}
+	
 	
 	//
 	public static OrderContainer getInstance() {
@@ -52,7 +56,7 @@ public class OrderContainer implements ContainerInterface<ItemOrder> {
 	
 	@Override
 	public int getID(ItemOrder obj) {
-		return ItemOrder.getID();
+		return orderDatabase.indexOf(obj);
 	}
 	
 	public int createID() {

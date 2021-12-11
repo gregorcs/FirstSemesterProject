@@ -63,14 +63,32 @@ public class ProductController implements InterfaceController<ProductForSale> {
 		}
 	}
 	
-	public int askForID() {	
-		if (ProductContainer.getInstance().arraySize() > 0) {
-			printAskforID();
-			int input = keyboard.intInput();
-			return input;
-		}
-		int input = -1;
-		return input;
+	public int askForID() {
+        int input = 0;
+
+        if (ProductContainer.getInstance().arraySize() > 0) {
+            boolean isCorrect = false;
+            printAskforID();
+            input = keyboard.intInput();
+
+            while (!isCorrect) {
+                if (ProductContainer.getInstance().searchForObj(input) != null) {
+                    return input;
+                } else {
+                    printTryAgain();
+                    input = keyboard.intInput();
+                }
+            }
+            return input;
+        } else {
+            printUnavailable();
+        }
+        return input;
+    }
+
+	private void printTryAgain() {
+			System.out.println("Incorrect, try again!");
+		
 	}
 
 	public int[] getMinAndMaxAmount() {
@@ -122,6 +140,9 @@ public class ProductController implements InterfaceController<ProductForSale> {
 	public void printAskforID() {
 		System.out.println("Please enter ID of the product: ");
 	}
+	public void printAskForProducts() {
+        System.out.println("Press -1 to stop or any other number to continue: ");
+    }
 	public void printSuccess() {
 		System.out.println("Item edited successfully");
 	}

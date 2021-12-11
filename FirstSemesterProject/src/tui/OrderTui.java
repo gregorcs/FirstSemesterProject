@@ -9,7 +9,6 @@ import model.OrderFolder.Basket;
 public class OrderTui {
 	
 	private OrderController oController;
-	private Basket b;
 	private OrderTuiEdit oTuiEdit;
 	private KeyboardInput kbInput;
 	
@@ -17,6 +16,7 @@ public class OrderTui {
 		oController = new OrderController();
 		oTuiEdit = new OrderTuiEdit();
 		kbInput = new KeyboardInput();
+		
 	}
 	
 	public void start() {
@@ -76,8 +76,9 @@ public class OrderTui {
 	
 	public void printAllOrders() {
 		for (ItemOrder order : OrderContainer.getInstance().getOrderDatabase()) {
-			printOrderInformation(order);
+			if (order != null) { printOrderInformation(order);
 			System.out.println(OrderContainer.getInstance().arraySize());
+			}
 		}
 	}
 
@@ -85,7 +86,7 @@ public class OrderTui {
 		System.out.println("------------------------------------");
 		System.out.println("ID: " + order.getID());
 		System.out.println("Customer ID: " + order.getCustomerID());
-		System.out.println("Total: " + b.getTotalPrice());
+		System.out.println("Total: " + order.getBasket().getTotalPrice());
 		System.out.println("------------------------------------");	
 	}
 	
