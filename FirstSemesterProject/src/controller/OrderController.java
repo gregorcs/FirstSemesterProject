@@ -2,6 +2,7 @@ package controller;
 
 import input.KeyboardInput;
 import model.OrderFolder.OrderContainer;
+import model.ProductFolder.ProductForSale;
 import model.LineItem;
 import model.OrderFolder.Basket;
 import model.OrderFolder.ItemOrder;
@@ -27,7 +28,7 @@ public class OrderController {
 		customerName = keyboard.stringInput();
 		printAddItems();
 		iOrder = new ItemOrder(customerName, addToOrder());
-		OrderContainer.getInstance().create(iOrder);
+			OrderContainer.getInstance().create(iOrder);
 	
 	}
 
@@ -60,12 +61,19 @@ public class OrderController {
 		int qty;
 		Basket basket = new Basket();
 		LineItem lineItem;
+		ProductForSale PFS;
 		
 		while (isRunning) {
+			PFS = pController.getObj();
 			printAskQty();
 			qty = keyboard.intInput();
-			lineItem = new LineItem(pController.getObj(), qty);
-			basket.addToBasket(lineItem);
+			
+			if (PFS.canDecrementStock(qty)) {
+				lineItem = new LineItem(PFS, qty);
+				basket.addToBasket(lineItem);
+			} else {
+				System.out.println("Sorry " + qty + " is not available.");
+			} 
 			
 			pController.printAskForProducts();
 			choice = keyboard.intInput();

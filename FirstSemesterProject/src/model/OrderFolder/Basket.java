@@ -8,8 +8,8 @@ import input.KeyboardInput;
 public class Basket {
 	private ArrayList<LineItem> itemsList;
 	private double discount;
-	private int customerID;
 	private KeyboardInput keyboard;
+	private String customerName;
 	
 	public Basket() {
 		this.itemsList = new ArrayList<>();
@@ -63,7 +63,7 @@ public class Basket {
 	//connect with Discount class & put customer IDs in groups. the ID will act like a discount code.
 	//the discount amount will depend on the group the customer is in.
 	private void applyDiscount() {
-		customerID = keyboard.intInput();
+		customerName = keyboard.stringInput();
 	}
 	
 	public void printReceipt() {

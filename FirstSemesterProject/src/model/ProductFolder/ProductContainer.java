@@ -30,6 +30,15 @@ public class ProductContainer {
 		return null;
 	}
 	
+	public ProductForSale searchForObj(ProductForSale PFS) {
+		for (ProductForSale product : productsDatabase) {
+			if (product.equals(PFS)) {
+				return product;
+			}
+		}
+		return null;
+	}
+	
 	//CRUD Methods
 	public void create(ProductForSale obj) {
 		obj.setID(createID());

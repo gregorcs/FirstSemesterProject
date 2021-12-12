@@ -1,6 +1,7 @@
 package model;
 
 import model.ProductFolder.Product;
+import model.ProductFolder.ProductContainer;
 import model.ProductFolder.ProductForSale;
 
 public class LineItem extends Product{
@@ -17,7 +18,8 @@ public class LineItem extends Product{
 		this.prodName = p.getName();
 		this.prodID = p.getID();
 		
-		//Here it searches for the specific product, and decrements it's amount by qty
+		//decrements stock
+		ProductContainer.getInstance().searchForObj(p).DecrementStock(qty);;
 		}
 	
 		public void setQty(int qty) {

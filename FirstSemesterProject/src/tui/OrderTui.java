@@ -8,12 +8,10 @@ import model.OrderFolder.ItemOrder;
 public class OrderTui {
 	
 	private OrderController oController;
-	private OrderTuiEdit oTuiEdit;
 	private KeyboardInput kbInput;
 	
 	public OrderTui() {
 		oController = new OrderController();
-		oTuiEdit = new OrderTuiEdit();
 		kbInput = new KeyboardInput();
 		
 	}
@@ -37,9 +35,6 @@ public class OrderTui {
 			printAllOrders();
 			break;
 		case 4:
-			oTuiEdit.start();
-			break;
-		case 5:
 			oController.deleteObj();
 			break;
 		case 0:
@@ -55,8 +50,7 @@ public class OrderTui {
         System.out.println(" (1) New order");
         System.out.println(" (2) Show specific order");
         System.out.println(" (3) Show all orders");
-        System.out.println(" (4) Update order");
-        System.out.println(" (5) Delete order");
+        System.out.println(" (4) Delete order");
         System.out.println(" (0) Return to Main Menu");
         System.out.print("\n Choice:");
 	}

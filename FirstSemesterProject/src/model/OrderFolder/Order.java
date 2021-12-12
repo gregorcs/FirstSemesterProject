@@ -1,13 +1,10 @@
 package model.OrderFolder;
 
-import input.KeyboardInput;
-
 public abstract class Order {
 
 	//Variable declarations
 	private int orderID;
 	private String customerName;
-	private KeyboardInput keyboard;
 	private Basket basket;
 	
 	public Order(String customerName, Basket basket) {
