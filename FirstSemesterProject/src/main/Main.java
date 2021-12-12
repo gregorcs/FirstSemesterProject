@@ -3,7 +3,7 @@ package main;
 import model.ProductFolder.ProductContainer;
 import model.ProductFolder.ProductForSale;
 import tui.MainMenu;
-import tui.ProductTui;
+import tui.ProductTui;	
 
 public class Main {
 	
@@ -16,7 +16,7 @@ public class Main {
 	
 	static void testCreateObj() {
 		for (int i = 0; i < 4; i++) {
-			ProductContainer.getInstance().create(new ProductForSale(5, "hammer", null, 2, true, 4, 5));
+			ProductContainer.getInstance().create(new ProductForSale(30, "hammer", null, 5, true, 4, 50));
 		}
 		ProductTui prodTui = new ProductTui();
 		prodTui.printAllProductsForSale();

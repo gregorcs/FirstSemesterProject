@@ -8,7 +8,7 @@ public abstract class Product {
 	
 	//Variable declarations
 	private int ID;
-	private int amount;
+	protected int stock;
 	private String name;
 	private String location;
 	private double price;
@@ -16,8 +16,8 @@ public abstract class Product {
 	private ArrayList<Discount> discounts;
 
 	
-	public Product(int amount, String name, String location, double price, boolean available) {
-		this.amount = amount;
+	public Product(int stock, String name, String location, double price, boolean available) {
+		this.stock = stock;
 		this.name = name;
 		this.location = location;
 		this.price = price;
@@ -30,15 +30,7 @@ public abstract class Product {
 	}
 	
 	public void setID(int iD) {
-
-		/**
-		 * Could we just use
-		 * this.ID = ID;
-		 * or am I missing something here?
-		 * ~Max
-		 */
-	
-		ID = iD;
+		this.ID = iD;
 	}
 	
 	public String getName() {
@@ -58,11 +50,11 @@ public abstract class Product {
 	}
 	
 	public int getAmount() {
-		return amount;
+		return stock;
 	}
 	
 	public void setAmount(int amount) {
-		this.amount = amount;
+		this.stock = amount;
 	}
 	
 	public boolean isAvailable() {
