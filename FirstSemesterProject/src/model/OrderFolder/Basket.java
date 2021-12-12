@@ -7,15 +7,12 @@ import input.KeyboardInput;
 
 public class Basket {
 	private ArrayList<LineItem> itemsList;
-	private double totalPrice;
-	private double finalPrice;
 	private double discount;
 	private int customerID;
 	private KeyboardInput keyboard;
 	
 	public Basket() {
 		this.itemsList = new ArrayList<>();
-		this.totalPrice = 0;
 		this.discount = 0;
 	}
 	
@@ -56,6 +53,7 @@ public class Basket {
 			lineItemPrice = 0;
 			singleProdPrice = itemsList.get(i).getPrice();
 			qtyToBuy = itemsList.get(i).getQty();
+			
 			lineItemPrice += (singleProdPrice * qtyToBuy);
 			finalPrice += lineItemPrice;
 		}

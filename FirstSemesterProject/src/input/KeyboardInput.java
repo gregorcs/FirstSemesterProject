@@ -7,7 +7,6 @@ public class KeyboardInput {
 
 	private Scanner sc;
 	private PrintInput printStatement;
-	private String numRegex = ".*[0-9].*";
 	private String alphaRegex = "[ a-zA-Z]+";
 	
 	//Constructor

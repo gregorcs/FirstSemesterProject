@@ -5,11 +5,8 @@ import model.OrderFolder.OrderContainer;
 import model.LineItem;
 import model.OrderFolder.Basket;
 import model.OrderFolder.ItemOrder;
-import controller.ProductController;
-import java.util.ArrayList;
 
-
-public class OrderController implements InterfaceController<ItemOrder>{
+public class OrderController {
 	
 	private KeyboardInput keyboard;
 	private ProductController pController;
@@ -20,34 +17,24 @@ public class OrderController implements InterfaceController<ItemOrder>{
 	}
 
 	//order creation
-	@Override
 	public void createObj() {
-		int ID;
 		int customerID;
 		ItemOrder iOrder;
 		
 		printNewOrderHeader();
-		ID = OrderContainer.getInstance().createID();
+		
 		printAskCustID();
 		customerID = keyboard.intInput();
 		printAddItems();
-		iOrder = new ItemOrder(ID, customerID, addToOrder());
+		iOrder = new ItemOrder(customerID, addToOrder());
 		OrderContainer.getInstance().create(iOrder);
 	
 	}
 
-	@Override
 	public ItemOrder getObj() {
 		return OrderContainer.getInstance().searchForObj(askForID());
 	}
 
-	//what we gonna do bout this
-	@Override
-	public void updateObj() {
-		
-	}
-
-	@Override
 	public void deleteObj() {
 		ItemOrder iOrder = getObj();
 		
@@ -102,7 +89,7 @@ public class OrderController implements InterfaceController<ItemOrder>{
 		System.out.println("Please enter the ID of the customer: ");
 		
 	}
-	//change text later
+	
 	private void printAddItems() {
 		System.out.println("****Add your items****");
 		

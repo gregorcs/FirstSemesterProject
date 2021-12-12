@@ -2,22 +2,22 @@ package model;
 
 import model.ProductFolder.Product;
 import model.ProductFolder.ProductForSale;
-import input.KeyboardInput;
 
 public class LineItem extends Product{
 
 	private int qty;
 	private int prodID;
 	private String prodName;
-	private double prodPrice = 6.9;
-	private KeyboardInput keyboard;
+	private double prodPrice;
 		
 	public LineItem(ProductForSale p, int qty) {
 		super(p.getID(), p.getName(), p.getLocation(), p.getPrice(), p.isAvailable());
 		this.qty = qty;
-		//this.setProdID(p.getID());
-		//this.setProdName(p.getName());
-		//this.setProdPrice(p.getPrice());
+		this.prodPrice = p.getPrice();
+		this.prodName = p.getName();
+		this.prodID = p.getID();
+		
+		//Here it searches for the specific product, and decrements it's amount by qty
 		}
 	
 		public void setQty(int qty) {

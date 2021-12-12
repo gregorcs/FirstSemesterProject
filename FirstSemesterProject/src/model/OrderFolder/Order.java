@@ -1,8 +1,6 @@
 package model.OrderFolder;
 
-import java.util.ArrayList;
 import input.KeyboardInput;
-import model.LineItem;
 
 public abstract class Order {
 
@@ -12,7 +10,7 @@ public abstract class Order {
 	private KeyboardInput keyboard;
 	private Basket basket;
 	
-	public Order(int ID, int customerID, Basket basket) {
+	public Order(int customerID, Basket basket) {
 		this.basket = basket;
 	}
 	
