@@ -8,9 +8,5 @@
 ## General info
 This project is meant to be a system to hold different types of items, users, categories, discounts etc. It uses static containers for storing data instead of an SQL database. 
 	
-## Technologies
-Project is created with:
-Java version: 17.0.0
-	
 ## Setup
 To run this project, download the project, run the main class in Eclipse or your editor of choice.
