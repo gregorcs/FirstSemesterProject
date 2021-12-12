@@ -118,7 +118,7 @@ public class ProductController implements InterfaceController<ProductForSale> {
 	}
 	
 	public void printCreateProdHeader() {
-    	System.out.println("****** Create product for sale******");
+    	System.out.println("******Create product for sale*******");
     	System.out.println("************************************");
 	}
 	
@@ -150,5 +150,4 @@ public class ProductController implements InterfaceController<ProductForSale> {
 	public void printUnavailable() {
 		System.out.println("Unavailable product");
 	}
-
 }
