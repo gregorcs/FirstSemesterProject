@@ -18,8 +18,7 @@ public class PersonController {
 	public void createObj() {
 		String username, password, password2, role;
 		boolean correctUN = false;
-		boolean correctPass = false;;
-		
+		boolean correctPass = false;
 		
 		printCreateAccHeader();
 		
@@ -49,35 +48,31 @@ public class PersonController {
 		}
 	
 		printSuccess();
-		mm.setIsLoggedIn(true);
 		
 		role = ask4Role();
 		
 		// Object Creation
 		Person obj = new Person(username, password, role);
 		percon.create(obj);
-		percon.setUsername(username);
+		mm.setIsLoggedIn(true);
 	}
 	
 	public void updateUN() {
 		PersonContainer percon = PersonContainer.getInstance();
-		
 		Person obj = verify();
-		percon.delete(obj);
 		
 		System.out.println("Enter new username: ");
-		String username = keyboard.stringInput();
-		obj.setUsername(username);
-		percon.setUsername(username);
+		obj.setUsername(keyboard.stringInput());
 		percon.update(obj);
 	}
 	
 	public void updatePass() {
-		Person obj = verify();				
+		PersonContainer percon = PersonContainer.getInstance();
+		Person obj = verify();	
+		
 		System.out.println("Enter new password: ");
 		obj.setPassword(keyboard.stringInput());
-	
-		PersonContainer.getInstance().update(obj);
+		percon.update(obj);
 	}
 	
 	public void deleteObj() {
@@ -85,7 +80,6 @@ public class PersonController {
 		if (obj != null) {
 			PersonContainer.getInstance().delete(obj);
 			printSuccessDelete();
-			mm.setIsLoggedIn(false);
 		} else {
 			print404Error();
 		    UserSettingsMenu usm = new UserSettingsMenu();
@@ -96,9 +90,8 @@ public class PersonController {
 	public void logIn() {
 		PersonContainer percon = PersonContainer.getInstance();
 		String username, password;
-		boolean loggedIn = false;
 		
-		while(!loggedIn) {
+		while (!mm.getIsLoggedIn()) {
 			username = ask4UN();
 			if (percon.loginInfo.containsKey(username)) {
 				printAskPass();
@@ -109,9 +102,8 @@ public class PersonController {
 					password = keyboard.stringInput();
 					printLoginSuccessful();
 					mm.setIsLoggedIn(true);
-					loggedIn = true;
-					percon.setUsername(username);
 				}
+				
 			} else {
 				print404Error();
 				mm.start();
@@ -156,25 +148,15 @@ public class PersonController {
 	
 	public Person verify() {
 		PersonContainer percon = PersonContainer.getInstance();
-		boolean correct = false;
+		Person obj = getObj();
 		
-		String username = percon.getUsername();
-		
-		System.out.println("Logged in as: " + percon.getUsername());
-		printConfirmPassword();
-		String password = keyboard.stringInput();
-		while(!correct) {
-			if(password.equals(percon.loginInfo.get(username))) {
-				correct = true;
-				printVerifySuccess();
-			}
-			else {
+		while (!percon.loginInfo.containsKey(obj.getUsername())) {
 			printTryAgain();
-			printAskPass();
-			password = keyboard.stringInput();
-			}
+			obj = getObj();
 		}
-		return percon.searchForObj(username);
+		
+		System.out.println("Currently managed account: " + obj.getUsername());
+		return obj;
 	}
 	
 	public Person getObj() {

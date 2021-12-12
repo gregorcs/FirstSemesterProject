@@ -12,7 +12,7 @@ public class PersonContainer {
 	public HashMap<String, String> loginInfo = new HashMap<>();
 	public ArrayList<Person> personsList = new ArrayList<>();
 	private static PersonContainer instance;
-	private String username;
+	public Person currentUser;
 
 	//Returns the Instance
 	public static PersonContainer getInstance() {
@@ -35,27 +35,28 @@ public class PersonContainer {
 		public void create(Person obj) {
 			personsList.add(obj);
 			loginInfo.put(obj.getUsername(), obj.getPassword());
+			currentUser = obj;
 		}
 		
 		public void readAll() {
-			PersonController percontrol = new PersonController();
-			Person obj = percontrol.getObj();
-			if (obj.getRole().equals("a")) {
-				for (Entry<String, String> e : loginInfo.entrySet()) {
-		            System.out.println("Username: " + e.getKey());
-					System.out.println("Password: " + e.getValue());
+			if (currentUser.getRole().equals("A")) {
+				for (Person P : personsList) {
+		            System.out.println("Username: " + P.getUsername());
+					System.out.println("Password: " + P.getPassword());
+					System.out.println("===============================");
 					System.out.println();
 				}
 				
-				System.out.println("Total number of users: " + loginInfo.size());
+				System.out.println("Total number of users: " + personsList.size());
 			
-			} else if (obj.getRole().equals("e")) {
-				for (Entry<String, String> e : loginInfo.entrySet()) {
-		            System.out.println("Username: " + e.getKey());
+			} else if (currentUser.getRole().equals("E")) {
+				for (Person P : personsList) {
+		            System.out.println("Username: " + P.getUsername());
+					System.out.println("===============================");
 					System.out.println();
 				}
 				
-				System.out.println("Total number of users: " + loginInfo.size());
+				System.out.println("Total number of users: " + personsList.size());
 			}
 			
 		}
@@ -66,14 +67,6 @@ public class PersonContainer {
 		
 		public void delete(Person obj) {
 			loginInfo.remove(obj.getUsername(), obj.getPassword());
-		}
-		
-		public void setUsername(String username) {
-			this.username = username;
-		}
-		
-		public String getUsername() {
-			if(username == null) return "null";
-			else return this.username;
+			personsList.remove(obj);
 		}
 }

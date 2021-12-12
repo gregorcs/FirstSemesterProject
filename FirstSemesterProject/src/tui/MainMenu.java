@@ -2,7 +2,7 @@ package tui;
 
 import controller.PersonController;
 import input.KeyboardInput;
-import model.PersonFolder.Person;
+import model.PersonFolder.*;
 
 public class MainMenu {
 
@@ -11,6 +11,7 @@ public class MainMenu {
 	//Initialize variables
 	private KeyboardInput kbInput;
 	private boolean isLoggedIn = false;
+	private PersonContainer percon = PersonContainer.getInstance();
 
 	public static MainMenu getInstance() {
 		if(instance == null) {
@@ -30,24 +31,23 @@ public class MainMenu {
 		int input;
 
 		while(isRunning) {
-			printMainMenu();
-			input = kbInput.intInput();
-
 			PersonController percontrol = new PersonController();
-			Person P = percontrol.getObj();
 
 			 if (!isLoggedIn) {
+				 printMainMenu();
+				 input = kbInput.intInput();
 				 switch(input) {
 				 case 1:
 					 // Registration Process
 					 percontrol.createObj();
-					 isLoggedIn = true;
+					 setIsLoggedIn(true);
 					 break;
 				 case 2:
 					 percontrol.logIn();
-					 isLoggedIn = true;
+					 setIsLoggedIn(true);
 					 break;
 				 case 0:
+					 percon.currentUser = null;
 					 isRunning = false;
 					 printGoodbye();
 					 break;
@@ -56,7 +56,14 @@ public class MainMenu {
 					 break;
 				}
 			 } else {
-			 	String role = P.getRole(); 
+				printMMLoggedIn();
+				String role = percon.currentUser.getRole(); 
+				if (!role.equals("C")) {
+					input = kbInput.intInput();
+				} else {
+					input = 0;
+				}
+				
 				switch(role) {
 				case "A":
 					switch(input) {
@@ -65,7 +72,8 @@ public class MainMenu {
 						ordMenu.start();
 						break;
 					case 2:
-						System.out.println("To-Do -- Edit Customers");
+						AccManagementMenu amm = new AccManagementMenu();
+						amm.start();
 						break;
 					case 3:
 						ProductTui prodMenu = new ProductTui();
@@ -79,8 +87,8 @@ public class MainMenu {
 						usm.start();
 						break;
 					case 0:
-						isLoggedIn = false;
-						mainMenu();
+						setIsLoggedIn(false);
+						start();
 						break;
 					default:
 						errorMessage();
@@ -94,22 +102,19 @@ public class MainMenu {
 						ordMenu.start();
 						break;
 					case 2:
-						System.out.println("To-Do -- Edit Customers");
-						break;
-					case 3:
 						ProductTui prodMenu = new ProductTui();
 						prodMenu.start();
 						break;
-					case 4:
+					case 3:
 						System.out.println("To-Do -- Discounts");
 						break;
-					case 5:
+					case 4:
 						UserSettingsMenu usm = new UserSettingsMenu();
 						usm.start();
 						break;
 					case 0:
-						isLoggedIn = false;
-						mainMenu();
+						setIsLoggedIn(false);
+						start();
 						break;
 					default:
 						errorMessage();
@@ -118,12 +123,12 @@ public class MainMenu {
 					
 				case "C":
 					printUnprivileged();
+					setIsLoggedIn(false);
 					start();
 					break;
 				  	}
 				}
-			  	
-			}
+			 }
 		}
 
 	//Print statements
@@ -134,16 +139,33 @@ public class MainMenu {
 		    System.out.println(" (2) Log In");
 		    System.out.println(" (0) Quit the program");
 		    System.out.print("\n Choice:");
-		   } else {
-		    System.out.println("****** Main Menu ******");
-		    System.out.println(" (1) Create Order");
-		    System.out.println(" (2) Edit Customers");
-		    System.out.println(" (3) Product Menu");
-		    System.out.println(" (4) Discounts");
-		    System.out.println(" (5) User Settings");
-		    System.out.println(" (0) Log Out");
-		    System.out.print("\n Choice:");
-		   }
+		}
+	}
+	
+	private void printMMLoggedIn() {
+		String role = percon.currentUser.getRole(); 
+		
+		if (role.equals("A") || (role.equals("E"))) {
+			   System.out.println("****** Main Menu ******");
+			   System.out.println(" (1) Create Order");
+			   System.out.println(" (2) Edit Customers");
+			   System.out.println(" (3) Product Menu");
+			   System.out.println(" (4) Discounts");
+			   System.out.println(" (5) User Settings");
+			   System.out.println(" (0) Log Out");
+			   System.out.print("\n Choice:");
+			   
+		} else if (role.equals("E")) {
+			System.out.println("****** Main Menu ******");
+			   System.out.println(" (1) Create Order");
+			   System.out.println(" (2) Product Menu");
+			   System.out.println(" (3) Discounts");
+			   System.out.println(" (4) User Settings");
+			   System.out.println(" (0) Log Out");
+		
+		} else {
+			System.out.println("****** Main Menu ******");
+		}
 	}
 
 	private void printIntro() {

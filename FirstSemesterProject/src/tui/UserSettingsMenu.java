@@ -7,10 +7,9 @@ import model.PersonFolder.*;
 public class UserSettingsMenu {
 	private KeyboardInput kbInput;
 	MainMenu mm;
-	PersonContainer percon = new PersonContainer();
 	PersonController percontrol = new PersonController();
-	Person P = percontrol.getObj();
-	String role = P.getRole();
+	PersonContainer percon = PersonContainer.getInstance();
+	String role = percon.currentUser.getRole();
 	
 	public UserSettingsMenu() {
 		kbInput = new KeyboardInput();
@@ -40,10 +39,6 @@ public class UserSettingsMenu {
 					break;
 				case 3:
 					percon.readAll();
-					break;
-				case 4: 
-					percontrol.deleteObj();
-					mm.mainMenu();
 					break;
 				case 0:
 					mm.mainMenu();
@@ -75,22 +70,20 @@ public class UserSettingsMenu {
 
 	// Print Statements
 	public void printUSM() {
-		if (role.equals("a")) {
+		if (role.equals("A")) {
 			System.out.println("****** User Settings Menu ******");
 		    System.out.println(" (1) Change Username of Current Account");
 		    System.out.println(" (2) Change Password of Current Account");
 		    System.out.println(" (3) Show All Existing Accounts");
-		    System.out.println(" (4) Delete Current Account");
 		    System.out.println(" (0) Return");
 		    System.out.print("\n Choice:");
 		    
-		} else if (role.equals("e")) {
+		} else if (role.equals("E")) {
 			System.out.println("****** User Settings Menu ******");
 		    System.out.println(" (1) Change Password of Current Account");
 		    System.out.println(" (2) Show All Existing Accounts");
 		    System.out.println(" (0) Return");
 		    System.out.print("\n Choice:");
 		}
-		
 	}
 }
