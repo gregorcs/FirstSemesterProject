@@ -135,8 +135,20 @@ public class PersonController {
 		printAskRole();
 		String temp = keyboard.stringInput();
 		
-		while (!temp.equals("a") || !temp.equals("e") || !temp.equals("c")) {
+		switch (temp) {
+		case "A":
+			printSuccess();
+			break;
+		case "E":
+			printSuccess();
+			break;
+		case "C":
+			printSuccess();
+			break;
+		default:
 			printTryAgain();
+			temp = keyboard.stringInput();
+			break;
 		}
 		
 		return temp;

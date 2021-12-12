@@ -30,7 +30,7 @@ public class UserSettingsMenu {
 			input = kbInput.intInput();
 			
 			switch (role) {
-			case "a":
+			case "A":
 				switch(input) {
 				case 1:
 					percontrol.updateUN();
@@ -53,7 +53,7 @@ public class UserSettingsMenu {
 					break;
 			}
 				
-			case "e":
+			case "E":
 				switch(input) {
 				case 1:
 					percontrol.updatePass();

@@ -58,7 +58,7 @@ public class MainMenu {
 			 } else {
 			 	String role = P.getRole(); 
 				switch(role) {
-				case "a":
+				case "A":
 					switch(input) {
 					case 1:
 						OrderTui ordMenu = new OrderTui();
@@ -87,7 +87,7 @@ public class MainMenu {
 						break;
 				  	}
 					
-				case "e":
+				case "E":
 					switch(input) {
 					case 1:
 						OrderTui ordMenu = new OrderTui();
@@ -116,7 +116,7 @@ public class MainMenu {
 						break;
 				  	}
 					
-				case "c":
+				case "C":
 					printUnprivileged();
 					start();
 					break;
@@ -125,7 +125,6 @@ public class MainMenu {
 			  	
 			}
 		}
-	}
 
 	//Print statements
 	private void printMainMenu() {
