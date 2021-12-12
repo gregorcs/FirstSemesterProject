@@ -1,27 +1,30 @@
 package input;
 import java.util.Scanner;
 
-import tui.PrintInput;
-
 public class KeyboardInput {
 
 	private Scanner sc;
-	private PrintInput printStatement;
-	private String numRegex = ".*[0-9].*";
 	private String alphaRegex = "[ a-zA-Z]+";
 	
 	//Constructor
 	public KeyboardInput() {
-		printStatement = new PrintInput();
 	};
+	
+	public String input() {
+		String input = "-1";
+		sc = new Scanner(System.in);
+		
+		if (sc.hasNextLine()) {
+			return input = sc.nextLine();
+		}
+		return input;
+	}
 	
 	//String input
 	public String stringInput() {
 		String input = "-1";
 		boolean correctInput = false;
 		
-		//printStatement.askForString();
-		//while statement checks if inputed string is from a to z
 		while (!correctInput) {
 			sc = new Scanner(System.in);
 			if (sc.hasNextLine()) {
@@ -36,9 +39,8 @@ public class KeyboardInput {
 	public boolean isStringCorrect(String str) {
 		if (str.matches(alphaRegex)) {
 			return true;
-		}
-		else {
-			printStatement.askForStringAgain();
+		} else {
+			printIncorrectInput();
 			return false;
 		}
 	}
@@ -48,8 +50,6 @@ public class KeyboardInput {
 		int input = -1;
 		boolean correctInput = false;
 
-		//printStatement.askForInt();
-		//loops until user enters and integer, returns that integer
 		while (!correctInput) {
 			sc = new Scanner(System.in);
 
@@ -58,21 +58,18 @@ public class KeyboardInput {
 				
 				correctInput = numIsPositive(input);
 			} catch (Exception e) {
-				printStatement.askForIntAgain();
+				printIncorrectInput();
 			}
 		}
 		return input;
 	}
 	
 	//int logic
-	//is this good? converts int to double, idk how to do it
 	public boolean numIsPositive(double num) {
-		//checks if bigger or equal to 0 and checks against biggest possible int 
 		if ( (num >= 0) && (num < 4294967295L)) {
 			return true;
-		}
-		else {
-			printStatement.askForPositiveInt();
+		} else {
+			printIncorrectInput();
 			return false;
 		}
 	}
@@ -83,15 +80,19 @@ public class KeyboardInput {
 		
 		while(!correctInput) {
 			sc = new Scanner(System.in);
-			
+
 			try {
 				result = sc.nextDouble();
 				correctInput = numIsPositive(result);
 			} catch (Exception e) {
-				printStatement.askForIntAgain();
+				printIncorrectInput();
 			}
 		}
 		return result;
+	}
+	
+	private void printIncorrectInput() {
+		System.out.println("Incorrect input, try again: ");
 	}
 }
 
