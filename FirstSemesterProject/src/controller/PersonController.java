@@ -92,7 +92,8 @@ public class PersonController {
 		String username, password;
 		
 		while (!mm.getIsLoggedIn()) {
-			username = ask4UN();
+			Person obj = getObj();
+            username = obj.getUsername();
 			if (percon.loginInfo.containsKey(username)) {
 				printAskPass();
 				password = keyboard.stringInput();
@@ -102,6 +103,7 @@ public class PersonController {
 					password = keyboard.stringInput();
 					printLoginSuccessful();
 					mm.setIsLoggedIn(true);
+					percon.currentUser = obj;
 				}
 				
 			} else {

@@ -55,7 +55,6 @@ public class PersonContainer {
 					System.out.println("===============================");
 					System.out.println();
 				}
-				
 				System.out.println("Total number of users: " + personsList.size());
 			}
 			

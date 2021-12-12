@@ -2,6 +2,8 @@ package controller;
 
 import input.KeyboardInput;
 import model.OrderFolder.OrderContainer;
+import model.PersonFolder.Person;
+import model.PersonFolder.PersonContainer;
 import model.ProductFolder.ProductForSale;
 import model.LineItem;
 import model.OrderFolder.Basket;
@@ -19,19 +21,34 @@ public class OrderController {
 
 	//order creation
 	public void createObj() {
-		String customerName;
+		String customerName = null;
 		ItemOrder iOrder;
+		boolean isCorrect = false;
 		
 		printNewOrderHeader();
 		
-		printAskCustName();
-		customerName = keyboard.stringInput();
+		while(!isCorrect) {
+			printAskCustName();
+			customerName = keyboard.stringInput();
+			isCorrect = customerExists(customerName);
+		}
+		
 		printAddItems();
 		iOrder = new ItemOrder(customerName, addToOrder());
 			OrderContainer.getInstance().create(iOrder);
-	
 	}
-
+	
+	public boolean customerExists(String customerName) {
+		Person p = PersonContainer.getInstance().searchForObj(customerName);
+		if ( (p != null) && (p.getRole().equals("C"))) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+	
 	public ItemOrder getObj() {
 		return OrderContainer.getInstance().searchForObj(askForID());
 	}
