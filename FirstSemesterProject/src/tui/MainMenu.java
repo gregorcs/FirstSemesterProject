@@ -2,6 +2,7 @@ package tui;
 
 import controller.PersonController;
 import input.KeyboardInput;
+import model.PersonFolder.Person;
 
 public class MainMenu {
 	
@@ -17,6 +18,7 @@ public class MainMenu {
 		}
 		return instance;
 	}
+<<<<<<< Updated upstream
 	
 	//constructor
 	/*public MainMenu() {
@@ -24,12 +26,19 @@ public class MainMenu {
 	}*/
 	
 	//start method to call 
+=======
+
+>>>>>>> Stashed changes
 	public void start() {
 		printIntro();
 		mainMenu();
 	}
+<<<<<<< Updated upstream
 	
 	//main menu input and output
+=======
+
+>>>>>>> Stashed changes
 	public void mainMenu() {
 		kbInput = new KeyboardInput();
 		boolean isRunning = true;
@@ -38,9 +47,14 @@ public class MainMenu {
 		while(isRunning) {
 			printMainMenu();
 			input = kbInput.intInput();
+<<<<<<< Updated upstream
 			
+=======
+			PersonController percontrol = new PersonController();
+			Person P = percontrol.getObj();
+
+>>>>>>> Stashed changes
 			 if (!isLoggedIn) {
-				 PersonController percontrol = new PersonController();
 				 switch(input) {
 				 case 1:
 					 // Registration Process
@@ -60,6 +74,7 @@ public class MainMenu {
 					 break;
 				}
 			 } else {
+<<<<<<< Updated upstream
 			  	switch(input) {
 				case 1:
 					System.out.println("To-Do -- Create Order");
@@ -77,20 +92,85 @@ public class MainMenu {
 				case 5:
 					UserSettingsMenu usm = new UserSettingsMenu();
 					usm.start();
+=======
+			 	String role = P.getRole(); 
+				switch(role) {
+				case "a":
+					switch(input) {
+					case 1:
+						OrderTui ordMenu = new OrderTui();
+						ordMenu.start();
+						break;
+					case 2:
+						System.out.println("To-Do -- Edit Customers");
+						break;
+					case 3:
+						ProductTui prodMenu = new ProductTui();
+						prodMenu.start();
+						break;
+					case 4:
+						System.out.println("To-Do -- Discounts");
+						break;
+					case 5:
+						UserSettingsMenu usm = new UserSettingsMenu();
+						usm.start();
+						break;
+					case 0:
+						isLoggedIn = false;
+						mainMenu();
+						break;
+					default:
+						errorMessage();
+						break;
+				  	}
+					
+				case "e":
+					switch(input) {
+					case 1:
+						OrderTui ordMenu = new OrderTui();
+						ordMenu.start();
+						break;
+					case 2:
+						System.out.println("To-Do -- Edit Customers");
+						break;
+					case 3:
+						ProductTui prodMenu = new ProductTui();
+						prodMenu.start();
+						break;
+					case 4:
+						System.out.println("To-Do -- Discounts");
+						break;
+					case 5:
+						UserSettingsMenu usm = new UserSettingsMenu();
+						usm.start();
+						break;
+					case 0:
+						isLoggedIn = false;
+						mainMenu();
+						break;
+					default:
+						errorMessage();
+						break;
+				  	}
+					
+				case "c":
+					printUnprivileged();
+					start();
+>>>>>>> Stashed changes
 					break;
-				case 0:
-					isLoggedIn = false;
-					mainMenu();
-					break;
-				default:
-					errorMessage();
-					break;
-			  	}
+				  	}
+				}
+			  	
 			}
 		}
+<<<<<<< Updated upstream
 	}
 	
 	//Print statements 
+=======
+
+	//Print statements
+>>>>>>> Stashed changes
 	private void printMainMenu() {
 		if (!isLoggedIn) {
 			System.out.println("****** Main Menu ******");
@@ -118,6 +198,13 @@ public class MainMenu {
 		System.out.println("Thank you for shopping with us!");
 	}
 	
+<<<<<<< Updated upstream
+=======
+	private void printUnprivileged() {
+		System.out.println("Unfortunately, your account lacks the privileges required to display this page.");
+	}
+	
+>>>>>>> Stashed changes
 	void errorMessage() {
 		System.out.println("Input does not match menu, try again: ");
 	}

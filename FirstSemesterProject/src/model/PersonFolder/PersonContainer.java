@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import controller.PersonController;
+
 public class PersonContainer {
 
 	// Declaration of Variables
-	public HashMap<String, String> personsDatabase = new HashMap<>();
+	public HashMap<String, String> loginInfo = new HashMap<>();
 	public ArrayList<Person> personsList = new ArrayList<>();
 	private static PersonContainer instance;
 	private String username;
@@ -32,26 +34,38 @@ public class PersonContainer {
 	//CRUD Methods
 		public void create(Person obj) {
 			personsList.add(obj);
-			personsDatabase.put(obj.getUsername(), obj.getPassword());
+			loginInfo.put(obj.getUsername(), obj.getPassword());
 		}
 		
 		public void readAll() {
-			for (Entry<String, String> e : personsDatabase.entrySet()) {
-	            System.out.println("Username: " + e.getKey());
-			// For Testing Purposes ONLY
-				System.out.println("Password: " + e.getValue());
-				System.out.println();
+			PersonController percontrol = new PersonController();
+			Person obj = percontrol.getObj();
+			if (obj.getRole().equals("a")) {
+				for (Entry<String, String> e : loginInfo.entrySet()) {
+		            System.out.println("Username: " + e.getKey());
+					System.out.println("Password: " + e.getValue());
+					System.out.println();
+				}
+				
+				System.out.println("Total number of users: " + loginInfo.size());
+			
+			} else if (obj.getRole().equals("e")) {
+				for (Entry<String, String> e : loginInfo.entrySet()) {
+		            System.out.println("Username: " + e.getKey());
+					System.out.println();
+				}
+				
+				System.out.println("Total number of users: " + loginInfo.size());
 			}
 			
-			System.out.println("Total number of users: " + personsDatabase.size());
 		}
 
 		public void update(Person obj) {
-			personsDatabase.put(obj.getUsername(), obj.getPassword());
+			loginInfo.put(obj.getUsername(), obj.getPassword());
 		}
 		
 		public void delete(Person obj) {
-			personsDatabase.remove(obj.getUsername(), obj.getPassword());
+			loginInfo.remove(obj.getUsername(), obj.getPassword());
 		}
 		
 		public void setUsername(String username) {

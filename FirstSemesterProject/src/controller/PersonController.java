@@ -1,8 +1,10 @@
 package controller;
 
+
 import input.KeyboardInput;
 import model.PersonFolder.*;
 import tui.MainMenu;
+import tui.UserSettingsMenu;
 
 public class PersonController {
 	private KeyboardInput keyboard;
@@ -14,9 +16,9 @@ public class PersonController {
 	}
 	
 	public void createObj() {
-		String username, password, password2;
-		boolean correct = false;
+		String username, password, password2, role;
 		boolean correctUN = false;
+		boolean correctPass = false;;
 		
 		
 		printCreateAccHeader();
@@ -25,21 +27,22 @@ public class PersonController {
 		PersonContainer percon = PersonContainer.getInstance();
 		username = ask4UN();
 		while(!correctUN) {
-			if(!percon.personsDatabase.containsKey(username)) {
+			if (!percon.loginInfo.containsKey(username)) {
 				correctUN = true;
-			}else {
+			} else {
+				printDupeError();
 				username = ask4UN();
 			}
 		}
 		
 		password = ask4Pass();
 		
-		// bugged but working on it if we got time
+		// double checks password input
 		 printConfirm();
-		 while (!correct) {
+		 while (!correctPass) {
 			 password2 = keyboard.stringInput();
 			   if (password2.equals(password)) {
-				   correct = true;
+				   correctPass = true;
 			   } else {
 				   printTryAgain();
 			   }
@@ -47,8 +50,11 @@ public class PersonController {
 	
 		printSuccess();
 		mm.setIsLoggedIn(true);
+		
+		role = ask4Role();
+		
 		// Object Creation
-		Person obj = new Person(username, password);
+		Person obj = new Person(username, password, role);
 		percon.create(obj);
 		percon.setUsername(username);
 	}
@@ -82,6 +88,8 @@ public class PersonController {
 			mm.setIsLoggedIn(false);
 		} else {
 			print404Error();
+		    UserSettingsMenu usm = new UserSettingsMenu();
+		    usm.start();
 		}
 	}
 	
@@ -92,20 +100,21 @@ public class PersonController {
 		
 		while(!loggedIn) {
 			username = ask4UN();
-			if(percon.personsDatabase.containsKey(username)) {
+			if (percon.loginInfo.containsKey(username)) {
 				printAskPass();
 				password = keyboard.stringInput();
-				while(!password.equals(percon.personsDatabase.get(username))) {
+				
+				while (!password.equals(percon.loginInfo.get(username))) {
 					printTryAgain();
-					password = keyboard.stringInput(); ///There is no option in this to stop login in. Once you click login you stuck until you login.
+					password = keyboard.stringInput();
+					printLoginSuccessful();
+					mm.setIsLoggedIn(true);
+					loggedIn = true;
+					percon.setUsername(username);
 				}
-				printLoginSuccessful();
-				mm.setIsLoggedIn(true);
-				loggedIn = true;
-				percon.setUsername(username);
-			}
-			else {
+			} else {
 				print404Error();
+				mm.start();
 			}
 		}
 	}
@@ -122,6 +131,17 @@ public class PersonController {
 		return temp;
 	}
 	
+	public String ask4Role() {
+		printAskRole();
+		String temp = keyboard.stringInput();
+		
+		while (!temp.equals("a") || !temp.equals("e") || !temp.equals("c")) {
+			printTryAgain();
+		}
+		
+		return temp;
+	}
+	
 	public Person verify() {
 		PersonContainer percon = PersonContainer.getInstance();
 		boolean correct = false;
@@ -132,7 +152,7 @@ public class PersonController {
 		printConfirmPassword();
 		String password = keyboard.stringInput();
 		while(!correct) {
-			if(password.equals(percon.personsDatabase.get(username))) {
+			if(password.equals(percon.loginInfo.get(username))) {
 				correct = true;
 				printVerifySuccess();
 			}
@@ -166,6 +186,13 @@ public class PersonController {
 		System.out.println("Enter password: ");
 	}
 	
+	private void printAskRole() {
+		System.out.println("Please press the key depicting the role you'd like to assign to this account:");
+		System.out.println("(A) Admin");
+		System.out.println("(E) Employee");
+		System.out.println("(C) Customer");
+	}
+	
 	public void printSuccess() {
 		System.out.println("Credentials set successfully.");
 	}
@@ -187,7 +214,7 @@ public class PersonController {
 	}
 	
 	public void printTryAgain() {
-		System.out.println("The password is incorrect! Please try again.");
+		System.out.println("Invalid input detected. Please try again.");
 	}
 	
 	public void printDupeError() {
