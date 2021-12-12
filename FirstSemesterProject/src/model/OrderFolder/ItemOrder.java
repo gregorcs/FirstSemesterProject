@@ -2,7 +2,7 @@ package model.OrderFolder;
 
 public class ItemOrder extends Order{
 	
-	public ItemOrder(int customerID, Basket basket) {
-		super(customerID, basket);
+	public ItemOrder(String customerName, Basket basket) {
+		super(customerName, basket);
 	}
 }

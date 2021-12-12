@@ -6,12 +6,13 @@ public abstract class Order {
 
 	//Variable declarations
 	private int orderID;
-	private int customerID;
+	private String customerName;
 	private KeyboardInput keyboard;
 	private Basket basket;
 	
-	public Order(int customerID, Basket basket) {
+	public Order(String customerName, Basket basket) {
 		this.basket = basket;
+		this.customerName = customerName;
 	}
 	
 	//Getters & setters
@@ -30,11 +31,11 @@ public abstract class Order {
 		this.orderID = orderID;
 	}
 
-	public int getCustomerID() {
-		return customerID;
+	public String getCustomerName() {
+		return customerName;
 	}
-	
-	public void setCustomerID() {
-		customerID = keyboard.intInput();
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 }

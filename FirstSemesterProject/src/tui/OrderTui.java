@@ -84,7 +84,7 @@ public class OrderTui {
 	private void printOrderInformation(ItemOrder order) {
 		System.out.println("------------------------------------");
 		System.out.println("ID: " + order.getID());
-		System.out.println("Customer ID: " + order.getCustomerID());
+		System.out.println("Customer name: " + order.getCustomerName());
 		System.out.println("Quantity: " + order.getBasket().getQuantity());
 		System.out.println("Total: " + order.getBasket().getTotalPrice());
 		System.out.println("------------------------------------");	

@@ -18,15 +18,15 @@ public class OrderController {
 
 	//order creation
 	public void createObj() {
-		int customerID;
+		String customerName;
 		ItemOrder iOrder;
 		
 		printNewOrderHeader();
 		
-		printAskCustID();
-		customerID = keyboard.intInput();
+		printAskCustName();
+		customerName = keyboard.stringInput();
 		printAddItems();
-		iOrder = new ItemOrder(customerID, addToOrder());
+		iOrder = new ItemOrder(customerName, addToOrder());
 		OrderContainer.getInstance().create(iOrder);
 	
 	}
@@ -85,8 +85,8 @@ public class OrderController {
 		System.out.println("Please enter the ID of the order: ");
 	}
 
-	private void printAskCustID() {
-		System.out.println("Please enter the ID of the customer: ");
+	private void printAskCustName() {
+		System.out.println("Please enter the name of the customer: ");
 		
 	}
 	

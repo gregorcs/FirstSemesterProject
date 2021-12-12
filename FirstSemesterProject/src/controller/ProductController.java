@@ -4,7 +4,7 @@ import input.KeyboardInput;
 import model.ProductFolder.ProductContainer;
 import model.ProductFolder.ProductForSale;
 
-public class ProductController implements InterfaceController<ProductForSale> {
+public class ProductController {
 
 	private KeyboardInput keyboard;
 	
@@ -12,7 +12,6 @@ public class ProductController implements InterfaceController<ProductForSale> {
 		keyboard = new KeyboardInput();
 	}
 	
-	@Override
 	public void createObj() {
     	int  amount, minAmount, maxAmount;
     	double price;
@@ -40,17 +39,14 @@ public class ProductController implements InterfaceController<ProductForSale> {
 		ProductContainer.getInstance().create(pForSale);
 	}
 	
-	@Override
 	public ProductForSale getObj() {
 		return ProductContainer.getInstance().searchForObj(askForID());
 	}
 
-	@Override
 	public void updateObj() {
 		
 	}
 
-	@Override
 	public void deleteObj() {
 		ProductForSale product = getObj();
 		
