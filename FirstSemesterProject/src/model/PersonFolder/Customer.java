@@ -1,4 +1,4 @@
-package controller;
+package model.PersonFolder;
 
 public class Customer {
 

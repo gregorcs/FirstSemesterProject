@@ -3,9 +3,9 @@ package model.OrderFolder;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-import controller.Customer;
 import discountFolder.Discount;
 import model.LineItem;
+import model.PersonFolder.Customer;
 import input.KeyboardInput;
 
 public class Basket {

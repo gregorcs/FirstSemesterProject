@@ -6,6 +6,8 @@ import discountFolder.Discount;
 import discountFolder.DiscountContainer;
 import input.KeyboardInput;
 import model.OrderFolder.OrderContainer;
+import model.PersonFolder.Customer;
+import model.PersonFolder.CustomerContainer;
 import model.PersonFolder.Person;
 import model.PersonFolder.PersonContainer;
 import model.ProductFolder.ProductForSale;
@@ -35,7 +37,7 @@ public class OrderController {
 		while(!isCorrect) {
 			printAskCustName();
 			customerName = keyboard.stringInput();
-			isCorrect = customerExists(customerName);
+			isCorrect = CustomerContainer.getInstance().customerExists(customerName);
 		}				
 		
 		basket = new Basket(addToBasket(), addDiscounts());
@@ -70,16 +72,8 @@ public class OrderController {
 		return discountAL;
 	}
 	
-	
-	public boolean customerExists(String customerName) {
-		Person p = PersonContainer.getInstance().searchForObj(customerName);
-		if ( (p != null) && (p.getRole().equals("C"))) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+	//this should be in customerController
+
 	
 	public ItemOrder getObj() {
 		return OrderContainer.getInstance().searchForObj(askForID());
