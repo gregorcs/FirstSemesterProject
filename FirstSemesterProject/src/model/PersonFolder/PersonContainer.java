@@ -11,7 +11,7 @@ public class PersonContainer {
 	// Declaration of Variables
 	public HashMap<String, String> loginInfo = new HashMap<>();
 	public ArrayList<Person> personsList = new ArrayList<>();
-	public Person currentUser;
+	private Person currentUser;
 	private static PersonContainer instance;
 
 	//Returns the Instance
@@ -67,5 +67,13 @@ public class PersonContainer {
 		public void delete(Person obj) {
 			loginInfo.remove(obj.getUsername(), obj.getPassword());
 			personsList.remove(obj);
+		}
+		
+		public void setCurrentUser(Person currentUser){
+			this.currentUser = currentUser;
+		}
+		
+		public Person getCurrentUser(){
+			return currentUser;
 		}
 }

@@ -12,6 +12,7 @@ public class MainMenu {
 	private KeyboardInput kbInput;
 	private boolean isLoggedIn = false;
 	private PersonContainer percon = PersonContainer.getInstance();
+	private PrintOuts po = new PrintOuts();
 	
 
 	public static MainMenu getInstance() {
@@ -22,106 +23,27 @@ public class MainMenu {
 	}
 
 	public void start() {
-		printIntro();
+		po.printIntro();
 		mainMenu();
 	}
 
 	public void mainMenu() {
 		kbInput = new KeyboardInput();
 		boolean isRunning = true;
-		int input;
 
 		while(isRunning) {
 			 if (!isLoggedIn) {
-				 printMainMenu();
+				 po.printMainMenu();
 				 notLoggedInMenu();
 			 } else { 
-				String role = percon.currentUser.getRole();
-				printMainMenu();
-				
-				if (!role.equals("C")) {
-					input = kbInput.intInput();
-				} else {
-					input = 0;
-				}
-				
-				switch(role) {
-					case "A":
-						switch(input) {
-							case 1:
-								OrderTui ordMenu = new OrderTui();
-								ordMenu.start();
-								break;
-							case 2:
-								AccManagementMenu amm = new AccManagementMenu();
-								amm.start();
-								break;
-							case 3:
-								ProductTui prodMenu = new ProductTui();
-								prodMenu.start();
-								break;
-							case 4:
-								System.out.println("To-Do -- Discounts");
-								break;
-							case 5:
-								UserSettingsMenu usm = new UserSettingsMenu();
-								usm.start();
-								break;
-							case 0:
-								setIsLoggedIn(false);
-								percon.currentUser = null;
-								start();
-								break;
-							default:
-								errorMessage();
-								break;
-					  	}
-						
-					case "E":
-						switch(input) {
-							case 1:
-								OrderTui ordMenu = new OrderTui();
-								ordMenu.start();
-								break;
-							case 2:
-								ProductTui prodMenu = new ProductTui();
-								prodMenu.start();
-								break;
-							case 3:
-								System.out.println("To-Do -- Discounts");
-								break;
-							case 4:
-								UserSettingsMenu usm = new UserSettingsMenu();
-								usm.start();
-								break;
-							case 0:
-								percon.currentUser = null;
-								setIsLoggedIn(false);
-								start();
-								break;
-							default:
-								errorMessage();
-								break;
-					  	}
-						
-					case "C":
-						switch (input) {
-						case 0 :
-						printUnprivileged();
-						percon.currentUser = null;
-						setIsLoggedIn(false);
-						start();
-						break;
-						}
-					}
-				}
-			 }
+				po.printMainMenu();
+				loggedInMenu();				
+			}
 		}
+	}
 
-	
-	
 	public void notLoggedInMenu() {
-		 printMainMenu();
+		 po.printMainMenu();
 		 PersonController percontrol = new PersonController();
 		 int input = kbInput.intInput();
 		 switch(input) {
@@ -135,70 +57,87 @@ public class MainMenu {
 			 setIsLoggedIn(true);
 			 break;
 		 case 0:
-			 printGoodbye();
+			 po.printGoodbye();
 			 break;
 		 default:
-			 errorMessage();
+			 po.errorMessage();
 			 break;
 		 }
 	}
 	
-	//Print statements
-	private void printMainMenu() {
-		if (!isLoggedIn) {
-			System.out.println("****** Main Menu ******");
-			System.out.println(" (1) Register");
-		    System.out.println(" (2) Log In");
-		    System.out.println(" (0) Quit the program");
-		    System.out.print("\n Choice:");
-		} else {
-		String role = percon.currentUser.getRole(); 
-		
-		if (role.equals("A")) {
-			   System.out.println("****** Main Menu ******");
-			   System.out.println(" (1) Create Order");
-			   System.out.println(" (2) Edit Customers");
-			   System.out.println(" (3) Product Menu");
-			   System.out.println(" (4) Discounts");
-			   System.out.println(" (5) User Settings");
-			   System.out.println(" (0) Log Out");
-			   System.out.print("\n Choice:");
-			   
-		} else if (role.equals("E")) {
-			System.out.println("****** Main Menu ******");
-			   System.out.println(" (1) Create Order");
-			   System.out.println(" (2) Product Menu");
-			   System.out.println(" (3) Discounts");
-			   System.out.println(" (4) User Settings");
-			   System.out.println(" (0) Log Out");
-	    }
-	  }
-	}
-	
-	// Print Methods
-	private void printIntro() {
-		System.out.println("****** Shopping in Vestbjerg Byggecenter ******");
-	}
-
-	private void printGoodbye() {
-		System.out.println("Thank you for shopping with us!");
-	}
-	private void printUnprivileged() {
-		System.out.println("****** Main Menu ******");
-		System.out.println("Unfortunately, your account lacks the privileges required to display this page.");
-		System.out.println("You have been logged out automatically.");
-	}
-  
-	void errorMessage() {
-		System.out.println("Invalid input, try again: ");
-	}
+	public void loggedInMenu() {
+		int input = kbInput.intInput();
+		String role = percon.getCurrentUser().getRole();
+		switch(role) {
+			case "A":
+				switch(input) {
+					case 1:
+						OrderTui ordMenu = new OrderTui();
+						ordMenu.start();
+						break;
+					case 2:
+						AccManagementMenu amm = new AccManagementMenu();
+						amm.start();
+						break;
+					case 3:
+						CustomerManageMenu cmm = new CustomerManageMenu();
+						cmm.start();
+					case 4:
+						ProductTui prodMenu = new ProductTui();
+						prodMenu.start();
+						break;
+					case 5:
+						System.out.println("To-Do -- Discounts");
+						break;
+					case 6:
+						UserSettingsMenu usm = new UserSettingsMenu();
+						usm.start();
+						break;
+					case 0:
+						setIsLoggedIn(false);
+						percon.setCurrentUser(null);
+						start();
+						break;
+					default:
+						po.errorMessage();
+						break;
+			  	}
+				
+			case "E":
+				switch(input) {
+					case 1:
+						OrderTui ordMenu = new OrderTui();
+						ordMenu.start();
+						break;
+					case 2:
+						ProductTui prodMenu = new ProductTui();
+						prodMenu.start();
+						break;
+					case 3:
+						System.out.println("To-Do -- Discounts");
+						break;
+					case 4:
+						UserSettingsMenu usm = new UserSettingsMenu();
+						usm.start();
+						break;
+					case 0:
+						setIsLoggedIn(false);
+						percon.setCurrentUser(null);
+						start();
+						break;
+					default:
+						po.errorMessage();
+						break;
+			  	}
+			}
+		}
 	
 	// Setters n' Getters
-	public void setIsLoggedIn(boolean isLoggedIn) {
-		this.isLoggedIn = isLoggedIn;
-	}
+		public void setIsLoggedIn(boolean isLoggedIn) {
+			this.isLoggedIn = isLoggedIn;
+		}
 
-	public boolean getIsLoggedIn() {
-		return isLoggedIn;
-	}
+		public boolean getIsLoggedIn() {
+			return isLoggedIn;
+		}
 }

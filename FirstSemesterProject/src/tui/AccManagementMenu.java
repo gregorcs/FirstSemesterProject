@@ -7,7 +7,8 @@ import model.PersonFolder.*;
 public class AccManagementMenu {
 	
 		private KeyboardInput kbInput;
-		MainMenu mm;
+		MainMenu mm = MainMenu.getInstance();
+		PrintOuts po = new PrintOuts();
 		PersonController percontrol = new PersonController();
 		PersonContainer percon = PersonContainer.getInstance();
 		
@@ -26,7 +27,7 @@ public class AccManagementMenu {
 			int input;
 			
 			while(isRunning) {
-				printAMM();
+				po.printAMM();
 				
 				input = kbInput.intInput();
 				
@@ -44,18 +45,9 @@ public class AccManagementMenu {
 						mm.mainMenu();
 						break;
 					default:
-						mm.errorMessage();
+						po.errorMessage();
 						break;		
 					}
 				}
 			}
-
-		public void printAMM() {
-			System.out.println("****** Account Management Menu ******");
-			System.out.println(" (1) Change Username of Selected Account");
-		    System.out.println(" (2) Change Password of Selected Account");
-		    System.out.println(" (3) Delete Selected Account");
-		    System.out.println(" (0) Return");
-		    System.out.print("\n Choice:");
 		}
-}

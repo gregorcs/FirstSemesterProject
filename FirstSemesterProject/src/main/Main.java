@@ -9,7 +9,7 @@ public class Main {
 	
 	public static void main (String args[]) {
 		testCreateObj();
-		MainMenu mainMenu = new MainMenu();
+		MainMenu mainMenu = MainMenu.getInstance();
 		mainMenu.start();
 		
 	}
