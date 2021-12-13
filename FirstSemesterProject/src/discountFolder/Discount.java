@@ -31,4 +31,8 @@ public class Discount {
 	public void setID(int iD) {
 		ID = iD;
 	}
+
+	public int getMAX_PERCENTAGE() {
+		return MAX_PERCENTAGE;
+	}
 }

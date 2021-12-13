@@ -48,22 +48,25 @@ public class OrderController {
 		DiscountController dController = new DiscountController();
 		ArrayList<Discount> discountAL = new ArrayList<Discount>();
 		Discount discount= null;
-		boolean isCorrect = false;
+		boolean isCorrect = true;
 		int input = 0;
 		
-		while (input != -1) {									//asks if you want to add another discount
-			while(discount == null) {							//checks if discount exists
+		while (input != -1 && isCorrect) {									//asks if you want to add another discount															//checks if discount exists
 			System.out.println("Enter discount ID: ");
 			if (DiscountContainer.getInstance().arraySize() != 0) {
-				discount = dController.getObj();					//runs infinitely if discarray is empty
+				discount = dController.getObj();
+				if (discount == null) {
+					isCorrect = false;
+				} else {
+					discountAL.add(discount);
+				}
+				printAskCont();											//runs infinitely if discarray is empty
 			} else {
-				return discountAL;										//this can be simplified, just return everything
+				printUnavDiscount();
+				return discountAL;										//check earlier if discount array is 0!!!!
 			}
-			discountAL.add(discount);
-			printAskCont();
 			input = keyboard.intInput();
-			}
-		}
+			}	
 		return discountAL;
 	}
 	
@@ -166,6 +169,10 @@ public class OrderController {
 	public void printUnavailable() {
 		System.out.println("Unavailable order");
 		
+	}
+	//this should be in discount classes, but have no time 
+	public void printUnavDiscount() {
+		System.out.println("No discounts available");
 	}
 
 }
