@@ -71,9 +71,24 @@ public class PersonController {
 	public void updatePass() {
 		PersonContainer percon = PersonContainer.getInstance();
 		Person obj = verify();	
+		String password, password2;
+		boolean correctPass = false;
 		
 		System.out.println("Enter new password: ");
-		obj.setPassword(keyboard.stringInput());
+		password = keyboard.stringInput();
+		
+		// double checks password input
+		po.printConfirmPassword();
+		while (!correctPass) {
+			password2 = keyboard.stringInput();
+			if (password2.equals(password)) {
+				correctPass = true;
+			} else {
+				po.printTryAgain();
+			}
+		 }
+		po.printSuccess();
+		obj.setPassword(password);
 		percon.update(obj);
 	}
 	
@@ -116,7 +131,6 @@ public class PersonController {
 				while (!password.equals(percon.loginInfo.get(username))) {
 					po.printTryAgain();
 					password = keyboard.stringInput();
-					//IF KEYBOARDINOUT = 0 STOP = TRUE without loggedintrue
 				}
 				po.printLoginSuccessful();
 				percon.setIsLoggedIn(true);
@@ -171,15 +185,19 @@ public class PersonController {
 	
 	public Person verify() {
 		PersonContainer percon = PersonContainer.getInstance();
-		Person obj = getObj();
+		Person currentUser = percon.getCurrentUser();
+		po.printAskPass();
+		String password = keyboard.stringInput();
 		
-		while (!percon.loginInfo.containsKey(obj.getUsername())) {
+		while (!password.equals(percon.loginInfo.get(currentUser.getUsername()))) {
 			po.printTryAgain();
-			obj = getObj();
+			po.printAskPass();
+			password = keyboard.stringInput();
 		}
 		
-		System.out.println("Currently managed account: " + obj.getUsername());
-		return obj;
+		
+		System.out.println("Currently managed account: " + currentUser.getUsername());
+		return currentUser;
 	}
 	
 	public Person getObj() {
