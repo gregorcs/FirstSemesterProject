@@ -6,11 +6,8 @@ import discountFolder.Discount;
 import discountFolder.DiscountContainer;
 import input.KeyboardInput;
 import model.OrderFolder.OrderContainer;
-<<<<<<< Updated upstream
 import model.PersonFolder.Person;
 import model.PersonFolder.PersonContainer;
-=======
->>>>>>> Stashed changes
 import model.ProductFolder.ProductForSale;
 import model.LineItem;
 import model.OrderFolder.Basket;
@@ -35,17 +32,11 @@ public class OrderController {
 		
 		printNewOrderHeader();
 		
-		//while(!isCorrect) {
+		while(!isCorrect) {
 			printAskCustName();
-<<<<<<< Updated upstream
 			customerName = keyboard.stringInput();
 			isCorrect = customerExists(customerName);
 		}				
-=======
-			//customerName = keyboard.stringInput();
-			//isCorrect = CustomerContainer.getInstance().customerExists(customerName);
-		//}				
->>>>>>> Stashed changes
 		
 		basket = new Basket(addToBasket(), addDiscounts());
 		printAddItems();
@@ -61,7 +52,7 @@ public class OrderController {
 		int input = 0;
 		
 		while (input != -1 && isCorrect) {									//asks if you want to add another discount															//checks if discount exists
-			printAskDiscountID();
+			System.out.println("Enter discount ID: ");
 			if (DiscountContainer.getInstance().arraySize() != 0) {
 				discount = dController.getObj();
 				if (discount == null) {
@@ -151,10 +142,6 @@ public class OrderController {
 		System.out.println("Please enter the ID of the order: ");
 	}
 
-	private void printAskDiscountID() {
-		System.out.println("Enter discount ID: ");
-	}
-	
 	private void printAskCustName() {
 		System.out.println("Please enter the name of the customer: ");	
 	}

@@ -4,11 +4,7 @@ package controller;
 import input.KeyboardInput;
 import model.PersonFolder.*;
 import tui.MainMenu;
-<<<<<<< Updated upstream
 import tui.UserSettingsMenu;
-=======
-import tui.PrintOuts;
->>>>>>> Stashed changes
 
 public class PersonController {
 	private KeyboardInput keyboard;
