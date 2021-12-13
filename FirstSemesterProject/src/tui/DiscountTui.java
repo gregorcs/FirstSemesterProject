@@ -1,5 +1,7 @@
 package tui;
 
+import java.util.ArrayList;
+
 import controller.DiscountController;
 import discountFolder.Discount;
 import discountFolder.DiscountContainer;
@@ -78,6 +80,15 @@ public class DiscountTui {
 			System.out.println(ProductContainer.getInstance().arraySize());
 		}
 	}
+	
+	public void printRequestedDiscounts(ArrayList<Discount> al) {
+		//what do we do with this?
+		for (Discount discount : al) {
+			printProductInformation(discount);
+			System.out.println(ProductContainer.getInstance().arraySize());
+		}
+	}
+	
 	public void printProductInformation(Discount discount) {
 		System.out.println("------------------------------------");
 		System.out.println("ID: " + discount.getID());

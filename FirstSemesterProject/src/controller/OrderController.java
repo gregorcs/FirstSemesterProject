@@ -1,5 +1,9 @@
 package controller;
 
+import java.util.ArrayList;
+
+import discountFolder.Discount;
+import discountFolder.DiscountContainer;
 import input.KeyboardInput;
 import model.OrderFolder.OrderContainer;
 import model.PersonFolder.Person;
@@ -24,6 +28,7 @@ public class OrderController {
 		String customerName = null;
 		ItemOrder iOrder;
 		boolean isCorrect = false;
+		Basket basket;
 		
 		printNewOrderHeader();
 		
@@ -31,12 +36,34 @@ public class OrderController {
 			printAskCustName();
 			customerName = keyboard.stringInput();
 			isCorrect = customerExists(customerName);
-		}
+		}				
 		
-		printAddItems();
-		iOrder = new ItemOrder(customerName, addToOrder());
-			OrderContainer.getInstance().create(iOrder);
+		basket = new Basket(addToBasket(), addDiscounts());
+		printAddItems();											
+		iOrder = new ItemOrder(customerName, basket);
+		OrderContainer.getInstance().create(iOrder);
+		System.out.println(basket.getListOfDiscounts().get(0).getDiscPercentage());
 	}
+
+	private ArrayList<Discount> addDiscounts() {
+		DiscountController dController = new DiscountController();
+		ArrayList<Discount> discountAL = new ArrayList<Discount>();
+		Discount discount= null;
+		boolean isCorrect = false;
+		int input = 0;
+		
+		while (input != -1) {									//asks if you want to add another discount
+			while(discount == null) {							//checks if discount exists
+			System.out.println("Enter discount ID: ");
+			discount = dController.getObj();					//runs infinitely if discarray is empty
+			}
+			discountAL.add(discount);
+			printAskCont();
+			input = keyboard.intInput();
+		}
+		return discountAL;
+	}
+	
 	
 	public boolean customerExists(String customerName) {
 		Person p = PersonContainer.getInstance().searchForObj(customerName);
@@ -46,7 +73,6 @@ public class OrderController {
 		else {
 			return false;
 		}
-		
 	}
 	
 	public ItemOrder getObj() {
@@ -72,11 +98,11 @@ public class OrderController {
 		return input;
 	}
 	
-	private Basket addToOrder() {
+	private ArrayList<LineItem> addToBasket() {
+		ArrayList<LineItem> al = new ArrayList<LineItem>();
 		boolean isRunning = true;
 		int choice;
 		int qty;
-		Basket basket = new Basket();
 		LineItem lineItem;
 		ProductForSale PFS;
 		
@@ -87,7 +113,7 @@ public class OrderController {
 			
 			if (PFS.canDecrementStock(qty)) {
 				lineItem = new LineItem(PFS, qty);
-				basket.addToBasket(lineItem);
+				al.add(lineItem);
 			} else {
 				System.out.println("Sorry " + qty + " is not available.");
 			} 
@@ -98,7 +124,7 @@ public class OrderController {
 				isRunning = false;
 			}
 		}
-		return basket;
+		return al;
 	}
 
 	private void printNewOrderHeader() {
@@ -111,13 +137,15 @@ public class OrderController {
 	}
 
 	private void printAskCustName() {
-		System.out.println("Please enter the name of the customer: ");
-		
+		System.out.println("Please enter the name of the customer: ");	
+	}
+	
+	private void printAskCont() {
+		System.out.println("Any num to continue, -1 to exit: ");
 	}
 	
 	private void printAddItems() {
-		System.out.println("****Add your items****");
-		
+		System.out.println("****Add discount****");	
 	}
 	
 	public void printAskQty() {

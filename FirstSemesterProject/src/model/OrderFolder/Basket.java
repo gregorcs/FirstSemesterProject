@@ -2,6 +2,9 @@ package model.OrderFolder;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
+
+import controller.Customer;
+import discountFolder.Discount;
 import model.LineItem;
 import input.KeyboardInput;
 
@@ -9,11 +12,14 @@ public class Basket {
 	private ArrayList<LineItem> itemsList;
 	private double discount;
 	private KeyboardInput keyboard;
-	private String customerName;
+	private Customer customerName;
+	private ArrayList<Discount> listOfDiscounts;
 	
-	public Basket() {
+	public Basket(ArrayList<LineItem> itemsList, ArrayList<Discount> listOfDiscounts) {
 		this.itemsList = new ArrayList<>();
 		this.discount = 0;
+		this.itemsList = itemsList;
+		this.listOfDiscounts = listOfDiscounts;
 	}
 	
 	//add an item to the basket
@@ -60,11 +66,21 @@ public class Basket {
 		return finalPrice;
 	}
 	
+	public int getQuantity() {
+		int qty = 0;
+		
+		for (int i = 0; i < itemsList.size(); i++) {
+			qty += itemsList.get(i).getQty();
+		}
+		return qty;
+	}
+	
 	//connect with Discount class & put customer IDs in groups. the ID will act like a discount code.
 	//the discount amount will depend on the group the customer is in.
-	private void applyDiscount() {
-		customerName = keyboard.stringInput();
-	}
+	
+	//private void applyDiscount() {
+	//	customerName = keyboard.stringInput();
+	//}
 	
 	public void printReceipt() {
 		ListIterator<LineItem> iterator3 = itemsList.listIterator();
@@ -76,17 +92,16 @@ public class Basket {
 			System.out.println(item4.getPrice() * item4.getQty());
 		}
 		System.out.println("\n" + "Total: " + this.getTotalPrice());
-		this.applyDiscount();
+		//this.applyDiscount();
 		System.out.println("\n" + "Discount: " + this.discount);
 		System.out.println("\n" + "TOTAL: " + this.getTotalPrice());
-	}	
-	
-	public int getQuantity() {
-		int qty = 0;
-		
-		for (int i = 0; i < itemsList.size(); i++) {
-			qty += itemsList.get(i).getQty();
-		}
-		return qty;
 	}
+
+	public ArrayList<Discount> getListOfDiscounts() {
+		return listOfDiscounts;
+	}
+
+	public void setListOfDiscounts(ArrayList<Discount> listOfDiscounts) {
+		this.listOfDiscounts = listOfDiscounts;
+	}	
 }

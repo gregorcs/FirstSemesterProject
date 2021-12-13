@@ -69,17 +69,22 @@ public class OrderTui {
 	
 	public void printAllOrders() {
 		for (ItemOrder order : OrderContainer.getInstance().getOrderDatabase()) {
-			if (order != null) { printOrderInformation(order);
-			System.out.println(OrderContainer.getInstance().arraySize());
+			if (order != null) { 
+				printOrderInformation(order);
+				System.out.println(OrderContainer.getInstance().arraySize());
 			}
 		}
 	}
 
 	private void printOrderInformation(ItemOrder order) {
+		DiscountTui dTui = new DiscountTui();
+		
 		System.out.println("------------------------------------");
 		System.out.println("ID: " + order.getID());
 		System.out.println("Customer name: " + order.getCustomerName());
 		System.out.println("Quantity: " + order.getBasket().getQuantity());
+		System.out.println("Applied discount: ");
+		dTui.printRequestedDiscounts(order.getBasket().getListOfDiscounts());
 		System.out.println("Total: " + order.getBasket().getTotalPrice());
 		System.out.println("------------------------------------");	
 	}
