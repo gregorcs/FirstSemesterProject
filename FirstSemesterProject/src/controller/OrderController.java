@@ -54,11 +54,15 @@ public class OrderController {
 		while (input != -1) {									//asks if you want to add another discount
 			while(discount == null) {							//checks if discount exists
 			System.out.println("Enter discount ID: ");
-			discount = dController.getObj();					//runs infinitely if discarray is empty
-			}													//this can be simplified, just return everything
+			if (DiscountContainer.getInstance().arraySize() != 0) {
+				discount = dController.getObj();					//runs infinitely if discarray is empty
+			} else {
+				return discountAL;										//this can be simplified, just return everything
+			}
 			discountAL.add(discount);
 			printAskCont();
 			input = keyboard.intInput();
+			}
 		}
 		return discountAL;
 	}
