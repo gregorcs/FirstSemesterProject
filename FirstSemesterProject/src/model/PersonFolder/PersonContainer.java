@@ -2,14 +2,18 @@ package model.PersonFolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
+
+import controller.PersonController;
 
 public class PersonContainer {
 
 	// Declaration of Variables
 	public HashMap<String, String> loginInfo = new HashMap<>();
-	public ArrayList<Person> personsList = new ArrayList<>();
+	private ArrayList<Person> personsList = new ArrayList<>();
 	public Person currentUser;
 	private static PersonContainer instance;
+	private boolean isLoggedIn = false;
 
 	//Returns the Instance
 	public static PersonContainer getInstance() {
@@ -64,5 +68,25 @@ public class PersonContainer {
 		public void delete(Person obj) {
 			loginInfo.remove(obj.getUsername(), obj.getPassword());
 			personsList.remove(obj);
+		}
+		
+		public void setCurrentUser(Person currentUser){
+			this.currentUser = currentUser;
+		}
+		
+		public Person getCurrentUser(){
+			return currentUser;
+		}
+		
+		public ArrayList<Person> getPersonsList() {
+			return personsList;
+		}
+		
+		public void setIsLoggedIn(boolean isLoggedIn) {
+			this.isLoggedIn = isLoggedIn;
+		}
+		
+		public boolean getIsLoggedIn() {
+			return isLoggedIn;
 		}
 }

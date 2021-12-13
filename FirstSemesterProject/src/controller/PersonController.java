@@ -4,16 +4,23 @@ package controller;
 import input.KeyboardInput;
 import model.PersonFolder.*;
 import tui.MainMenu;
+import tui.PrintOuts;
 import tui.UserSettingsMenu;
 
 public class PersonController {
 	private KeyboardInput keyboard;
 	MainMenu mm;
+	PrintOuts po = new PrintOuts();
 	
 	public PersonController() {
 		keyboard = new KeyboardInput();
 		mm = MainMenu.getInstance();
-		mm.setIsLoggedIn(false);
+		
+		//TEST
+		Person p = new Person("a", "a", "A");
+		PersonContainer percon = PersonContainer.getInstance();
+		percon.create(p);
+		
 	}
 	
 	public void createObj() {
@@ -21,7 +28,7 @@ public class PersonController {
 		boolean correctUN = false;
 		boolean correctPass = false;
 		
-		printCreateAccHeader();
+		po.printCreateAccHeader();
 		
 		// checks4Dupes
 		PersonContainer percon = PersonContainer.getInstance();
@@ -30,7 +37,7 @@ public class PersonController {
 			if (!percon.loginInfo.containsKey(username)) {
 				correctUN = true;
 			} else {
-				printDupeError();
+				po.printDupeError();
 				username = ask4UN();
 			}
 		}
@@ -38,24 +45,24 @@ public class PersonController {
 		password = ask4Pass();
 		
 		// double checks password input
-		 printConfirm();
+		 po.printConfirmPassword();
 		 while (!correctPass) {
 			 password2 = keyboard.stringInput();
 			   if (password2.equals(password)) {
 				   correctPass = true;
 			   } else {
-				   printTryAgain();
+				   po.printTryAgain();
 			   }
 		}
 	
-		printSuccess();
+		po.printSuccess();
 		
 		role = ask4Role();
 		
 		// Object Creation
 		Person obj = new Person(username, password, role);
 		percon.create(obj);
-		mm.setIsLoggedIn(true);
+		percon.setIsLoggedIn(true);
 	}
 	
 	public void updateUN() {
@@ -80,11 +87,9 @@ public class PersonController {
 		Person obj = verify();
 		if (obj != null) {
 			PersonContainer.getInstance().delete(obj);
-			printSuccessDelete();
+			po.printSuccessDelete();
 		} else {
-			print404Error();
-		    UserSettingsMenu usm = new UserSettingsMenu();
-		    usm.start();
+			po.print404Error();
 		}
 	}
 	
@@ -92,48 +97,50 @@ public class PersonController {
 		PersonContainer percon = PersonContainer.getInstance();
 		String username = "";
 		String password;
+		boolean stop = false;
 		
-		if (percon.personsList.size() == 0) {
-			printMTError();
+		if (percon.getPersonsList().size() == 0) {
+			po.printMTError();
 			mm.start();
 		}
 		
-		while (!mm.getIsLoggedIn()) {
+		while (!stop) {
 			
 			// Asks 4 UN
-			percon.currentUser = getObj();
-			if (percon.currentUser == null) {
-				print404Error();
+			//percon.currentUser = getObj();
+			percon.setCurrentUser(getObj());
+			if (percon.getCurrentUser() == null) {
+				po.print404Error();
 			} else {
-				username = percon.currentUser.getUsername();
+				username = percon.getCurrentUser().getUsername();
 	
 			// Asks 4 Pass
 			if (percon.loginInfo.containsKey(username)) {
-				printAskPass();
+				po.printAskPass();
 				password = keyboard.stringInput();
 				
 				while (!password.equals(percon.loginInfo.get(username))) {
-					printTryAgain();
+					po.printTryAgain();
 					password = keyboard.stringInput();
-					
-					if (password.equals(percon.loginInfo.get(username))) {
-					printLoginSuccessful();
-					mm.setIsLoggedIn(true);
-					}
+					//IF KEYBOARDINOUT = 0 STOP = TRUE without loggedintrue
+				}
+				po.printLoginSuccessful();
+				percon.setIsLoggedIn(true);
+				stop = true;
 				}
 			}
 		}
 	}
-}
+
 	
 	public String ask4UN() {
-		printAskUN();
+		po.printAskUN();
 		String temp = keyboard.stringInput();
 		return temp;
 	}
 	
 	public String ask4Pass() {
-		printAskPass();
+		po.printAskPass();
 		String temp = keyboard.stringInput();
 		return temp;
 	}
@@ -141,28 +148,28 @@ public class PersonController {
 	public String ask4Role() {
 		boolean success = false;
 		
-		printAskRole();
+		po.printAskRole();
 		String temp = keyboard.stringInput();
 		
 		while (!success) {			
 			switch (temp) {
 			case "A":
-				printSuccess();
+				po.printSuccess();
 				success = true;
 				break;
 			case "E":
-				printSuccess();
+				po.printSuccess();
 				success = true;
 				break;
 			case "C":
-				printSuccess();
+				po.printSuccess();
 				success = true;
 				break;
 			default:
-					printTryAgain();
+					po.printTryAgain();
 					temp = keyboard.stringInput();
 					break;
-				}
+			}
 		}
 			
 		return temp;
@@ -173,7 +180,7 @@ public class PersonController {
 		Person obj = getObj();
 		
 		while (!percon.loginInfo.containsKey(obj.getUsername())) {
-			printTryAgain();
+			po.printTryAgain();
 			obj = getObj();
 		}
 		
@@ -183,65 +190,5 @@ public class PersonController {
 	
 	public Person getObj() {
 		return PersonContainer.getInstance().searchForObj(ask4UN());
-	}
-	
-	// Print Methods
-	public void printCreateAccHeader() {
-    	System.out.println("**********Create an Account*********");
-    	System.out.println("************************************");
-	}
-	
-	private void printLoginSuccessful() {
-		System.out.println("Login successful!");
-	}
-	
-	private void printAskUN() {
-		System.out.println("Enter username: ");
-	}
-	private void printAskPass() {
-		System.out.println("Enter password: ");
-	}
-	
-	private void printAskRole() {
-		System.out.println("Please press the key depicting the role you'd like to assign to this account:");
-		System.out.println("(A) Admin");
-		System.out.println("(E) Employee");
-		System.out.println("(C) Customer");
-	}
-	
-	public void printSuccess() {
-		System.out.println("Credentials set successfully.");
-	}
-	
-	public void printSuccessDelete() {
-		System.out.println("Account deleted successfully.");
-	}
-	
-	public void printVerifySuccess() {
-		System.out.println("Password verified succesfully.");
-	}
-	
-	public void printConfirmPassword() {
-		System.out.println("Confirm your password: ");
-	}
-
-	public void printConfirm() {
-		System.out.println("Repeat your password: ");
-	}
-	
-	public void printTryAgain() {
-		System.out.println("Invalid input detected. Please try again.");
-	}
-	
-	public void printDupeError() {
-		System.out.println("An account with this username already exists! Try a different one.");
-	}
-	
-	public void print404Error() {
-		System.out.println("No account found with this username!");
-	}
-	
-	public void printMTError() {
-		System.out.println("No accounts currently exist!");
 	}
 }
