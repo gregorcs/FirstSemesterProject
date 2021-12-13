@@ -13,6 +13,7 @@ public class PersonController {
 	public PersonController() {
 		keyboard = new KeyboardInput();
 		mm = MainMenu.getInstance();
+		mm.setIsLoggedIn(false);
 	}
 	
 	public void createObj() {
@@ -89,11 +90,24 @@ public class PersonController {
 	
 	public void logIn() {
 		PersonContainer percon = PersonContainer.getInstance();
-		String username, password;
+		String username = "";
+		String password;
+		
+		if (percon.personsList.size() == 0) {
+			printMTError();
+			mm.start();
+		}
 		
 		while (!mm.getIsLoggedIn()) {
-			Person obj = getObj();
-            username = obj.getUsername();
+			
+			// Asks 4 UN
+			percon.currentUser = getObj();
+			if (percon.currentUser == null) {
+				print404Error();
+			} else {
+				username = percon.currentUser.getUsername();
+	
+			// Asks 4 Pass
 			if (percon.loginInfo.containsKey(username)) {
 				printAskPass();
 				password = keyboard.stringInput();
@@ -101,17 +115,16 @@ public class PersonController {
 				while (!password.equals(percon.loginInfo.get(username))) {
 					printTryAgain();
 					password = keyboard.stringInput();
+					
+					if (password.equals(percon.loginInfo.get(username))) {
 					printLoginSuccessful();
 					mm.setIsLoggedIn(true);
-					percon.currentUser = obj;
+					}
 				}
-				
-			} else {
-				print404Error();
-				mm.start();
 			}
 		}
 	}
+}
 	
 	public String ask4UN() {
 		printAskUN();
@@ -126,25 +139,32 @@ public class PersonController {
 	}
 	
 	public String ask4Role() {
+		boolean success = false;
+		
 		printAskRole();
 		String temp = keyboard.stringInput();
 		
-		switch (temp) {
-		case "A":
-			printSuccess();
-			break;
-		case "E":
-			printSuccess();
-			break;
-		case "C":
-			printSuccess();
-			break;
-		default:
-			printTryAgain();
-			temp = keyboard.stringInput();
-			break;
+		while (!success) {			
+			switch (temp) {
+			case "A":
+				printSuccess();
+				success = true;
+				break;
+			case "E":
+				printSuccess();
+				success = true;
+				break;
+			case "C":
+				printSuccess();
+				success = true;
+				break;
+			default:
+					printTryAgain();
+					temp = keyboard.stringInput();
+					break;
+				}
 		}
-		
+			
 		return temp;
 	}
 	
@@ -172,7 +192,7 @@ public class PersonController {
 	}
 	
 	private void printLoginSuccessful() {
-		System.out.println("Login succesful!");
+		System.out.println("Login successful!");
 	}
 	
 	private void printAskUN() {
@@ -219,5 +239,9 @@ public class PersonController {
 	
 	public void print404Error() {
 		System.out.println("No account found with this username!");
+	}
+	
+	public void printMTError() {
+		System.out.println("No accounts currently exist!");
 	}
 }

@@ -12,6 +12,7 @@ public class MainMenu {
 	private KeyboardInput kbInput;
 	private boolean isLoggedIn = false;
 	private PersonContainer percon = PersonContainer.getInstance();
+	
 
 	public static MainMenu getInstance() {
 		if(instance == null) {
@@ -31,18 +32,19 @@ public class MainMenu {
 		int input;
 
 		while(isRunning) {
-			PersonController percontrol = new PersonController();
-
 			 if (!isLoggedIn) {
-				 isLoggedIn = notLoggedInMenu(percontrol);
-			 } else {
-				printMMLoggedIn();
-				String role = percon.currentUser.getRole(); 
+				 printMainMenu();
+				 notLoggedInMenu();
+			 } else { 
+				String role = percon.currentUser.getRole();
+				printMainMenu();
+				
 				if (!role.equals("C")) {
 					input = kbInput.intInput();
 				} else {
 					input = 0;
 				}
+				
 				switch(role) {
 					case "A":
 						switch(input) {
@@ -66,8 +68,8 @@ public class MainMenu {
 								usm.start();
 								break;
 							case 0:
-								percon.currentUser = null;
 								setIsLoggedIn(false);
+								percon.currentUser = null;
 								start();
 								break;
 							default:
@@ -105,8 +107,8 @@ public class MainMenu {
 					case "C":
 						switch (input) {
 						case 0 :
-						System.out.println("****** Main Menu ******");
 						printUnprivileged();
+						percon.currentUser = null;
 						setIsLoggedIn(false);
 						start();
 						break;
@@ -118,8 +120,9 @@ public class MainMenu {
 
 	
 	
-	public boolean notLoggedInMenu(PersonController percontrol) {
+	public void notLoggedInMenu() {
 		 printMainMenu();
+		 PersonController percontrol = new PersonController();
 		 int input = kbInput.intInput();
 		 switch(input) {
 		 case 1:
@@ -132,14 +135,12 @@ public class MainMenu {
 			 setIsLoggedIn(true);
 			 break;
 		 case 0:
-			 percon.currentUser = null;
 			 printGoodbye();
-			 return false;
+			 break;
 		 default:
 			 errorMessage();
 			 break;
 		 }
-		return isLoggedIn;
 	}
 	
 	//Print statements
@@ -150,10 +151,7 @@ public class MainMenu {
 		    System.out.println(" (2) Log In");
 		    System.out.println(" (0) Quit the program");
 		    System.out.print("\n Choice:");
-		}
-	}
-	
-	private void printMMLoggedIn() {
+		} else {
 		String role = percon.currentUser.getRole(); 
 		
 		if (role.equals("A")) {
@@ -173,25 +171,29 @@ public class MainMenu {
 			   System.out.println(" (3) Discounts");
 			   System.out.println(" (4) User Settings");
 			   System.out.println(" (0) Log Out");
-		
-		}
+	    }
+	  }
 	}
-
+	
+	// Print Methods
 	private void printIntro() {
-		System.out.println("Shopping in Vestbjerg Byggecenter");
+		System.out.println("****** Shopping in Vestbjerg Byggecenter ******");
 	}
 
 	private void printGoodbye() {
 		System.out.println("Thank you for shopping with us!");
 	}
 	private void printUnprivileged() {
+		System.out.println("****** Main Menu ******");
 		System.out.println("Unfortunately, your account lacks the privileges required to display this page.");
+		System.out.println("You have been logged out automatically.");
 	}
   
 	void errorMessage() {
-		System.out.println("Input does not match menu, try again: ");
+		System.out.println("Invalid input, try again: ");
 	}
-
+	
+	// Setters n' Getters
 	public void setIsLoggedIn(boolean isLoggedIn) {
 		this.isLoggedIn = isLoggedIn;
 	}
