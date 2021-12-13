@@ -60,10 +60,10 @@ public class OrderController {
 				} else {
 					discountAL.add(discount);
 				}
-				printAskCont();											//runs infinitely if discarray is empty
-			} else {
+				printAskCont();											//if you enter wrong discount index it goes through
+			} else {													//but doesnt crash at all
 				printUnavDiscount();
-				return discountAL;										//check earlier if discount array is 0!!!!
+				return discountAL;										
 			}
 			input = keyboard.intInput();
 			}	

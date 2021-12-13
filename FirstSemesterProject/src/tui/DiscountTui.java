@@ -37,8 +37,7 @@ public class DiscountTui {
 					printAllDiscounts();
 					break;
 				case 4:
-					break;
-				case 5:
+					printAskIdToDel();
 					dController.deleteObj();
 					break;
 				case 0:
@@ -53,15 +52,16 @@ public class DiscountTui {
 	private void writeDiscountMenu() {
 		System.out.println("****** Manage Discounts ******");
         System.out.println(" (1) Create quantity discount");
-        System.out.println(" (2) Create discount for customer");
+        //System.out.println(" (2) Create discount for customer");		//TODO
         System.out.println(" (2) Print specific discount");
         System.out.println(" (3) Print all discounts");
-        System.out.println(" (4) Update discount");
-        System.out.println(" (5) Delete discount");
+        //System.out.println(" (4) Update discount");
+        System.out.println(" (4) Delete discount");
         System.out.println(" (0) Return to Main Menu");
         System.out.print("\n Choice:");
 	}
-	public void printDiscount() {	
+	public void printDiscount() {
+		printAskIdToFind();
 		DiscountController dController = new DiscountController();
 			Discount discount = dController.getObj();
 			
@@ -97,5 +97,12 @@ public class DiscountTui {
 	}
 	public void emptyDatabase() {
 		System.out.println("Nothing to print");
+	}
+	
+	private void printAskIdToFind() {
+		System.out.println("Enter ID of discount you're looking for: ");
+	}
+	private void printAskIdToDel() {
+		System.out.println("Enter ID of discount you're looking to delete: ");
 	}
 }

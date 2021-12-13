@@ -46,7 +46,7 @@ public class DiscountController {
 		
 		if (discount!= null) {
 			DiscountContainer.getInstance().delete(discount);
-			printSuccess();
+			printDeleted();
 		}
 	}
 	
@@ -67,13 +67,16 @@ public class DiscountController {
 	private void printSuccess() {
 		System.out.println("Discount created");
 	}
+	private void printDeleted() {
+		System.out.println("Discount deleted");
+	}
 	
 	public void printAskPerc() {
 		System.out.println("Enter discount in percentage: ");
 	}
 	
 	public void printUnavailable() {
-		System.out.println("This item is not available");
+		System.out.println("This discount is not available");
 	}
 
 
