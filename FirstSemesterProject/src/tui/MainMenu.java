@@ -61,7 +61,8 @@ public class MainMenu {
 								prodMenu.start();
 								break;
 							case 4:
-								System.out.println("To-Do -- Discounts");
+								DiscountTui discMenu = new DiscountTui();
+								discMenu.start();
 								break;
 							case 5:
 								UserSettingsMenu usm = new UserSettingsMenu();
@@ -88,7 +89,8 @@ public class MainMenu {
 								prodMenu.start();
 								break;
 							case 3:
-								System.out.println("To-Do -- Discounts");
+								DiscountTui discMenu = new DiscountTui();
+								discMenu.start();
 								break;
 							case 4:
 								UserSettingsMenu usm = new UserSettingsMenu();

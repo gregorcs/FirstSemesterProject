@@ -5,12 +5,6 @@ import tui.PrintInput;
 
 public class KeyboardInput {
 	
-	/**
-	 * Mad respect, bro, but... do we even need any of this?
-	 * 
-	 * ~Max
-	 */
-
 	private Scanner sc;
 	private PrintInput printStatement;
 	private String alphaRegex = "[ a-zA-Z]+";
@@ -19,6 +13,18 @@ public class KeyboardInput {
 	public KeyboardInput() {
 		printStatement = new PrintInput();
 	};
+	
+	//String and num input
+	public String generalInput() {
+		String input = "-1";
+		
+		if (sc.hasNextLine()) {
+			input = sc.nextLine();
+			return input;
+		} else {
+			return input;
+		}
+	}
 	
 	//String input
 	public String stringInput() {

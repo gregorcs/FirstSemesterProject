@@ -2,7 +2,7 @@ package model.ProductFolder;
 
 import java.util.ArrayList;
 
-import model.Discount;
+import discountFolder.Discount;
 
 public abstract class Product {
 	

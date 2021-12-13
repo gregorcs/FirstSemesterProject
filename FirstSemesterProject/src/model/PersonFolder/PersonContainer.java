@@ -2,9 +2,6 @@ package model.PersonFolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
-
-import controller.PersonController;
 
 public class PersonContainer {
 
