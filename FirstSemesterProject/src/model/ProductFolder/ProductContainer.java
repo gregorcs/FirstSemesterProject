@@ -55,7 +55,6 @@ public class ProductContainer {
 
 	public int getID(ProductForSale obj) {
 		return productsDatabase.indexOf(obj);
-
 	}
 	
 	public int createID() {
@@ -72,7 +71,6 @@ public class ProductContainer {
 		}
 	}
 
-	//method for Junit
 	public int arraySize() {
 		return productsDatabase.size();
 	}

@@ -14,8 +14,6 @@ public class ProductForSale extends Product {
 		this.maximumAmount = maximumAmount;
 	}
 	
-	
-	
 	public void DecrementStock(int qty) {
 		if ((stock - qty) >= minimumAmount) {
 			stock -= qty;
@@ -23,7 +21,7 @@ public class ProductForSale extends Product {
 	}
 	
 	public boolean canDecrementStock(int qty) {
-		if ((qty > 0) && (stock - qty) >= minimumAmount) {
+		if ((qty > 0) && ((stock - qty) >= minimumAmount) && (qty <= stock)) {
 			return true;
 		} else {
 			qtyIsZero();
@@ -58,6 +56,6 @@ public class ProductForSale extends Product {
 		this.maximumAmount = maximumAmount;
 	}
 	private void qtyIsZero() {
-		System.out.println("Quantity cannot be zero.");
+		System.out.println("Insufficient stock.");
 	}
 }

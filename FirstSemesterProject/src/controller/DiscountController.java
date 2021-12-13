@@ -40,6 +40,15 @@ public class DiscountController {
 	public Discount getObj() {
 		return DiscountContainer.getInstance().searchForObj(askForID());
 	}
+	
+	public boolean discountExists(Discount disc) {
+		if (disc != null) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
 
 	public void deleteObj() {
 		Discount discount = getObj();

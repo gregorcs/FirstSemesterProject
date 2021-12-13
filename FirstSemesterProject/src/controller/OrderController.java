@@ -27,23 +27,28 @@ public class OrderController {
 
 	//order creation
 	public void createObj() {
+		boolean isCorrect = false;
 		String customerName = null;
 		ItemOrder iOrder;
-		boolean isCorrect = false;
 		Basket basket;
 		
 		printNewOrderHeader();
 		
-		while(!isCorrect) {
+	/*	while(!isCorrect) {
 			printAskCustName();
 			customerName = keyboard.stringInput();
 			isCorrect = CustomerContainer.getInstance().customerExists(customerName);
-		}				
+		}	*/			
 		
 		basket = new Basket(addToBasket(), addDiscounts());
-		printAddItems();
-		iOrder = new ItemOrder(customerName, basket);
-		OrderContainer.getInstance().create(iOrder);
+		
+		if (basket.getTotalPrice() > 0.00) {
+			printAddItems();
+			iOrder = new ItemOrder(customerName, basket);
+			OrderContainer.getInstance().create(iOrder);
+		} else {
+			printEmptyOrder();
+		}
 	}
 
 	private ArrayList<Discount> addDiscounts() {
@@ -53,17 +58,17 @@ public class OrderController {
 		boolean isCorrect = true;
 		int input = 0;
 		
-		while (input != -1 && isCorrect) {									//asks if you want to add another discount															//checks if discount exists
+		while (input != -1 && isCorrect) {									//asks if you want to add another discount
 			System.out.println("Enter discount ID: ");
 			if (DiscountContainer.getInstance().arraySize() != 0) {
 				discount = dController.getObj();
-				if (discount == null) {
+				if (!dController.discountExists(discount)) {
 					isCorrect = false;
 				} else {
 					discountAL.add(discount);
 				}
 				printAskCont();											//if you enter wrong discount index it goes through
-			} else {													//but doesnt crash at all
+			} else {													
 				printUnavDiscount();
 				return discountAL;										
 			}
@@ -167,6 +172,10 @@ public class OrderController {
 	//this should be in discount classes, but have no time 
 	public void printUnavDiscount() {
 		System.out.println("No discounts available");
+	}
+	
+	public void printEmptyOrder() {
+		System.out.println("You created an empty order.");
 	}
 
 }
