@@ -11,7 +11,7 @@ public class PersonContainer {
 	// Declaration of Variables
 	public HashMap<String, String> loginInfo = new HashMap<>();
 	private ArrayList<Person> personsList = new ArrayList<>();
-	public Person currentUser;
+	private Person currentUser;
 	private static PersonContainer instance;
 	private boolean isLoggedIn = false;
 

@@ -13,6 +13,7 @@ public class MainMenu {
 	private PersonContainer percon = PersonContainer.getInstance();
 	private PrintOuts po = new PrintOuts();
 	private boolean isRunning = true;
+	private String role;
 	
 	public static MainMenu getInstance() {
 		if(instance == null) {
@@ -34,6 +35,7 @@ public class MainMenu {
 				po.printMainMenu();
 				notLoggedInMenu();
 			}else {
+				System.out.println("YO");
 				checkRole();
 			}
 		}
@@ -61,10 +63,14 @@ public class MainMenu {
 	}
 	
 	private void checkRole() {
-		String role = percon.getCurrentUser().getRole();
-		if(role == null) po.printRoleError();
+		role = percon.getCurrentUser().getRole();
+		System.out.println(role);
+		if(role == null) { 
+			po.printRoleError();
+		}
 		else if(role.equals("A")) {
 			po.printAdminMenu();
+			System.out.println(percon.getCurrentUser().getUsername());
 			adminMenu();
 		}else if(role.equals("E")) {
 			po.printEmployeeMenu();
@@ -141,8 +147,10 @@ public class MainMenu {
 	}
 	
 	private void userSettings() {
+		role = percon.getCurrentUser().getRole();
 		UserSettingsMenu usm = new UserSettingsMenu();
-		usm.start(percon.getCurrentUser().getRole());
+		System.out.println(role);
+		usm.start(role);
 	}
 	
 	private void accountManagement() {

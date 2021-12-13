@@ -15,12 +15,6 @@ public class PersonController {
 	public PersonController() {
 		keyboard = new KeyboardInput();
 		mm = MainMenu.getInstance();
-		
-		//TEST
-		Person p = new Person("a", "a", "A");
-		PersonContainer percon = PersonContainer.getInstance();
-		percon.create(p);
-		
 	}
 	
 	public void createObj() {

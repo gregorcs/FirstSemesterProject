@@ -11,12 +11,14 @@ public class UserSettingsMenu {
 	PersonController percontrol = new PersonController();
 	PersonContainer percon = PersonContainer.getInstance();
 	private boolean isRunning = true;
+	private String role;
 	
-	public void start(String s) {
-		USM(s);
+	public void start(String role) {
+		this.role = role;
+		USM();
 	}
 	
-	public void USM(String role) {
+	public void USM() {
 		int kbChoice;
 		while(isRunning) {
 			po.printUSM(role);
