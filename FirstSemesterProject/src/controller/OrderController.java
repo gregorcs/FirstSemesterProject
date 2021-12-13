@@ -39,10 +39,9 @@ public class OrderController {
 		}				
 		
 		basket = new Basket(addToBasket(), addDiscounts());
-		printAddItems();											
+		printAddItems();
 		iOrder = new ItemOrder(customerName, basket);
 		OrderContainer.getInstance().create(iOrder);
-		System.out.println(basket.getListOfDiscounts().get(0).getDiscPercentage());
 	}
 
 	private ArrayList<Discount> addDiscounts() {
@@ -56,7 +55,7 @@ public class OrderController {
 			while(discount == null) {							//checks if discount exists
 			System.out.println("Enter discount ID: ");
 			discount = dController.getObj();					//runs infinitely if discarray is empty
-			}
+			}													//this can be simplified, just return everything
 			discountAL.add(discount);
 			printAskCont();
 			input = keyboard.intInput();

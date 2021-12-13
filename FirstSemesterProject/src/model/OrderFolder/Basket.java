@@ -10,14 +10,13 @@ import input.KeyboardInput;
 
 public class Basket {
 	private ArrayList<LineItem> itemsList;
-	private double discount;
 	private KeyboardInput keyboard;
 	private Customer customerName;
 	private ArrayList<Discount> listOfDiscounts;
+	private int finalDiscount;
 	
 	public Basket(ArrayList<LineItem> itemsList, ArrayList<Discount> listOfDiscounts) {
 		this.itemsList = new ArrayList<>();
-		this.discount = 0;
 		this.itemsList = itemsList;
 		this.listOfDiscounts = listOfDiscounts;
 	}
@@ -54,6 +53,7 @@ public class Basket {
 		double lineItemPrice = 0;		//this is the sum of one product * quantity
 		double finalPrice = 0;			//Let's say someone ordered 2 diff products, both with quantity of ten: 2 * 10 = 20 * 5 euro = 100eur
 		int qtyToBuy;
+		int discount = calculateDiscount();
 		
 		for (int i = 0; i < itemsList.size(); i++) {
 			lineItemPrice = 0;
@@ -61,8 +61,11 @@ public class Basket {
 			qtyToBuy = itemsList.get(i).getQty();
 			
 			lineItemPrice += (singleProdPrice * qtyToBuy);
+			
 			finalPrice += lineItemPrice;
+			finalPrice = getFinalPrice(finalPrice, calculateDiscount());
 		}
+		
 		return finalPrice;
 	}
 	
@@ -73,6 +76,25 @@ public class Basket {
 			qty += itemsList.get(i).getQty();
 		}
 		return qty;
+	}
+	
+	//logic for adding up all the discounts 
+	private int calculateDiscount() {
+		int result = 0;
+		for (Discount discount : listOfDiscounts) {
+			result = getFinalDiscount() + discount.getDiscPercentage();
+		}
+		return result; 
+	}
+	
+	//logic for price - discount
+	private double getFinalPrice(double price, double discountPerc) {
+		double discount = 0.00;
+		
+		discount = ((price * discountPerc) / 100);
+		
+		price -= discount;
+		return price;
 	}
 	
 	//connect with Discount class & put customer IDs in groups. the ID will act like a discount code.
@@ -93,7 +115,7 @@ public class Basket {
 		}
 		System.out.println("\n" + "Total: " + this.getTotalPrice());
 		//this.applyDiscount();
-		System.out.println("\n" + "Discount: " + this.discount);
+		//System.out.println("\n" + "Discount: " + this.discount);
 		System.out.println("\n" + "TOTAL: " + this.getTotalPrice());
 	}
 
@@ -103,5 +125,13 @@ public class Basket {
 
 	public void setListOfDiscounts(ArrayList<Discount> listOfDiscounts) {
 		this.listOfDiscounts = listOfDiscounts;
-	}	
+	}
+
+	public int getFinalDiscount() {
+		return finalDiscount;
+	}
+
+	public void setFinalDiscount(int finalDiscount) {
+		this.finalDiscount = finalDiscount;
+	}
 }
