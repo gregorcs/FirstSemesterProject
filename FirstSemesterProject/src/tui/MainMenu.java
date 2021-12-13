@@ -64,13 +64,11 @@ public class MainMenu {
 	
 	private void checkRole() {
 		role = percon.getCurrentUser().getRole();
-		System.out.println(role);
 		if(role == null) { 
 			po.printRoleError();
 		}
 		else if(role.equals("A")) {
 			po.printAdminMenu();
-			System.out.println(percon.getCurrentUser().getUsername());
 			adminMenu();
 		}else if(role.equals("E")) {
 			po.printEmployeeMenu();
