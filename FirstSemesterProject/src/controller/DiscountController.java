@@ -64,9 +64,6 @@ public class DiscountController {
     	System.out.println("*****************************");	
 	}
 	
-	private void printSuccess() {
-		System.out.println("Discount created");
-	}
 	private void printDeleted() {
 		System.out.println("Discount deleted");
 	}
