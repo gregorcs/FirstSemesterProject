@@ -3,13 +3,13 @@ package tui;
 import controller.ProductController;
 import input.KeyboardInput;
 import model.ProductFolder.ProductContainer;
-import model.ProductFolder.ProductForSale;
 
 public class ProductTui {
 	
 	private ProductController pController;
 	private ProductTuiEdit prodTuiEdit;
 	private KeyboardInput kbInput;
+	boolean isRunning = true;
 
 	public ProductTui() {
 		pController = new ProductController();
@@ -18,35 +18,38 @@ public class ProductTui {
 	}
 	
 	public void start() {
-		boolean isRunning = true;
 		int kbChoice;
 		
 		while(isRunning) {
 			writeProductMenu();
 			kbChoice = kbInput.intInput();
-			
-			switch(kbChoice) {
-				case 1:
-					pController.createObj();
-					break;
-				case 2:
-					printProductForSale();
-					break;
-				case 3:
-					printAllProductsForSale();
-					break;
-				case 4:
-					prodTuiEdit.start();
-					break;
-				case 5:
-					pController.deleteObj();
-					break;
-				case 0:
-					isRunning = false;
-					break;
-				default:
-					break;
-			}
+			productMenu(kbChoice);
+		}
+	}
+	
+	private void productMenu(int kbChoice) {
+		switch(kbChoice) {
+		case 1:
+			pController.createObj();
+			break;
+		case 2:
+			printProductForSale();
+			break;
+		case 3:
+			printAllProductsForSale();
+			break;
+		case 4:
+			prodTuiEdit.start();
+			break;
+		case 5:
+			pController.deleteObj();
+			break;
+		case 0:
+			isRunning = false;
+			break;
+		default:
+			printErrorMessage();
+			break;
 		}
 	}
 	
@@ -93,4 +96,8 @@ public class ProductTui {
 	public void emptyDatabase() {
 		System.out.println("Nothing to print");
 	}
+	
+	public void printErrorMessage() {
+		System.out.println("Invalid input, try again: ");
+	}	
 }

@@ -1,4 +1,6 @@
-package model.ProductFolder;
+package tui;
+
+import model.ProductFolder.Product;
 
 public class ProductForSale extends Product {
 	

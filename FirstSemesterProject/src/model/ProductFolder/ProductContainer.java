@@ -2,6 +2,8 @@ package model.ProductFolder;
 
 import java.util.ArrayList;
 
+import tui.ProductForSale;
+
 public class ProductContainer {
 	
 	//variable declarations

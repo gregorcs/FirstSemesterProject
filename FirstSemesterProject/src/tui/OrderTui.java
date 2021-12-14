@@ -9,6 +9,7 @@ public class OrderTui {
 	
 	private OrderController oController;
 	private KeyboardInput kbInput;
+	boolean isRunning = true;
 	
 	public OrderTui() {
 		oController = new OrderController();
@@ -17,13 +18,16 @@ public class OrderTui {
 	}
 	
 	public void start() {
-		boolean isRunning = true;
 		int kbChoice;
 		
 		while (isRunning) {
-			writeOrderMenu();
+			printOrderMenu();
 			kbChoice = kbInput.intInput();
-		
+			orderMenu(kbChoice);
+		}
+	}
+	
+	private void orderMenu(int kbChoice) {
 		switch(kbChoice) {
 		case 1:
 			oController.createObj();
@@ -43,9 +47,9 @@ public class OrderTui {
 		default:
 			break;
 			}
-		}
 	}
-	private void writeOrderMenu() {
+	
+	private void printOrderMenu() {
 		System.out.println("****** Manage Orders ******");
         System.out.println(" (1) New order");
         System.out.println(" (2) Show specific order");

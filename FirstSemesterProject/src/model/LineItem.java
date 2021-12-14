@@ -2,7 +2,7 @@ package model;
 
 import model.ProductFolder.Product;
 import model.ProductFolder.ProductContainer;
-import model.ProductFolder.ProductForSale;
+import tui.ProductForSale;
 
 public class LineItem extends Product{
 

@@ -2,7 +2,7 @@ package controller;
 
 import input.KeyboardInput;
 import model.ProductFolder.ProductContainer;
-import model.ProductFolder.ProductForSale;
+import tui.ProductForSale;
 
 public class ProductController {
 

@@ -94,6 +94,9 @@ public class MainMenu {
 		case 5:
 			userSettings();
 			break;
+		case 6:
+			scan();
+			break;
 		case 0:
 			logOut();
 			break;
@@ -118,6 +121,9 @@ public class MainMenu {
 			break;
 		case 4:
 			userSettings();
+			break;
+		case 5:
+			scan();
 			break;
 		case 0:
 			logOut();
@@ -154,6 +160,10 @@ public class MainMenu {
 	private void accountManagement() {
 		AccManagementMenu amm = new AccManagementMenu();
 		amm.start();
+	}
+	
+	private void scan() {
+		
 	}
 	
 	private void logOut() {

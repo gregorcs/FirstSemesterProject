@@ -25,6 +25,7 @@ public class PrintOuts {
 		System.out.println(" (3) Product Menu");
 		System.out.println(" (4) Discounts");
 		System.out.println(" (5) User Settings");
+		System.out.println(" (6) Scan");
 		System.out.println(" (0) Log Out");
 		System.out.print("\n Choice:");
 	}
@@ -35,6 +36,7 @@ public class PrintOuts {
 		System.out.println(" (2) Product Menu");
 		System.out.println(" (3) Discounts");
 		System.out.println(" (4) User Settings");
+		System.out.println(" (5) Scan");
 		System.out.println(" (0) Log Out");
 	}
 		

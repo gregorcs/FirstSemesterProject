@@ -12,6 +12,7 @@ public class DiscountTui {
 	
 	private DiscountController dController;
 	private KeyboardInput kbInput;
+	boolean isRunning = true;
 
 	public DiscountTui() {
 		dController = new DiscountController();
@@ -19,33 +20,36 @@ public class DiscountTui {
 	}
 	
 	public void start() {
-		boolean isRunning = true;
 		int kbChoice;
 		
 		while(isRunning) {
 			writeDiscountMenu();
 			kbChoice = kbInput.intInput();
-			
-			switch(kbChoice) {
-				case 1:
-					dController.createObj();
-					break;
-				case 2:
-					printDiscount();
-					break;
-				case 3:
-					printAllDiscounts();
-					break;
-				case 4:
-					printAskIdToDel();
-					dController.deleteObj();
-					break;
-				case 0:
-					isRunning = false;
-					break;
-				default:
-					break;
-			}
+			discountMenu(kbChoice);
+		}
+	}
+	
+	private void discountMenu(int kbChoice) {
+		switch(kbChoice) {
+		case 1:
+			dController.createObj();
+			break;
+		case 2:
+			printDiscount();
+			break;
+		case 3:
+			printAllDiscounts();
+			break;
+		case 4:
+			printAskIdToDel();
+			dController.deleteObj();
+			break;
+		case 0:
+			isRunning = false;
+			break;
+		default:
+			printErrorMessage();
+			break;
 		}
 	}
 	
@@ -105,4 +109,8 @@ public class DiscountTui {
 	private void printAskIdToDel() {
 		System.out.println("Enter ID of discount you're looking to delete: ");
 	}
+	
+	public void printErrorMessage() {
+		System.out.println("Invalid input, try again: ");
+	}	
 }

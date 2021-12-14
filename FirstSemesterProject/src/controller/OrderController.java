@@ -10,7 +10,7 @@ import model.PersonFolder.Customer;
 import model.PersonFolder.CustomerContainer;
 import model.PersonFolder.Person;
 import model.PersonFolder.PersonContainer;
-import model.ProductFolder.ProductForSale;
+import tui.ProductForSale;
 import model.LineItem;
 import model.OrderFolder.Basket;
 import model.OrderFolder.ItemOrder;
