@@ -51,7 +51,11 @@ public class OrderController {
 		boolean isCorrect = true;
 		int input = 0;
 		
+<<<<<<< Updated upstream
 		while (input != -1 && isCorrect) {									//asks if you want to add another discount															//checks if discount exists
+=======
+		while (input != -1 && isCorrect) {									//adds all the discounts, if there is any
+>>>>>>> Stashed changes
 			System.out.println("Enter discount ID: ");
 			if (DiscountContainer.getInstance().arraySize() != 0) {
 				discount = dController.getObj();
@@ -60,8 +64,13 @@ public class OrderController {
 				} else {
 					discountAL.add(discount);
 				}
+<<<<<<< Updated upstream
 				printAskCont();											//if you enter wrong discount index it goes through
 			} else {													//but doesnt crash at all
+=======
+				printAskCont();											
+			} else {													
+>>>>>>> Stashed changes
 				printUnavDiscount();
 				return discountAL;										
 			}

@@ -1,6 +1,11 @@
 /controller/
 /tui/
 /model/
+<<<<<<< Updated upstream
 /main/
 /input/
 /test/
+=======
+/controller/
+/main/
+>>>>>>> Stashed changes

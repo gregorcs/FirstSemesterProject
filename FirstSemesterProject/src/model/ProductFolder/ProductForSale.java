@@ -5,13 +5,15 @@ public class ProductForSale extends Product {
 	//variable declarations
 	private int minimumAmount;
 	private int maximumAmount;
+	private String category;
 
 	//constructor for Product and this class
-	public ProductForSale(int stock, String name, String location, double price, boolean available, int minimumAmount, int maximumAmount) {
+	public ProductForSale(int stock, String name, String location, double price, boolean available, int minimumAmount, int maximumAmount, String category) {
 		super(stock, name, location, price, available);
 
 		this.minimumAmount = minimumAmount;
 		this.maximumAmount = maximumAmount;
+		this.setCategory(category);
 	}
 	
 	
@@ -59,5 +61,13 @@ public class ProductForSale extends Product {
 	}
 	private void qtyIsZero() {
 		System.out.println("Quantity cannot be zero.");
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }

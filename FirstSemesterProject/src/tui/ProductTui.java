@@ -36,9 +36,12 @@ public class ProductTui {
 					printAllProductsForSale();
 					break;
 				case 4:
-					prodTuiEdit.start();
+					printCategory();
 					break;
 				case 5:
+					prodTuiEdit.start();
+					break;
+				case 6:
 					pController.deleteObj();
 					break;
 				case 0:
@@ -55,8 +58,9 @@ public class ProductTui {
         System.out.println(" (1) Create Product");
         System.out.println(" (2) Print specific product");
         System.out.println(" (3) Print all products");
-        System.out.println(" (4) Update Product");
-        System.out.println(" (5) Delete Product");
+        System.out.println(" (4) Print categories products");
+        System.out.println(" (5) Update Product");
+        System.out.println(" (6) Delete Product");
         System.out.println(" (0) Return to Main Menu");
         System.out.print("\n Choice:");
 	}
@@ -75,9 +79,17 @@ public class ProductTui {
 		//what do we do with this?
 		for (ProductForSale product : ProductContainer.getInstance().getProductsDatabase()) {
 			printProductInformation(product);
-			System.out.println(ProductContainer.getInstance().arraySize());
 		}
 	}
+	
+	public void printCategory() {
+		for (ProductForSale product : pController.getCategory()) {
+			if (product != null) {
+				printProductInformation(product);
+			}
+		}
+	}
+	
 	public void printProductInformation(ProductForSale product) {
 		System.out.println("------------------------------------");
 		System.out.println("ID: " + product.getID());
@@ -86,6 +98,7 @@ public class ProductTui {
 		System.out.println("Price: " + product.getPrice() + "dkk");
 		System.out.println("Availability: " + product.isAvailable());
 		System.out.println("Physical location: " + product.getLocation());
+		System.out.println("Category: " + product.getCategory());
 		System.out.println("Minimum allowed in storage: " + product.getMinimumAmount());
 		System.out.println("Maximum allowed in storage: " + product.getMaximumAmount());
 		System.out.println("------------------------------------");		

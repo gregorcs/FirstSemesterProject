@@ -16,7 +16,7 @@ public class Main {
 	
 	static void testCreateObj() {
 		for (int i = 0; i < 40; i++) {
-			ProductContainer.getInstance().create(new ProductForSale(30, "hammer", null, 5, true, 4, 50));
+			ProductContainer.getInstance().create(new ProductForSale(30, "hammer", null, 5, true, 4, 50, "diy"));
 		}
 		ProductTui prodTui = new ProductTui();
 		prodTui.printAllProductsForSale();

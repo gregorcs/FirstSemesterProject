@@ -39,6 +39,14 @@ public class ProductContainer {
 		return null;
 	}
 	
+	public boolean productExists(ProductForSale PFS) {
+		if (PFS != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	//CRUD Methods
 	public void create(ProductForSale obj) {
 		obj.setID(createID());
@@ -79,4 +87,24 @@ public class ProductContainer {
 	public ArrayList<ProductForSale> getProductsDatabase() {
 		return productsDatabase;
 	}
+	
+	// I will make this a hashmap eventually TODO
+	public ArrayList<ProductForSale> getCategory(String category) {
+		ArrayList<ProductForSale> al = new ArrayList<ProductForSale>();
+		
+		for (ProductForSale productFS : productsDatabase) {
+			if (productFS.getCategory().equals(category)) {
+				al.add(productFS);
+			}
+		}
+		return al;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
