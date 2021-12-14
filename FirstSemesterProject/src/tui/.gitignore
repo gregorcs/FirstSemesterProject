@@ -6,5 +6,6 @@
 /OrderTui.class
 /OrderTuiEdit.class
 /AccManagementMenu.class
-/PrintOuts.class
 /CustomerManageMenu.class
+/DiscountTui.class
+/PrintOuts.class

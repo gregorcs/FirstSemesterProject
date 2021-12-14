@@ -8,12 +8,10 @@ public class MainMenu {
 
 	private static MainMenu instance;
 
-	//Initialize variables
-	private KeyboardInput kbInput;
-	private boolean isLoggedIn = false;
+	private KeyboardInput keyboard;
 	private PersonContainer percon = PersonContainer.getInstance();
 	private PrintOuts po = new PrintOuts();
-	
+
 
 	public static MainMenu getInstance() {
 		if(instance == null) {
@@ -28,116 +26,143 @@ public class MainMenu {
 	}
 
 	public void mainMenu() {
-		kbInput = new KeyboardInput();
-		boolean isRunning = true;
+		keyboard = new KeyboardInput();
 
 		while(isRunning) {
-			 if (!isLoggedIn) {
-				 po.printMainMenu();
-				 notLoggedInMenu();
-			 } else { 
+			if (!(percon.getIsLoggedIn())) {
 				po.printMainMenu();
-				loggedInMenu();				
+				notLoggedInMenu();
+			} else {
+				checkRole();
 			}
 		}
 	}
 
-	public void notLoggedInMenu() {
-		 po.printMainMenu();
-		 PersonController percontrol = new PersonController();
-		 int input = kbInput.intInput();
-		 switch(input) {
-		 case 1:
-			 // Registration Process
-			 percontrol.createObj();
-			 setIsLoggedIn(true);
-			 break;
-		 case 2:
-			 percontrol.logIn();
-			 setIsLoggedIn(true);
-			 break;
-		 case 0:
-			 po.printGoodbye();
-			 break;
-		 default:
-			 po.errorMessage();
-			 break;
-		 }
-	}
-	
-	public void loggedInMenu() {
-		int input = kbInput.intInput();
-		String role = percon.getCurrentUser().getRole();
-		switch(role) {
-			case "A":
-				switch(input) {
-					case 1:
-						OrderTui ordMenu = new OrderTui();
-						ordMenu.start();
-						break;
-					case 2:
-						AccManagementMenu amm = new AccManagementMenu();
-						amm.start();
-						break;
-					case 3:
-						CustomerManageMenu cmm = new CustomerManageMenu();
-						cmm.start();
-					case 4:
-						ProductTui prodMenu = new ProductTui();
-						prodMenu.start();
-						break;
-					case 5:
-						System.out.println("To-Do -- Discounts");
-						break;
-					case 6:
-						UserSettingsMenu usm = new UserSettingsMenu();
-						usm.start();
-						break;
-					case 0:
-						setIsLoggedIn(false);
-						percon.setCurrentUser(null);
-						start();
-						break;
-					default:
-						po.errorMessage();
-						break;
-			  	}
-				
-			case "E":
-				switch(input) {
-					case 1:
-						OrderTui ordMenu = new OrderTui();
-						ordMenu.start();
-						break;
-					case 2:
-						ProductTui prodMenu = new ProductTui();
-						prodMenu.start();
-						break;
-					case 3:
-						System.out.println("To-Do -- Discounts");
-						break;
-					case 4:
-						UserSettingsMenu usm = new UserSettingsMenu();
-						usm.start();
-						break;
-					case 0:
-						setIsLoggedIn(false);
-						percon.setCurrentUser(null);
-						start();
-						break;
-					default:
-						po.errorMessage();
-						break;
-			  	}
-			}
+	private void notLoggedInMenu() {
+		PersonController percontrol = new PersonController();
+		int input = keyboard.intInput();
+		switch(input) {
+		case 1:
+			percontrol.createObj();
+			break;
+		case 2:
+			percontrol.logIn();
+			break;
+		case 0:
+			po.printGoodbye();
+			isRunning = false;
+			break;
+		default:
+			po.errorMessage();
+			notLoggedInMenu();
+			break;
 		}
-	
-	// Setters n' Getters
-		public void setIsLoggedIn(boolean isLoggedIn) {
-			this.isLoggedIn = isLoggedIn;
+	}
+
+	private void checkRole() {
+		role = percon.getCurrentUser().getRole();
+		if(role == null) {
+			po.printRoleError();
+
+		} else if (role.equals("A")) {
+			po.printAdminMenu();
+			adminMenu();
+
+		} else if (role.equals("E")) {
+			po.printEmployeeMenu();
+			employeeMenu();
+		}
+	}
+
+	private void adminMenu() {
+		int input = keyboard.intInput();
+		switch(input) {
+		case 1:
+			order();
+			break;
+		case 2:
+			accountManagement();
+			break;
+		case 3:
+			customerMenu();
+			break;
+		case 4:
+			productMenu();
+			break;
+		case 5:
+			discountMenu();
+			break;
+		case 6:
+			userSettings();
+			break;
+		case 0:
+			logOut();
+			break;
+		default:
+			po.errorMessage();
+			adminMenu();
+			break;
 		}
 
-		public boolean getIsLoggedIn() {
-			return isLoggedIn;
+	private void employeeMenu() {
+		int input = keyboard.intInput();
+		switch(input) {
+		case 1:
+			order();
+			break;
+		case 2:
+			productMenu();
+			break;
+		case 3:
+			discountMenu();
+			break;
+		case 4:
+			userSettings();
+			break;
+		case 0:
+			logOut();
+			break;
+		default:
+			po.errorMessage();
+			employeeMenu();
+			break;
 		}
+	}
+
+	private void order() {
+		OrderTui ordMenu = new OrderTui();
+		ordMenu.start();
+	}
+
+	private void customerMenu() {
+		CustomerManageMenu cmm = new CustomerManageMenu();
+		cmm.start();
+	}
+
+	private void productMenu() {
+		ProductTui prodMenu = new ProductTui();
+		prodMenu.start();
+	}
+
+	private void discountMenu() {
+		DiscountTui discMenu = new DiscountTui();
+		discMenu.start();
+	}
+
+	private void userSettings() {
+		role = percon.getCurrentUser().getRole();
+		UserSettingsMenu usm = new UserSettingsMenu();
+		System.out.println(role);
+		usm.start(role);
+	}
+
+	private void accountManagement() {
+		AccManagementMenu amm = new AccManagementMenu();
+		amm.start();
+	}
+
+	private void logOut() {
+		percon.setIsLoggedIn(false);
+		percon.setCurrentUser(null);
+	}
 }
