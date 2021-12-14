@@ -1,10 +1,12 @@
 package controller;
 
+import java.util.ArrayList;
+
 import input.KeyboardInput;
 import model.ProductFolder.ProductContainer;
 import model.ProductFolder.ProductForSale;
 
-public class ProductController implements InterfaceController<ProductForSale> {
+public class ProductController {
 
 	private KeyboardInput keyboard;
 	
@@ -12,13 +14,12 @@ public class ProductController implements InterfaceController<ProductForSale> {
 		keyboard = new KeyboardInput();
 	}
 	
-	@Override
 	public void createObj() {
     	int  amount, minAmount, maxAmount;
     	double price;
     	boolean isAvailable = false;
     	ProductForSale pForSale;
-    	String name, location;
+    	String name, location, category;
     	
     	printCreateProdHeader();
     	printAskName();
@@ -29,6 +30,8 @@ public class ProductController implements InterfaceController<ProductForSale> {
 		price = keyboard.doubleInput();
 		printAskLocation();
 		location = keyboard.stringInput();
+		printAskCategory();
+		category = keyboard.stringInput();
 		
 		int[] minAndMaxList = getMinAndMaxAmount();
 		minAmount = minAndMaxList[0];
@@ -36,21 +39,18 @@ public class ProductController implements InterfaceController<ProductForSale> {
 		isAvailable = (amount > 0) ? true : false;
 		
 		//create object
-		pForSale = new ProductForSale(amount, name, location, price, isAvailable, minAmount, maxAmount);
+		pForSale = new ProductForSale(amount, name, location, price, isAvailable, minAmount, maxAmount, category);
 		ProductContainer.getInstance().create(pForSale);
 	}
 	
-	@Override
 	public ProductForSale getObj() {
 		return ProductContainer.getInstance().searchForObj(askForID());
 	}
 
-	@Override
 	public void updateObj() {
 		
 	}
 
-	@Override
 	public void deleteObj() {
 		ProductForSale product = getObj();
 		
@@ -63,14 +63,31 @@ public class ProductController implements InterfaceController<ProductForSale> {
 		}
 	}
 	
-	public int askForID() {	
-		if (ProductContainer.getInstance().arraySize() > 0) {
-			printAskforID();
-			int input = keyboard.intInput();
-			return input;
-		}
-		int input = -1;
-		return input;
+	public int askForID() {
+        int input = 0;
+
+        if (ProductContainer.getInstance().arraySize() > 0) {
+            boolean isCorrect = false;
+            printAskforID();
+            input = keyboard.intInput();
+
+            while (!isCorrect) {
+                if (ProductContainer.getInstance().searchForObj(input) != null) {
+                    return input;
+                } else {
+                    printTryAgain();
+                    input = keyboard.intInput();
+                }
+            }
+            return input;
+        } else {
+            printUnavailable();
+        }
+        return input;
+    }
+
+	private void printTryAgain() {
+			System.out.println("Incorrect, try again!");
 	}
 
 	public int[] getMinAndMaxAmount() {
@@ -95,12 +112,41 @@ public class ProductController implements InterfaceController<ProductForSale> {
 		 return resultArr;
 	}
 	
+	// we need a hashmap for this TODO
+	public ArrayList<ProductForSale> getCategory() {
+		boolean isCorrect = false;
+		String input;
+		ArrayList<ProductForSale> al = new ArrayList<ProductForSale>();
+
+		printAskCategory();
+		input = keyboard.stringInput();
+		al = getCategoryAl(input);
+
+		if (al != null) {
+			return al;
+		} else {
+			while (!isCorrect) {
+				printTryAgain();
+				input = keyboard.stringInput();
+				al = getCategoryAl(input);
+				if (al != null) {
+					isCorrect = true;
+				}
+			}
+			return al;
+		}
+	}
+	
+	private ArrayList<ProductForSale> getCategoryAl(String input) {
+		return ProductContainer.getInstance().getCategory(input);
+	}
+	
 	private void printAskMinStock() {
 		System.out.println("Enter minimum stock amount: ");
 	}
 	
 	public void printCreateProdHeader() {
-    	System.out.println("****** Create product for sale******");
+    	System.out.println("******Create product for sale*******");
     	System.out.println("************************************");
 	}
 	
@@ -122,12 +168,18 @@ public class ProductController implements InterfaceController<ProductForSale> {
 	public void printAskforID() {
 		System.out.println("Please enter ID of the product: ");
 	}
+	public void printAskForProducts() {
+        System.out.println("Press -1 to stop or any other number to continue: ");
+    }
 	public void printSuccess() {
 		System.out.println("Item edited successfully");
 	}
 
+	public void printAskCategory() {
+		System.out.println("Enter the category: ");
+	}
+	
 	public void printUnavailable() {
 		System.out.println("Unavailable product");
 	}
-
 }

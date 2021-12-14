@@ -1,13 +1,15 @@
 package tui;
 
 import input.KeyboardInput;
+import model.ProductFolder.ProductContainer;
+import model.ProductFolder.ProductForSale;
 
 
 //TO DO, i'll finish this part up today
 public class ProductTuiEdit {
 	
 	private KeyboardInput keyboard;
-	
+	private ProductContainer prodcon = ProductContainer.getInstance();
 	public ProductTuiEdit() {
 		keyboard = new KeyboardInput();
 	}
@@ -15,28 +17,48 @@ public class ProductTuiEdit {
 	public void start() {
 		boolean isRunning = true;
 		int kbChoice;
+		int prodToEdit;
 		
 		while(isRunning) {
-			writeTuiEdit();
-			kbChoice = keyboard.intInput();
-			
-			switch(kbChoice) {
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				case 4:
-					break;
-				case 5:
-					break;
-				case 6:
-					break;
-				case 7:
-					break;
-				default:
-					break;
+			printProdToEdit();
+			prodToEdit = keyboard.intInput();
+			ProductForSale PFS = prodcon.searchForObj(prodToEdit);
+			if (prodcon.productExists(PFS)) {
+				writeTuiEdit();
+				kbChoice = keyboard.intInput();
+				switch(kbChoice) {
+					case 1:
+						printEditAmount();
+						PFS.setAmount(keyboard.intInput());
+						break;
+					case 2:
+						printEditName();
+						PFS.setName(keyboard.stringInput());
+						break;
+					case 3:
+						printEditLocation();
+						PFS.setLocation(keyboard.stringInput());
+						break;
+					case 4:
+						printEditPrice();
+						PFS.setPrice(keyboard.doubleInput());
+						break;
+					case 5:
+						PFS.setAvailable(isRunning);;
+						break;
+					case 6:
+						PFS.setMinimumAmount(kbChoice);
+						break;
+					case 7:
+						PFS.setMaximumAmount(kbChoice);
+						break;
+					case 0:
+						isRunning = false;
+					default:
+						break;
+				}
+			} else {
+				printUnvailable();
 			}
 		}
 	}
@@ -52,5 +74,25 @@ public class ProductTuiEdit {
         System.out.println(" (7) Edit maximum amount");
         System.out.println(" (0) Quit the program");
         System.out.print("\n Choice:");
+	}
+	
+	private void printProdToEdit() {
+		System.out.println("Enter ID of product you want to edit: ");
+	}
+	
+	private void printUnvailable() {
+		System.out.println("This item in not available");
+	}
+	private void printEditAmount() {
+		System.out.println("Enter new amount: ");
+	}
+	private void printEditName() {
+		System.out.println("Enter new name: ");
+	}
+	private void printEditLocation() {
+		System.out.println("Enter new location: ");
+	}
+	private void printEditPrice() {
+		System.out.println("Enter new price: ");
 	}
 }
